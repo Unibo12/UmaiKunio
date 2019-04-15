@@ -7,19 +7,19 @@ public class Anime : MonoBehaviour
 {
     public OnKeyPress_MoveGravity onKeyPress_MoveGravity;
 
-    public string upAnime = "";     // 上向き：Inspectorで指定
-    public string downAnime = "";   // 下向き：Inspectorで指定
-    public string rightAnime = "";  // 右向き：Inspectorで指定
-    public string leftAnime = "";   // 左向き：Inspectorで指定
-    public string StopAnime = "";   // 静止状態：Inspectorで指定
-    public string HijiAnime = "";   // 肘打ち：Inspectorで指定
-    public string DosukoiAnime = "";// どすこい張り手：Inspectorで指定
-    public string ThrowAnime = "";  // まいぼうるもどき投げ：Inspectorで指定
+    public string upAnime = "";         // 上向き：Inspectorで指定
+    public string downAnime = "";       // 下向き：Inspectorで指定
+    public string rightAnime = "";      // 右向き：Inspectorで指定
+    public string leftAnime = "";       // 左向き：Inspectorで指定
+    public string StopAnime = "";       // 静止状態：Inspectorで指定
+    public string HijiAnime = "";       // 肘打ち：Inspectorで指定
+    public string DosukoiAnime = "";    // どすこい張り手：Inspectorで指定
+    public string ThrowAnime = "";      // まいぼうるもどき投げ：Inspectorで指定
     public string JumpShagamiAnime = "";// ジャンプ時しゃがみ：Inspectorで指定
-    public string JumpAnime = "";   // ジャンプ時：Inspectorで指定
+    public string JumpAnime = "";       // ジャンプ時：Inspectorで指定
 
-    bool HijiFlg = true;            // 肘ボタン押しっぱなしで連打不可にしようとしたが未実装
-    bool DosukoiFlg = true;         // どすこいも同様
+    bool HijiFlg = true;                // 肘ボタン押しっぱなしで連打不可にしようとしたが未実装
+    bool DosukoiFlg = true;             // どすこいも同様
 
     string nowMode = "";
     string oldMode = "";
@@ -95,10 +95,10 @@ public class Anime : MonoBehaviour
             nowMode = JumpAnime;
         }
 
-        if (!onKeyPress_MoveGravity.groundFlag)
-        {
-            nowMode = JumpAnime;
-        }
+        //if (!onKeyPress_MoveGravity.groundFlag)
+        //{
+        //    nowMode = JumpAnime;
+        //}
         
 
     }
