@@ -5,9 +5,9 @@ using UnityEngine;
 // キーを押すと、移動する（熱血風対応版）
 public class NekketsuAction : MonoBehaviour
 {
-    public float speed = 1;             // スピード：Inspectorで指定
-    public float jumppower = 20;        // ジャンプ力：Inspectorで指定
-    public float MaxJumpHeight = 80;    // ジャンプの最大高さ
+    public float speed = 0.08f;             // スピード：Inspectorで指定
+    public float jumppower = 0.08f;        // ジャンプ力：Inspectorで指定
+    public float MaxJumpHeight = 2.8f;    // ジャンプの最大高さ
     public float Gravity = -0.001f;     // 内部での重力
     public float InitalVelocity = 0.2f; // 内部での初速
 
@@ -93,10 +93,10 @@ public class NekketsuAction : MonoBehaviour
             if (Y < MaxJumpHeight)
             {
 
-                if (InitalVelocity != 0)
+                if (initalVelocity != 0)
                 {
-                    vx += InitalVelocity;
-                    InitalVelocity -= 0.02f;
+                    vx += initalVelocity;
+                    initalVelocity += gravity;
                 }
 
                 Y += vx;
@@ -106,7 +106,7 @@ public class NekketsuAction : MonoBehaviour
                 {
                     pushFlag = false;
                 }
-            }            
+            }
         }
 
         // ジャンプ下降中状態
@@ -125,9 +125,9 @@ public class NekketsuAction : MonoBehaviour
             {
                 jumpFlag = false;
 
-                if (InitalVelocity != 0)
+                if (initalVelocity != 0)
                 {
-                    InitalVelocity = 0.2f;
+                    initalVelocity = InitalVelocity;
                 }
 
             }
@@ -157,7 +157,7 @@ public class NekketsuAction : MonoBehaviour
             }
 
             //ジャンプ中の場合は内部Yを加える。
-            pos.y = Z + Y + gravity;
+            pos.y = Z + Y;
         }
         else
         {
