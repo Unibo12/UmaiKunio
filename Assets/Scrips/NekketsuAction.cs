@@ -5,8 +5,12 @@ using UnityEngine;
 // キーを押すと、移動する（熱血風対応版）
 public class NekketsuAction : MonoBehaviour
 {
-    public float speed = 1;         // スピード：Inspectorで指定
-    public float jumppower = 0.1f;  // ジャンプ力：Inspectorで指定
+    public float speed = 1;             // スピード：Inspectorで指定
+    public float jumppower = 20;        // ジャンプ力：Inspectorで指定
+    public float MaxJumpHeight = 80;    // ジャンプの最大高さ
+    public float Gravity = -0.001f;     // 内部での重力
+    public float InitalVelocity = 0.2f; // 内部での初速
+
 
     float vx = 0;
     bool leftFlag = false; // 左向きかどうか
@@ -19,10 +23,15 @@ public class NekketsuAction : MonoBehaviour
     float Y = 0;    //内部での高さ
     float Z = 0;    //内部での奥行き
 
-    float G = 0;    //内部での重力※未実装
-    float Spd = 0;  //内部での初速※未実装
+    float gravity;    //内部での重力
+    float initalVelocity;  //内部での初速
 
-    void Start() { } // 最初に行う
+    void Start()
+    {   
+        // 最初に行う
+        gravity = Gravity;
+        initalVelocity = InitalVelocity;
+    }
 
     void Update()
     { // ずっと行う
@@ -61,7 +70,7 @@ public class NekketsuAction : MonoBehaviour
         }
 
         // もし、ジャンプキーが押されたとき
-        if (!(jumppower * 25 <= Y) && (Input.GetKey("a") || Input.GetKey("joystick button 2")))
+        if (!(MaxJumpHeight <= Y) && (Input.GetKey("a") || Input.GetKey("joystick button 2")))
         {
             // 着地済みかつ、ジャンプキー押しっぱなしでなければ
             if (Y <= 0 && pushFlag == false)
@@ -81,12 +90,19 @@ public class NekketsuAction : MonoBehaviour
             vx = jumppower; // ジャンプの移動量を入れる
 
             // ジャンプが頂点に達しているか
-            if (Y < jumppower * 25)
+            if (Y < MaxJumpHeight)
             {
+
+                if (InitalVelocity != 0)
+                {
+                    vx += InitalVelocity;
+                    InitalVelocity -= 0.02f;
+                }
+
                 Y += vx;
 
                 // 決められたジャンプの頂点より高く飛ばないように
-                if (jumppower * 25 < Y)
+                if (MaxJumpHeight < Y)
                 {
                     pushFlag = false;
                 }
@@ -108,6 +124,12 @@ public class NekketsuAction : MonoBehaviour
             if (Y <= 0)
             {
                 jumpFlag = false;
+
+                if (InitalVelocity != 0)
+                {
+                    InitalVelocity = 0.2f;
+                }
+
             }
         }
 
@@ -129,8 +151,13 @@ public class NekketsuAction : MonoBehaviour
 
         if (jumpFlag)
         {
+            if (Y < 0)
+            {
+                Y = 0;  // マイナス値は入れないようにする
+            }
+
             //ジャンプ中の場合は内部Yを加える。
-            pos.y = Z + Y;
+            pos.y = Z + Y + gravity;
         }
         else
         {
