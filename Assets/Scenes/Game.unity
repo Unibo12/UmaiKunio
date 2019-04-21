@@ -1909,10 +1909,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0.08
-  jumppower: 0.08
-  MaxJumpHeight: 2.8
+  jumppower: 0.06
+  MaxJumpHeight: 2.5
   Gravity: -0.001
-  InitalVelocity: 0.1
+  InitalVelocity: 0.005
 --- !u!114 &1363921164
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2464,7 +2464,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 45a9ec691f7e8b6438b4f45561ca9df6, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 4416e1c2dab2dc14e80b98eb717d067e, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.4
   m_Pitch: 1

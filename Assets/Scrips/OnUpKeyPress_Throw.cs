@@ -22,7 +22,7 @@ public class OnUpKeyPress_Throw : MonoBehaviour {
 		if (Input.GetKey("left") || Input.GetAxis("Horizontal") < 0) { // もし、左キーが押されたら
 			leftFlag = true;
 		}
-        if (Input.GetKey("a") || Input.GetKey("joystick button 3")) { // もし、キーボードのa or xbox360のXボタンが押されたら
+        if (Input.GetKey("s") || Input.GetKey("joystick button 3")) { // もし、キーボードのa or xbox360のXボタンが押されたら
 			if (pushFlag == false) { // 押しっぱなしでなければ
 				pushFlag = true;
 				Vector3 area = this.GetComponent<SpriteRenderer>().bounds.size;
