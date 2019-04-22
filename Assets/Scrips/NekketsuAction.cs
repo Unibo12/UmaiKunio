@@ -11,8 +11,10 @@ public class NekketsuAction : MonoBehaviour
     public float Gravity = -0.001f;     // 内部での重力
     public float InitalVelocity = 0.005f; // 内部での初速
 
-
     float vx = 0;
+    float vy = 0;
+    float vz = 0;
+
     bool leftFlag = false; // 左向きかどうか
     bool pushFlag = false; // ジャンプキーを押しっぱなしかどうか
     bool jumpFlag = false; // ジャンプして空中にいるか
@@ -37,6 +39,9 @@ public class NekketsuAction : MonoBehaviour
     { // ずっと行う
 
         vx = 0;
+        //vy = 0;
+        vz = 0;
+
         pos = transform.position;
 
         // もし、右キーが押されたら
@@ -58,15 +63,15 @@ public class NekketsuAction : MonoBehaviour
         // もし、上キーが押されたら
         if (Input.GetKey("up") || Input.GetAxis("Vertical") > 0)
         {
-            vx = speed * 0.4f; // 上に進む移動量を入れる(熱血っぽく奥行きは移動量小)
+            vz = speed * 0.4f; // 上に進む移動量を入れる(熱血っぽく奥行きは移動量小)
 
-            Z += vx;
+            Z += vz;
         }
         if (Input.GetKey("down") || Input.GetAxis("Vertical") < 0)
         { // もし、下キーが押されたら
-            vx = speed * 0.4f; // 下に進む移動量を入れる(熱血っぽく奥行きは移動量小)
+            vz = speed * 0.4f; // 下に進む移動量を入れる(熱血っぽく奥行きは移動量小)
 
-            Z += -vx;
+            Z += -vz;
         }
 
         // もし、ジャンプキーが押されたとき
@@ -87,7 +92,7 @@ public class NekketsuAction : MonoBehaviour
         // ジャンプ上昇中状態
         if (jumpFlag && pushFlag)
         {
-            vx = jumppower; // ジャンプの移動量を入れる
+            vy = jumppower; // ジャンプの移動量を入れる
 
             // ジャンプが頂点に達しているか
             if (Y < MaxJumpHeight)
@@ -95,12 +100,12 @@ public class NekketsuAction : MonoBehaviour
 
                 if (initalVelocity != 0)
                 {
-                    vx += initalVelocity;
+                    vy += initalVelocity;
                     initalVelocity += gravity;
                     gravity += Gravity * -1.5f; // 上昇中にかかる重力を加算していく
                 }
 
-                Y += vx;
+                Y += vy;
 
                 // ジャンプ時、横移動の初速を考慮
                 if ((Input.GetKey("right") || Input.GetAxis("Horizontal") > 0)
@@ -127,12 +132,12 @@ public class NekketsuAction : MonoBehaviour
         // ジャンプ下降中状態
         if (jumpFlag && !pushFlag)
         {
-            vx = jumppower; // ジャンプの移動量を入れる
+            vy = jumppower; // ジャンプの移動量を入れる
 
             // ジャンプ中なら下降させる。
             if (0 <= Y)
             {
-                Y -= vx;
+                Y -= vy;
                 Y += gravity;
                 gravity += Gravity * 4.5f; // 下降中にかかる重力を加算していく
             }
