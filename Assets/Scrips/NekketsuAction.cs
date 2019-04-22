@@ -6,10 +6,10 @@ using UnityEngine;
 public class NekketsuAction : MonoBehaviour
 {
     public float speed = 0.08f;             // スピード：Inspectorで指定
-    public float jumppower = 0.06f;        // ジャンプ力：Inspectorで指定
+    public float jumppower = 0.00125f;        // ジャンプ力：Inspectorで指定
     public float MaxJumpHeight = 2.5f;    // ジャンプの最大高さ
-    public float Gravity = -0.001f;     // 内部での重力
-    public float InitalVelocity = 0.005f; // 内部での初速
+    public float Gravity = -0.0035f;     // 内部での重力
+    public float InitalVelocity = 0.125f; // 内部での初速
 
     float vx = 0;
     float vy = 0;
@@ -82,6 +82,9 @@ public class NekketsuAction : MonoBehaviour
             { 
                 jumpFlag = true; // ジャンプの準備
                 pushFlag = true; // 押しっぱなし状態
+
+                // ジャンプした瞬間に初速を追加
+                vy += initalVelocity;
             }
         }
         else
@@ -92,18 +95,11 @@ public class NekketsuAction : MonoBehaviour
         // ジャンプ上昇中状態
         if (jumpFlag && pushFlag)
         {
-            vy = jumppower; // ジャンプの移動量を入れる
+            vy += jumppower; // ジャンプの移動量を入れる
 
             // ジャンプが頂点に達しているか
             if (Y < MaxJumpHeight)
             {
-
-                if (initalVelocity != 0)
-                {
-                    vy += initalVelocity;
-                    initalVelocity += gravity;
-                    gravity += Gravity * -1.5f; // 上昇中にかかる重力を加算していく
-                }
 
                 Y += vy;
 
@@ -139,7 +135,7 @@ public class NekketsuAction : MonoBehaviour
             {
                 Y -= vy;
                 Y += gravity;
-                gravity += Gravity * 4.5f; // 下降中にかかる重力を加算していく
+                gravity += Gravity; // 下降中にかかる重力を加算していく
             }
 
             // 着地判定
@@ -152,6 +148,7 @@ public class NekketsuAction : MonoBehaviour
                     // 初速を初期値に戻す
                     initalVelocity = InitalVelocity;
                     gravity = Gravity;
+                    vy = 0;
                 }
 
             }

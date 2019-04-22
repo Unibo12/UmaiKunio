@@ -24,8 +24,15 @@ public class Anime : MonoBehaviour
     string nowMode = "";
     string oldMode = "";
 
+    public AudioClip JumpSE;
+    AudioSource audioSource;
+
     void Start()
     { // 最初に行う
+
+        //Componentを取得
+        audioSource = GetComponent<AudioSource>();
+
         nowMode = StopAnime;
         oldMode = "";
     }
@@ -93,6 +100,8 @@ public class Anime : MonoBehaviour
         if ((Input.GetKey("a") || Input.GetKey("joystick button 2")))
         {
             nowMode = JumpAnime;
+            //audioSource.PlayOneShot(JumpSE);
+            //効果音おためし。 うるさいので保留
         }
 
         //if (!onKeyPress_MoveGravity.groundFlag)

@@ -1909,10 +1909,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0.08
-  jumppower: 0.06
+  jumppower: 0.00125
   MaxJumpHeight: 2.5
-  Gravity: -0.001
-  InitalVelocity: 0.005
+  Gravity: -0.0035
+  InitalVelocity: 0.125
 --- !u!114 &1363921164
 MonoBehaviour:
   m_ObjectHideFlags: 0
