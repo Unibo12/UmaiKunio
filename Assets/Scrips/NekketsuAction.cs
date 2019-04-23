@@ -5,45 +5,48 @@ using UnityEngine;
 // キーを押すと、移動する（熱血風対応版）
 public class NekketsuAction : MonoBehaviour
 {
-    public float speed = 0.08f;             // スピード：Inspectorで指定
-    public float jumppower = 0.00125f;        // ジャンプ力：Inspectorで指定
-    public float MaxJumpHeight = 2.5f;    // ジャンプの最大高さ
-    public float Gravity = -0.0035f;     // 内部での重力
-    public float InitalVelocity = 0.125f; // 内部での初速
+    Vector3 pos;    // 最終的な描画で使用
 
-    float vx = 0;
-    float vy = 0;
-    float vz = 0;
+    public float speed = 0.08f;             // スピード
+    public float jumppower = 0.003f;        // ジャンプ力
+    public float Gravity = -0.011f;         // 内部での重力
+    public float InitalVelocity = 0.2f;     // 内部での初速
+
+    float vx = 0;   //内部X値用変数
+    float vy = 0;   //内部Y値用変数
+    float vz = 0;   //内部Z値用変数
 
     bool leftFlag = false; // 左向きかどうか
     bool pushFlag = false; // ジャンプキーを押しっぱなしかどうか
     bool jumpFlag = false; // ジャンプして空中にいるか
 
-    Vector3 pos;
-
     float X = 0;    //内部での横
     float Y = 0;    //内部での高さ
     float Z = 0;    //内部での奥行き
 
-    float gravity;    //内部での重力
+    float gravity;         //内部での重力
     float initalVelocity;  //内部での初速
+
+    bool jumpAccelerate = false;    //ジャンプ加速度の計算を行うフラグ
+
 
     void Start()
     {   
         // 最初に行う
         gravity = Gravity;
         initalVelocity = InitalVelocity;
+
+        pos = transform.position;
+
     }
 
     void Update()
     { // ずっと行う
 
         vx = 0;
-        //vy = 0;
         vz = 0;
 
-        pos = transform.position;
-
+        #region 十字キー移動
         // もし、右キーが押されたら
         if (Input.GetKey("right") || Input.GetAxis("Horizontal") > 0)
         {
@@ -74,8 +77,11 @@ public class NekketsuAction : MonoBehaviour
             Z += -vz;
         }
 
+        #endregion  移動
+
+        #region ジャンプ処理
         // もし、ジャンプキーが押されたとき
-        if (!(MaxJumpHeight <= Y) && (Input.GetKey("a") || Input.GetKey("joystick button 2")))
+        if (Input.GetKey("a") || Input.GetKey("joystick button 2"))
         {
             // 着地済みかつ、ジャンプキー押しっぱなしでなければ
             if (Y <= 0 && pushFlag == false)
@@ -85,6 +91,9 @@ public class NekketsuAction : MonoBehaviour
 
                 // ジャンプした瞬間に初速を追加
                 vy += initalVelocity;
+
+                // ジャンプ加速度の計算を行う
+                jumpAccelerate = true;
             }
         }
         else
@@ -92,81 +101,55 @@ public class NekketsuAction : MonoBehaviour
             pushFlag = false; // 押しっぱなし解除
         }
 
-        // ジャンプ上昇中状態
-        if (jumpFlag && pushFlag)
+        // ジャンプ加速度の計算
+        if (jumpFlag && jumpAccelerate)
         {
-            vy += jumppower; // ジャンプの移動量を入れる
-
-            // ジャンプが頂点に達しているか
-            if (Y < MaxJumpHeight)
+            // ジャンプ時、横移動の初速を考慮
+            if (jumpFlag &&
+                (Input.GetKey("right") || Input.GetAxis("Horizontal") > 0)
+                || (Input.GetKey("left") || Input.GetAxis("Horizontal") < 0))
             {
-
-                Y += vy;
-
-                // ジャンプ時、横移動の初速を考慮
-                if ((Input.GetKey("right") || Input.GetAxis("Horizontal") > 0)
-                    || (Input.GetKey("left") || Input.GetAxis("Horizontal") < 0))
+                if (leftFlag)
                 {
-                    if (leftFlag)
-                    {
-                        X += -(initalVelocity * 0.2f);
-                    }
-                    else
-                    {
-                        X += initalVelocity * 0.2f;
-                    }
+                    X += -(initalVelocity * 0.08f);
                 }
-
-                // 決められたジャンプの頂点より高く飛ばないように
-                if (MaxJumpHeight < Y)
+                else
                 {
-                    pushFlag = false;
+                    X += initalVelocity * 0.08f;
                 }
+            }
+            else
+            {
+                jumpAccelerate = false;
             }
         }
 
-        // ジャンプ下降中状態
-        if (jumpFlag && !pushFlag)
+        // ジャンプ状態
+        if (jumpFlag)
         {
-            vy = jumppower; // ジャンプの移動量を入れる
+            vy += jumppower; 
+            Y += vy;           // ジャンプ力を加算
+            Y += gravity;      // ジャンプ中の重力加算
 
-            // ジャンプ中なら下降させる。
-            if (0 <= Y)
-            {
-                Y -= vy;
-                Y += gravity;
-                gravity += Gravity; // 下降中にかかる重力を加算していく
-            }
+            gravity += Gravity; // ジャンプ中にかかる重力を増加させる
 
             // 着地判定
             if (Y <= 0)
             {
                 jumpFlag = false;
+                pushFlag = false;
 
                 if (initalVelocity != 0)
                 {
-                    // 初速を初期値に戻す
-                    initalVelocity = InitalVelocity;
+                    // 重力変数・内部Y軸変数を初期値に戻す
                     gravity = Gravity;
                     vy = 0;
                 }
-
             }
         }
+        #endregion
 
-
-
-        // スプライト反転
-        Vector3 scale = transform.localScale;
-        if (leftFlag)
-        {
-            scale.x = -1; // 反転する（左向き）
-        }
-        else
-        {
-            scale.x = 1; // そのまま（右向き）
-        }
-
+        #region 画面への描画
         // 入力された内部XYZをtransformに設定する。
         pos.x = X;
 
@@ -186,13 +169,28 @@ public class NekketsuAction : MonoBehaviour
         }
 
         transform.position = pos;
-        transform.localScale = scale;
+        #endregion
 
-        // キャラクターの影の位置を設定。
+        #region スプライト反転処理
+        Vector3 scale = transform.localScale;
+        if (leftFlag)
+        {
+            scale.x = -1; // 反転する（左向き）
+        }
+        else
+        {
+            scale.x = 1; // そのまま（右向き）
+        }
+
+        transform.localScale = scale;
+        #endregion
+
+        #region キャラクターの影の位置描画処理
         var shadeTransform = GameObject.Find("shade").transform;
         pos.y = Z - 0.8f;
 
         shadeTransform.position = pos;
+        #endregion
     }
 
     void FixedUpdate() { } // ずっと行う（一定時間ごとに）
