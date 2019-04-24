@@ -101,29 +101,6 @@ public class NekketsuAction : MonoBehaviour
             pushFlag = false; // 押しっぱなし解除
         }
 
-        // ジャンプ加速度の計算
-        if (jumpFlag && jumpAccelerate)
-        {
-            // ジャンプ時、横移動の初速を考慮
-            if (jumpFlag &&
-                (Input.GetKey("right") || Input.GetAxis("Horizontal") > 0)
-                || (Input.GetKey("left") || Input.GetAxis("Horizontal") < 0))
-            {
-                if (leftFlag)
-                {
-                    X += -(initalVelocity * 0.08f);
-                }
-                else
-                {
-                    X += initalVelocity * 0.08f;
-                }
-            }
-            else
-            {
-                jumpAccelerate = false;
-            }
-        }
-
         // ジャンプ状態
         if (jumpFlag)
         {
@@ -145,6 +122,29 @@ public class NekketsuAction : MonoBehaviour
                     gravity = Gravity;
                     vy = 0;
                 }
+            }
+        }
+
+        // ジャンプ加速度の計算
+        if (jumpFlag && jumpAccelerate)
+        {
+            // ジャンプ時、横移動の初速を考慮
+            if (jumpFlag &&
+                (Input.GetKey("right") || Input.GetAxis("Horizontal") > 0)
+                || (Input.GetKey("left") || Input.GetAxis("Horizontal") < 0))
+            {
+                if (leftFlag)
+                {
+                    X += -(initalVelocity * speed);
+                }
+                else
+                {
+                    X += initalVelocity * speed;
+                }
+            }
+            else
+            {
+                jumpAccelerate = false;
             }
         }
         #endregion
