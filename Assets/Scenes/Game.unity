@@ -1914,6 +1914,7 @@ MonoBehaviour:
   jumppower: 0.003
   Gravity: -0.011
   InitalVelocity: 0.2
+  nextButtonDownTime: 0.5
 --- !u!82 &1363921162
 AudioSource:
   m_ObjectHideFlags: 0

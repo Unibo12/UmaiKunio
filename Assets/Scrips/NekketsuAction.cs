@@ -5,39 +5,45 @@ using UnityEngine;
 // キーを押すと、移動する（熱血風対応版）
 public class NekketsuAction : MonoBehaviour
 {
-    Vector3 pos;    // 最終的な描画で使用
+    #region 変数定義
+    Vector3 pos;        // 最終的な描画で使用
+    Animator animator;  // アニメ変更用
 
     public float speed = 0.08f;             // スピード
     public float jumppower = 0.003f;        // ジャンプ力
     public float Gravity = -0.011f;         // 内部での重力
     public float InitalVelocity = 0.2f;     // 内部での初速
+    public float nextButtonDownTime = 1f;   // ダッシュを受け付ける時間
 
+    float X = 0;    //内部での横
+    float Y = 0;    //内部での高さ
+    float Z = 0;    //内部での奥行き
     float vx = 0;   //内部X値用変数
     float vy = 0;   //内部Y値用変数
     float vz = 0;   //内部Z値用変数
+    float gravity;  //内部での重力
 
     bool leftFlag = false; // 左向きかどうか
     bool pushFlag = false; // ジャンプキーを押しっぱなしかどうか
     bool jumpFlag = false; // ジャンプして空中にいるか
 
-    float X = 0;    //内部での横
-    float Y = 0;    //内部での高さ
-    float Z = 0;    //内部での奥行き
-
-    float gravity;         //内部での重力
-    float initalVelocity;  //内部での初速
-
     bool jumpAccelerate = false;    //ジャンプ加速度の計算を行うフラグ
 
+    bool dashFlag = false;   //走っているか否か
+    bool pushMove = false;   //走る事前準備として、左右移動ボタンが既に押されているか否か
+    bool leftDash = false;   //走ろうとする方向(左を正とする)
+    bool canDash = false;    //走ることが出来る状態か
+    float nowTime = 0f;      //最初に移動ボタンが押されてからの経過時間
+
+    #endregion
 
     void Start()
     {   
         // 最初に行う
         gravity = Gravity;
-        initalVelocity = InitalVelocity;
-
         pos = transform.position;
 
+        animator = this.GetComponent<Animator>();
     }
 
     void Update()
@@ -53,29 +59,123 @@ public class NekketsuAction : MonoBehaviour
             vx = speed; // 右に進む移動量を入れる
             leftFlag = false;
 
-            X += vx;
+            if (!dashFlag)
+            {
+                X += vx;
+            }
         }
         // もし、左キーが押されたら
-        if (Input.GetKey("left") || Input.GetAxis("Horizontal") < 0)
+        else if (Input.GetKey("left") || Input.GetAxis("Horizontal") < 0)   //else if でも同時押し対策NG
         {
             vx = -speed; // 左に進む移動量を入れる
             leftFlag = true;
 
-            X += vx;
+            if (!dashFlag)
+            {
+                X += vx;
+            }
         }
+
         // もし、上キーが押されたら
         if (Input.GetKey("up") || Input.GetAxis("Vertical") > 0)
         {
-            vz = speed * 0.4f; // 上に進む移動量を入れる(熱血っぽく奥行きは移動量小)
+            vz = speed * 0.5f; // 上に進む移動量を入れる(熱血っぽく奥行きは移動量小)
 
             Z += vz;
         }
         if (Input.GetKey("down") || Input.GetAxis("Vertical") < 0)
         { // もし、下キーが押されたら
-            vz = speed * 0.4f; // 下に進む移動量を入れる(熱血っぽく奥行きは移動量小)
+            vz = speed * 0.5f; // 下に進む移動量を入れる(熱血っぽく奥行きは移動量小)
 
             Z += -vz;
         }
+
+
+        if (!dashFlag)
+        {
+            // 非ダッシュ状態で、横移動中か？
+            if ((Input.GetKey("right") || Input.GetAxis("Horizontal") > 0)
+                || (Input.GetKey("left") || Input.GetAxis("Horizontal") < 0))
+            {
+                if (!pushMove)
+                {
+                    //ダッシュの準備をする
+                    pushMove = true;
+                    leftDash = leftFlag;
+                    nowTime = 0;
+                }
+                else
+                {
+                    // ダッシュ準備済なので、ダッシュしてよい状態か判断
+                    if (canDash && !jumpFlag
+                        && leftDash == leftFlag
+                        && nowTime <= nextButtonDownTime)
+                    {
+                        dashFlag = true;
+                    }
+                }
+            }
+            else
+            {
+                // 非ダッシュ状態で、ダッシュ準備済か？
+                // 1度左右キーが押された状態で、ダッシュ受付時間内にもう一度左右キーが押された時
+                if (pushMove)
+                {
+                    //　時間計測
+                    nowTime += Time.deltaTime;
+
+                    if (nowTime > nextButtonDownTime)
+                    {
+                        pushMove = false;
+                        canDash = false;
+                    }
+                    else
+                    {
+                        canDash = true;
+                    }
+                }
+            }
+        }
+        else
+        {   //ダッシュ済の場合
+
+            // ダッシュ中に逆方向を押した場合
+            if(leftDash != leftFlag)
+            {
+                dashFlag = false;
+                pushMove = false;
+                canDash = false;
+            }
+            else
+            {
+                // ダッシュ中の加速を計算する。
+                // ダッシュ中は方向キー入力なしで自動で進む。(クロカン・障害ふう)
+                if (leftFlag)
+                {
+                    vx = -speed; // 左に進む移動量を入れる
+                    X += vx * 1.4f;
+                }
+                else
+                {
+                    vx = speed; // 右に進む移動量を入れる
+                    X += vx * 1.4f;
+                }
+            }
+        }
+
+        // ダッシュ入力受付中
+        if (pushMove)
+        {
+            //　時間計測
+            nowTime += Time.deltaTime;
+
+            if (nowTime > nextButtonDownTime)
+            {
+                pushMove = false;
+                canDash = false;
+            }
+        }
+
 
         #endregion  移動
 
@@ -90,7 +190,7 @@ public class NekketsuAction : MonoBehaviour
                 pushFlag = true; // 押しっぱなし状態
 
                 // ジャンプした瞬間に初速を追加
-                vy += initalVelocity;
+                vy += InitalVelocity;
 
                 // ジャンプ加速度の計算を行う
                 jumpAccelerate = true;
@@ -116,7 +216,7 @@ public class NekketsuAction : MonoBehaviour
                 jumpFlag = false;
                 pushFlag = false;
 
-                if (initalVelocity != 0)
+                if (InitalVelocity != 0)
                 {
                     // 重力変数・内部Y軸変数を初期値に戻す
                     gravity = Gravity;
@@ -135,11 +235,11 @@ public class NekketsuAction : MonoBehaviour
             {
                 if (leftFlag)
                 {
-                    X += -(initalVelocity * speed);
+                    X += -(InitalVelocity * speed);
                 }
                 else
                 {
-                    X += initalVelocity * speed;
+                    X += InitalVelocity * speed;
                 }
             }
             else
@@ -191,7 +291,42 @@ public class NekketsuAction : MonoBehaviour
 
         shadeTransform.position = pos;
         #endregion
+
+        #region アニメ処理(ここでやるかは仮)
+        if (!jumpFlag)
+        {
+            if ((Input.GetKey("right") || Input.GetAxis("Horizontal") > 0)
+                || (Input.GetKey("left") || Input.GetAxis("Horizontal") < 0)
+                || (Input.GetKey("up") || Input.GetAxis("Vertical") > 0)
+                || (Input.GetKey("down") || Input.GetAxis("Vertical") < 0)
+                || dashFlag)
+            {
+                animator.Play("UmaGr");
+            }
+            else if ((Input.GetKey("z") || Input.GetKey("joystick button 0")))
+            {
+                animator.Play("UmaHiji");
+            }
+            else if ((Input.GetKey("x") || Input.GetKey("joystick button 1")))
+            {
+                animator.Play("UmaHarite");
+            }
+            else if ((Input.GetKey("s") || Input.GetKey("joystick button 3")))
+            {
+                animator.Play("UmaThrow");
+            }
+            else
+            {
+                animator.Play("UmaGrTACHI");
+            }
+        }
+        else
+        {
+            animator.Play("UmaJump");
+        }
+
+        #endregion
+
     }
 
-    void FixedUpdate() { } // ずっと行う（一定時間ごとに）
 }
