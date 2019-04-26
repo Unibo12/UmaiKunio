@@ -10,10 +10,10 @@ public class NekketsuAction : MonoBehaviour
     Animator animator;  // アニメ変更用
 
     public float speed = 0.08f;             // スピード
-    public float jumppower = 0.003f;        // ジャンプ力
+    public float jumppower = 0.08f;        // ジャンプ力
     public float Gravity = -0.011f;         // 内部での重力
-    public float InitalVelocity = 0.2f;     // 内部での初速
-    public float nextButtonDownTime = 1f;   // ダッシュを受け付ける時間
+    public float InitalVelocity = 0.17f;     // 内部での初速
+    public float nextButtonDownTimeDash = 1f;   // ダッシュを受け付ける時間
 
     float X = 0;    //内部での横
     float Y = 0;    //内部での高さ
@@ -24,7 +24,7 @@ public class NekketsuAction : MonoBehaviour
     float gravity;  //内部での重力
 
     bool leftFlag = false; // 左向きかどうか
-    bool pushFlag = false; // ジャンプキーを押しっぱなしかどうか
+    bool pushJump = false; // ジャンプキーを押しっぱなしかどうか
     bool jumpFlag = false; // ジャンプして空中にいるか
 
     bool jumpAccelerate = false;    //ジャンプ加速度の計算を行うフラグ
@@ -33,7 +33,7 @@ public class NekketsuAction : MonoBehaviour
     bool pushMove = false;   //走る事前準備として、左右移動ボタンが既に押されているか否か
     bool leftDash = false;   //走ろうとする方向(左を正とする)
     bool canDash = false;    //走ることが出来る状態か
-    float nowTime = 0f;      //最初に移動ボタンが押されてからの経過時間
+    float nowTimeDash = 0f;      //最初に移動ボタンが押されてからの経過時間
 
     #endregion
 
@@ -102,14 +102,14 @@ public class NekketsuAction : MonoBehaviour
                     //ダッシュの準備をする
                     pushMove = true;
                     leftDash = leftFlag;
-                    nowTime = 0;
+                    nowTimeDash = 0;
                 }
                 else
                 {
                     // ダッシュ準備済なので、ダッシュしてよい状態か判断
                     if (canDash && !jumpFlag
                         && leftDash == leftFlag
-                        && nowTime <= nextButtonDownTime)
+                        && nowTimeDash <= nextButtonDownTimeDash)
                     {
                         dashFlag = true;
                     }
@@ -122,9 +122,9 @@ public class NekketsuAction : MonoBehaviour
                 if (pushMove)
                 {
                     //　時間計測
-                    nowTime += Time.deltaTime;
+                    nowTimeDash += Time.deltaTime;
 
-                    if (nowTime > nextButtonDownTime)
+                    if (nowTimeDash > nextButtonDownTimeDash)
                     {
                         pushMove = false;
                         canDash = false;
@@ -167,9 +167,9 @@ public class NekketsuAction : MonoBehaviour
         if (pushMove)
         {
             //　時間計測
-            nowTime += Time.deltaTime;
+            nowTimeDash += Time.deltaTime;
 
-            if (nowTime > nextButtonDownTime)
+            if (nowTimeDash > nextButtonDownTimeDash)
             {
                 pushMove = false;
                 canDash = false;
@@ -184,10 +184,10 @@ public class NekketsuAction : MonoBehaviour
         if (Input.GetKey("a") || Input.GetKey("joystick button 2"))
         {
             // 着地済みかつ、ジャンプキー押しっぱなしでなければ
-            if (Y <= 0 && pushFlag == false)
+            if (Y <= 0 && pushJump == false)
             { 
                 jumpFlag = true; // ジャンプの準備
-                pushFlag = true; // 押しっぱなし状態
+                pushJump = true; // 押しっぱなし状態
 
                 // ジャンプした瞬間に初速を追加
                 vy += InitalVelocity;
@@ -198,15 +198,21 @@ public class NekketsuAction : MonoBehaviour
         }
         else
         {
-            pushFlag = false; // 押しっぱなし解除
+            pushJump = false; // 押しっぱなし解除
         }
 
         // ジャンプ状態
         if (jumpFlag)
         {
-            vy += jumppower; 
-            Y += vy;           // ジャンプ力を加算
+            if (pushJump)
+            {
+                Y += jumppower;
+            }
+
+            //vy += jumppower; 
             Y += gravity;      // ジャンプ中の重力加算
+
+            Y += vy;           // ジャンプ力を加算
 
             gravity += Gravity; // ジャンプ中にかかる重力を増加させる
 
@@ -214,7 +220,8 @@ public class NekketsuAction : MonoBehaviour
             if (Y <= 0)
             {
                 jumpFlag = false;
-                pushFlag = false;
+                pushJump = false;
+                dashFlag = false;   //ダッシュ中であれば、着地時にダッシュ解除
 
                 if (InitalVelocity != 0)
                 {

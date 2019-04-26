@@ -1911,10 +1911,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0.08
-  jumppower: 0.003
+  jumppower: 0.08
   Gravity: -0.011
-  InitalVelocity: 0.2
-  nextButtonDownTime: 0.5
+  InitalVelocity: 0.17
+  nextButtonDownTimeDash: 1
+  nextButtonDownTimeJump:
+  - 1
+  - 2
 --- !u!82 &1363921162
 AudioSource:
   m_ObjectHideFlags: 0
