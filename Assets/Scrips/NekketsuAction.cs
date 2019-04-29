@@ -10,9 +10,9 @@ public class NekketsuAction : MonoBehaviour
     Animator animator;  // アニメ変更用
 
     public float speed = 0.08f;             // スピード
-    public float jumppower = 0.08f;        // ジャンプ力
-    public float Gravity = -0.011f;         // 内部での重力
-    public float InitalVelocity = 0.17f;     // 内部での初速
+    public float jumppower = 0.05f;        // ジャンプ力
+    public float Gravity = -0.005f;         // 内部での重力
+    public float InitalVelocity = 0.15f;     // 内部での初速
     public float nextButtonDownTimeDash = 1f;   // ダッシュを受け付ける時間
 
     float X = 0;    //内部での横
@@ -204,17 +204,23 @@ public class NekketsuAction : MonoBehaviour
         // ジャンプ状態
         if (jumpFlag)
         {
-            if (pushJump)
+            if (!pushJump)
             {
-                Y += jumppower;
+                vy = vy * 0.95f;
+
             }
+            //else
+            //{
+            //    vy += jumppower;
+            //}
+
+            Y += gravity;      // ジャンプ中の重力加算
+            gravity += Gravity; // ジャンプ中にかかる重力を増加させる
 
             //vy += jumppower; 
-            Y += gravity;      // ジャンプ中の重力加算
 
             Y += vy;           // ジャンプ力を加算
 
-            gravity += Gravity; // ジャンプ中にかかる重力を増加させる
 
             // 着地判定
             if (Y <= 0)
