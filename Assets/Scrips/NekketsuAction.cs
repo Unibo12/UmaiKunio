@@ -26,6 +26,7 @@ public class NekketsuAction : MonoBehaviour
     bool leftFlag = false; // 左向きかどうか
     bool pushJump = false; // ジャンプキーを押しっぱなしかどうか
     bool jumpFlag = false; // ジャンプして空中にいるか
+    bool miniJumpFlag = false; // 小ジャンプ
 
     bool jumpAccelerate = false;    //ジャンプ加速度の計算を行うフラグ
 
@@ -188,7 +189,7 @@ public class NekketsuAction : MonoBehaviour
             { 
                 jumpFlag = true; // ジャンプの準備
                 pushJump = true; // 押しっぱなし状態
-
+                miniJumpFlag = false; // 小ジャンプ
                 // ジャンプした瞬間に初速を追加
                 vy += InitalVelocity;
 
@@ -204,30 +205,42 @@ public class NekketsuAction : MonoBehaviour
         // ジャンプ状態
         if (jumpFlag)
         {
-            if (!pushJump)
+            // ジャンプボタンが押されてない＆上昇中＆小ジャンプフラグが立ってない
+            if (!pushJump && vy > 0 && !miniJumpFlag)
             {
-                vy = vy * 0.95f;
+                // vy = vy * 0.95f;
+                vy = vy * 0.5f;
 
+                // 小ジャンプ
+                miniJumpFlag = true;
             }
             //else
             //{
             //    vy += jumppower;
             //}
 
-            Y += gravity;      // ジャンプ中の重力加算
-            gravity += Gravity; // ジャンプ中にかかる重力を増加させる
+            // Y += gravity; // ジャンプ中の重力加算
+            // gravity += Gravity; // ジャンプ中にかかる重力を増加させる
+
+            // 重力は変化せず常に同じ値が掛かる
+            vy += Gravity;
 
             //vy += jumppower; 
 
-            Y += vy;           // ジャンプ力を加算
-
+            Y += vy; // ジャンプ力を加算
 
             // 着地判定
             if (Y <= 0)
             {
                 jumpFlag = false;
                 pushJump = false;
-                dashFlag = false;   //ダッシュ中であれば、着地時にダッシュ解除
+                dashFlag = false; //ダッシュ中であれば、着地時にダッシュ解除
+
+                // 地面めりこみ補正は着地したタイミングで行う
+                if (Y < 0)
+                {
+                    Y = 0; // マイナス値は入れないようにする
+                }
 
                 if (InitalVelocity != 0)
                 {
@@ -264,22 +277,21 @@ public class NekketsuAction : MonoBehaviour
 
         #region 画面への描画
         // 入力された内部XYZをtransformに設定する。
+
+        // 基本的に、描画位置はジャンプなどのキャラ状態かかわらず、同じように内部座標を描画座標に適用する
+        // （適用できるように、必要ならば内部座標の段階で調整をしておく）
         pos.x = X;
+        pos.y = Z + Y;
 
-        if (jumpFlag)
-        {
-            if (Y < 0)
-            {
-                Y = 0;  // マイナス値は入れないようにする
-            }
-
-            //ジャンプ中の場合は内部Yを加える。
-            pos.y = Z + Y;
-        }
-        else
-        {
-            pos.y = Z;
-        }
+        // if (jumpFlag)
+        // {
+        //     //ジャンプ中の場合は内部Yを加える。
+        //     pos.y = Z + Y;
+        // }
+        // else
+        // {
+        //     pos.y = Z;
+        // }
 
         transform.position = pos;
         #endregion
