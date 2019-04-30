@@ -34,7 +34,10 @@ public class NekketsuAction : MonoBehaviour
     bool pushMove = false;   //走る事前準備として、左右移動ボタンが既に押されているか否か
     bool leftDash = false;   //走ろうとする方向(左を正とする)
     bool canDash = false;    //走ることが出来る状態か
-    float nowTimeDash = 0f;      //最初に移動ボタンが押されてからの経過時間
+    float nowTimeDash = 0f;  //最初に移動ボタンが押されてからの経過時間
+
+    bool squatFlag = false;  //しゃがみ状態フラグ
+    float nowTimesquat = 0f; //しゃがみ状態硬直時間を計測
 
     #endregion
 
@@ -54,214 +57,221 @@ public class NekketsuAction : MonoBehaviour
         vz = 0;
 
         #region 十字キー移動
-        // もし、右キーが押されたら
-        if (Input.GetKey("right") || Input.GetAxis("Horizontal") > 0)
+
+        if (!squatFlag)
         {
-            vx = speed; // 右に進む移動量を入れる
-            leftFlag = false;
+            // もし、右キーが押されたら
+            if (Input.GetKey("right") || Input.GetAxis("Horizontal") > 0)
+            {
+                vx = speed; // 右に進む移動量を入れる
+                leftFlag = false;
+
+                if (!dashFlag)
+                {
+                    X += vx;
+                }
+            }
+            // もし、左キーが押されたら
+            else if (Input.GetKey("left") || Input.GetAxis("Horizontal") < 0)   //else if でも同時押し対策NG
+            {
+                vx = -speed; // 左に進む移動量を入れる
+                leftFlag = true;
+
+                if (!dashFlag)
+                {
+                    X += vx;
+                }
+            }
+
+            // もし、上キーが押されたら
+            if (Input.GetKey("up") || Input.GetAxis("Vertical") > 0)
+            {
+                vz = speed * 0.5f; // 上に進む移動量を入れる(熱血っぽく奥行きは移動量小)
+
+                Z += vz;
+            }
+            if (Input.GetKey("down") || Input.GetAxis("Vertical") < 0)
+            { // もし、下キーが押されたら
+                vz = speed * 0.5f; // 下に進む移動量を入れる(熱血っぽく奥行きは移動量小)
+
+                Z += -vz;
+            }
 
             if (!dashFlag)
             {
-                X += vx;
-            }
-        }
-        // もし、左キーが押されたら
-        else if (Input.GetKey("left") || Input.GetAxis("Horizontal") < 0)   //else if でも同時押し対策NG
-        {
-            vx = -speed; // 左に進む移動量を入れる
-            leftFlag = true;
-
-            if (!dashFlag)
-            {
-                X += vx;
-            }
-        }
-
-        // もし、上キーが押されたら
-        if (Input.GetKey("up") || Input.GetAxis("Vertical") > 0)
-        {
-            vz = speed * 0.5f; // 上に進む移動量を入れる(熱血っぽく奥行きは移動量小)
-
-            Z += vz;
-        }
-        if (Input.GetKey("down") || Input.GetAxis("Vertical") < 0)
-        { // もし、下キーが押されたら
-            vz = speed * 0.5f; // 下に進む移動量を入れる(熱血っぽく奥行きは移動量小)
-
-            Z += -vz;
-        }
-
-
-        if (!dashFlag)
-        {
-            // 非ダッシュ状態で、横移動中か？
-            if ((Input.GetKey("right") || Input.GetAxis("Horizontal") > 0)
-                || (Input.GetKey("left") || Input.GetAxis("Horizontal") < 0))
-            {
-                if (!pushMove)
+                // 非ダッシュ状態で、横移動中か？
+                if ((Input.GetKey("right") || Input.GetAxis("Horizontal") > 0)
+                    || (Input.GetKey("left") || Input.GetAxis("Horizontal") < 0))
                 {
-                    //ダッシュの準備をする
-                    pushMove = true;
-                    leftDash = leftFlag;
-                    nowTimeDash = 0;
-                }
-                else
-                {
-                    // ダッシュ準備済なので、ダッシュしてよい状態か判断
-                    if (canDash && !jumpFlag
-                        && leftDash == leftFlag
-                        && nowTimeDash <= nextButtonDownTimeDash)
+                    if (!pushMove)
                     {
-                        dashFlag = true;
-                    }
-                }
-            }
-            else
-            {
-                // 非ダッシュ状態で、ダッシュ準備済か？
-                // 1度左右キーが押された状態で、ダッシュ受付時間内にもう一度左右キーが押された時
-                if (pushMove)
-                {
-                    //　時間計測
-                    nowTimeDash += Time.deltaTime;
-
-                    if (nowTimeDash > nextButtonDownTimeDash)
-                    {
-                        pushMove = false;
-                        canDash = false;
+                        //ダッシュの準備をする
+                        pushMove = true;
+                        leftDash = leftFlag;
+                        nowTimeDash = 0;
                     }
                     else
                     {
-                        canDash = true;
+                        // ダッシュ準備済なので、ダッシュしてよい状態か判断
+                        if (canDash && !jumpFlag
+                            && leftDash == leftFlag
+                            && nowTimeDash <= nextButtonDownTimeDash)
+                        {
+                            dashFlag = true;
+                        }
                     }
-                }
-            }
-        }
-        else
-        {   //ダッシュ済の場合
-
-            // ダッシュ中に逆方向を押した場合
-            if(leftDash != leftFlag)
-            {
-                dashFlag = false;
-                pushMove = false;
-                canDash = false;
-            }
-            else
-            {
-                // ダッシュ中の加速を計算する。
-                // ダッシュ中は方向キー入力なしで自動で進む。(クロカン・障害ふう)
-                if (leftFlag)
-                {
-                    vx = -speed; // 左に進む移動量を入れる
-                    X += vx * 1.4f;
                 }
                 else
                 {
-                    vx = speed; // 右に進む移動量を入れる
-                    X += vx * 1.4f;
+                    // 非ダッシュ状態で、ダッシュ準備済か？
+                    // 1度左右キーが押された状態で、ダッシュ受付時間内にもう一度左右キーが押された時
+                    if (pushMove)
+                    {
+                        //　時間計測
+                        nowTimeDash += Time.deltaTime;
+
+                        if (nowTimeDash > nextButtonDownTimeDash)
+                        {
+                            pushMove = false;
+                            canDash = false;
+                        }
+                        else
+                        {
+                            canDash = true;
+                        }
+                    }
+                }
+            }
+            else
+            {   //ダッシュ済の場合
+
+                // ダッシュ中に逆方向を押した場合
+                if (leftDash != leftFlag)
+                {
+                    dashFlag = false;
+                    pushMove = false;
+                    canDash = false;
+                }
+                else
+                {
+                    // ダッシュ中の加速を計算する。
+                    // ダッシュ中は方向キー入力なしで自動で進む。(クロカン・障害ふう)
+                    if (leftFlag)
+                    {
+                        vx = -speed; // 左に進む移動量を入れる
+                        X += vx * 1.4f;
+                    }
+                    else
+                    {
+                        vx = speed; // 右に進む移動量を入れる
+                        X += vx * 1.4f;
+                    }
+                }
+            }
+
+            // ダッシュ入力受付中
+            if (pushMove)
+            {
+                //　時間計測
+                nowTimeDash += Time.deltaTime;
+
+                if (nowTimeDash > nextButtonDownTimeDash)
+                {
+                    pushMove = false;
+                    canDash = false;
                 }
             }
         }
-
-        // ダッシュ入力受付中
-        if (pushMove)
-        {
-            //　時間計測
-            nowTimeDash += Time.deltaTime;
-
-            if (nowTimeDash > nextButtonDownTimeDash)
-            {
-                pushMove = false;
-                canDash = false;
-            }
-        }
-
 
         #endregion  移動
 
         #region ジャンプ処理
-        // もし、ジャンプキーが押されたとき
-        if (Input.GetKey("a") || Input.GetKey("joystick button 2"))
+        if (!squatFlag)
         {
-            // 着地済みかつ、ジャンプキー押しっぱなしでなければ
-            if (Y <= 0 && pushJump == false)
-            { 
-                jumpFlag = true; // ジャンプの準備
-                pushJump = true; // 押しっぱなし状態
-                miniJumpFlag = false; // 小ジャンプ
-                // ジャンプした瞬間に初速を追加
-                vy += InitalVelocity;
-
-                // ジャンプ加速度の計算を行う
-                jumpAccelerate = true;
-            }
-        }
-        else
-        {
-            pushJump = false; // 押しっぱなし解除
-        }
-
-        // ジャンプ状態
-        if (jumpFlag)
-        {
-            // ジャンプボタンが押されてない＆上昇中＆小ジャンプフラグが立ってない
-            if (!pushJump && vy > 0 && !miniJumpFlag)
+            // もし、ジャンプキーが押されたとき
+            if (Input.GetKey("a") || Input.GetKey("joystick button 2"))
             {
-                // 小ジャンプ用に、現在の上昇速度を半分にする
-                vy = vy * 0.5f;
-
-                // 小ジャンプ
-                miniJumpFlag = true;
-            }
-
-            // ジャンプ中の重力加算(重力は変化せず常に同じ値が掛かる)
-            vy += Gravity;
-
-            Y += vy; // ジャンプ力を加算
-
-            // 着地判定
-            if (Y <= 0)
-            {
-                jumpFlag = false;
-                pushJump = false;
-                dashFlag = false; //ダッシュ中であれば、着地時にダッシュ解除
-
-                // 地面めりこみ補正は着地したタイミングで行う
-                if (Y < 0)
+                // 着地済みかつ、ジャンプキー押しっぱなしでなければ
+                if (Y <= 0 && pushJump == false)
                 {
-                    Y = 0; // マイナス値は入れないようにする
-                }
+                    jumpFlag = true; // ジャンプの準備
+                    pushJump = true; // 押しっぱなし状態
+                    miniJumpFlag = false; // 小ジャンプ
+                                          // ジャンプした瞬間に初速を追加
+                    vy += InitalVelocity;
 
-                if (InitalVelocity != 0)
-                {
-                    // 重力変数・内部Y軸変数を初期値に戻す
-                    gravity = Gravity;
-                    vy = 0;
-                }
-            }
-        }
-
-        // ジャンプ加速度の計算
-        if (jumpFlag && jumpAccelerate)
-        {
-            // ジャンプ時、横移動の初速を考慮
-            if (jumpFlag &&
-                (Input.GetKey("right") || Input.GetAxis("Horizontal") > 0)
-                || (Input.GetKey("left") || Input.GetAxis("Horizontal") < 0))
-            {
-                if (leftFlag)
-                {
-                    X += -(InitalVelocity * speed);
-                }
-                else
-                {
-                    X += InitalVelocity * speed;
+                    // ジャンプ加速度の計算を行う
+                    jumpAccelerate = true;
                 }
             }
             else
             {
-                jumpAccelerate = false;
+                pushJump = false; // 押しっぱなし解除
+            }
+
+            // ジャンプ状態
+            if (jumpFlag)
+            {
+                // ジャンプボタンが押されてない＆上昇中＆小ジャンプフラグが立ってない
+                if (!pushJump && vy > 0 && !miniJumpFlag)
+                {
+                    // 小ジャンプ用に、現在の上昇速度を半分にする
+                    vy = vy * 0.5f;
+
+                    // 小ジャンプ
+                    miniJumpFlag = true;
+                }
+
+                // ジャンプ中の重力加算(重力は変化せず常に同じ値が掛かる)
+                vy += Gravity;
+
+                Y += vy; // ジャンプ力を加算
+
+                // 着地判定
+                if (Y <= 0)
+                {
+                    jumpFlag = false;
+                    pushJump = false;
+                    dashFlag = false; //ダッシュ中であれば、着地時にダッシュ解除
+
+                    squatFlag = true;
+
+                    // 地面めりこみ補正は着地したタイミングで行う
+                    if (Y < 0)
+                    {
+                        Y = 0; // マイナス値は入れないようにする
+                    }
+
+                    if (InitalVelocity != 0)
+                    {
+                        // 重力変数・内部Y軸変数を初期値に戻す
+                        gravity = Gravity;
+                        vy = 0;
+                    }
+                }
+            }
+
+            // ジャンプ加速度の計算
+            if (jumpFlag && jumpAccelerate)
+            {
+                // ジャンプ時、横移動の初速を考慮
+                if (jumpFlag &&
+                    (Input.GetKey("right") || Input.GetAxis("Horizontal") > 0)
+                    || (Input.GetKey("left") || Input.GetAxis("Horizontal") < 0))
+                {
+                    if (leftFlag)
+                    {
+                        X += -(InitalVelocity * speed);
+                    }
+                    else
+                    {
+                        X += InitalVelocity * speed;
+                    }
+                }
+                else
+                {
+                    jumpAccelerate = false;
+                }
             }
         }
         #endregion
@@ -274,7 +284,26 @@ public class NekketsuAction : MonoBehaviour
         pos.x = X;
         pos.y = Z + Y;
 
-        transform.position = pos;
+        // しゃがみ状態でなければ移動する
+        if (!squatFlag)
+        {
+            transform.position = pos;
+        }
+        else
+        {
+            // しゃがみ状態は移動不可
+            animator.Play("UmaJumpShagami");
+
+            // しゃがみ状態の時間計測
+            nowTimesquat += Time.deltaTime;
+            
+            // しゃがみ状態解除
+            if (nowTimesquat > 0.15f)
+            {
+                squatFlag = false;
+                nowTimesquat = 0;
+            }
+        }
         #endregion
 
         #region スプライト反転処理
@@ -295,11 +324,14 @@ public class NekketsuAction : MonoBehaviour
         var shadeTransform = GameObject.Find("shade").transform;
         pos.y = Z - 0.8f;
 
-        shadeTransform.position = pos;
+        if (!squatFlag)
+        {
+            shadeTransform.position = pos;
+        }
         #endregion
 
         #region アニメ処理(ここでやるかは仮)
-        if (!jumpFlag)
+        if (!jumpFlag && !squatFlag)
         {
             if ((Input.GetKey("right") || Input.GetAxis("Horizontal") > 0)
                 || (Input.GetKey("left") || Input.GetAxis("Horizontal") < 0)
@@ -328,7 +360,14 @@ public class NekketsuAction : MonoBehaviour
         }
         else
         {
-            animator.Play("UmaJump");
+            if (!squatFlag)
+            {
+                animator.Play("UmaJump");
+            }
+            else
+            {
+                animator.Play("UmaJumpShagami");
+            }
         }
 
         #endregion
