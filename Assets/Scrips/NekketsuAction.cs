@@ -208,24 +208,15 @@ public class NekketsuAction : MonoBehaviour
             // ジャンプボタンが押されてない＆上昇中＆小ジャンプフラグが立ってない
             if (!pushJump && vy > 0 && !miniJumpFlag)
             {
-                // vy = vy * 0.95f;
+                // 小ジャンプ用に、現在の上昇速度を半分にする
                 vy = vy * 0.5f;
 
                 // 小ジャンプ
                 miniJumpFlag = true;
             }
-            //else
-            //{
-            //    vy += jumppower;
-            //}
 
-            // Y += gravity; // ジャンプ中の重力加算
-            // gravity += Gravity; // ジャンプ中にかかる重力を増加させる
-
-            // 重力は変化せず常に同じ値が掛かる
+            // ジャンプ中の重力加算(重力は変化せず常に同じ値が掛かる)
             vy += Gravity;
-
-            //vy += jumppower; 
 
             Y += vy; // ジャンプ力を加算
 
@@ -282,16 +273,6 @@ public class NekketsuAction : MonoBehaviour
         // （適用できるように、必要ならば内部座標の段階で調整をしておく）
         pos.x = X;
         pos.y = Z + Y;
-
-        // if (jumpFlag)
-        // {
-        //     //ジャンプ中の場合は内部Yを加える。
-        //     pos.y = Z + Y;
-        // }
-        // else
-        // {
-        //     pos.y = Z;
-        // }
 
         transform.position = pos;
         #endregion
