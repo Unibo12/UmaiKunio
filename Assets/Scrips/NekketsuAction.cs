@@ -10,9 +10,9 @@ public class NekketsuAction : MonoBehaviour
     Animator animator;  // アニメ変更用
 
     public float speed = 0.08f;             // スピード
-    public float jumppower = 0.05f;        // ジャンプ力
-    public float Gravity = -0.005f;         // 内部での重力
-    public float InitalVelocity = 0.15f;     // 内部での初速
+    //public float jumppower = 0.05f;        // ジャンプ力
+    public float Gravity = -0.006f;         // 内部での重力
+    public float InitalVelocity = 0.19f;     // 内部での初速
     public float nextButtonDownTimeDash = 1f;   // ダッシュを受け付ける時間
 
     float X = 0;    //内部での横
@@ -29,6 +29,10 @@ public class NekketsuAction : MonoBehaviour
     bool miniJumpFlag = false; // 小ジャンプ
 
     bool jumpAccelerate = false;    //ジャンプ加速度の計算を行うフラグ
+
+    int JumpX = 0; // ジャンプの瞬間に入力していた疑似Xの方向(左、右、ニュートラル)
+    int JumpZ = 0; // ジャンプの瞬間に入力していた疑似Zの方向(手前、奥、ニュートラル)
+    bool leftJumpFlag = false; // ジャンプの瞬間に向いていた方向。左向きかどうか
 
     bool dashFlag = false;   //走っているか否か
     bool pushMove = false;   //走る事前準備として、左右移動ボタンが既に押されているか否か
@@ -60,13 +64,16 @@ public class NekketsuAction : MonoBehaviour
 
         if (!squatFlag)
         {
+
+            #region 歩き
+
             // もし、右キーが押されたら
             if (Input.GetKey("right") || Input.GetAxis("Horizontal") > 0)
             {
                 vx = speed; // 右に進む移動量を入れる
                 leftFlag = false;
 
-                if (!dashFlag)
+                if (!dashFlag && !jumpFlag)
                 {
                     X += vx;
                 }
@@ -77,10 +84,11 @@ public class NekketsuAction : MonoBehaviour
                 vx = -speed; // 左に進む移動量を入れる
                 leftFlag = true;
 
-                if (!dashFlag)
+                if (!dashFlag && !jumpFlag)
                 {
                     X += vx;
                 }
+
             }
 
             // もし、上キーが押されたら
@@ -88,14 +96,24 @@ public class NekketsuAction : MonoBehaviour
             {
                 vz = speed * 0.5f; // 上に進む移動量を入れる(熱血っぽく奥行きは移動量小)
 
-                Z += vz;
+                if (!jumpFlag)
+                {
+                    Z += vz;
+                }
             }
             if (Input.GetKey("down") || Input.GetAxis("Vertical") < 0)
             { // もし、下キーが押されたら
-                vz = speed * 0.5f; // 下に進む移動量を入れる(熱血っぽく奥行きは移動量小)
+                vz = -speed * 0.5f; // 下に進む移動量を入れる(熱血っぽく奥行きは移動量小)
 
-                Z += -vz;
+                if (!jumpFlag)
+                {
+                    Z += vz;
+                }
             }
+
+            #endregion
+
+            #region ダッシュ
 
             if (!dashFlag)
             {
@@ -159,12 +177,12 @@ public class NekketsuAction : MonoBehaviour
                     if (leftFlag)
                     {
                         vx = -speed; // 左に進む移動量を入れる
-                        X += vx * 1.4f;
+                        X += vx * 1.35f;
                     }
                     else
                     {
                         vx = speed; // 右に進む移動量を入れる
-                        X += vx * 1.4f;
+                        X += vx * 1.35f;
                     }
                 }
             }
@@ -181,6 +199,97 @@ public class NekketsuAction : MonoBehaviour
                     canDash = false;
                 }
             }
+
+            #endregion
+
+            #region 空中制御
+
+            if (jumpFlag && !dashFlag)
+            {
+                // 空中制御 疑似X軸
+                switch (JumpX)
+                {
+                    case (int)VectorX.None:
+
+                        if(JumpZ == (int)VectorY.None)
+                        {
+                            if (!leftJumpFlag)
+                            {
+                                // 右向き時の垂直ジャンプ中に右キーが押されたら
+                                if (Input.GetKey("right") || Input.GetAxis("Horizontal") > 0)
+                                {
+                                    vx = speed; // 右に進む移動量を入れる
+                                    leftFlag = false;
+
+                                    X += vx;
+                                }
+                            }
+                            else
+                            {
+                                // 左向き時の垂直ジャンプ中に左キーが押されたら
+                                if (Input.GetKey("left") || Input.GetAxis("Horizontal") < 0)   //else if でも同時押し対策NG
+                                {
+                                    vx = -speed; // 左に進む移動量を入れる
+                                    leftFlag = true;
+
+                                    X += vx;
+                                }
+                            }
+                        }
+                        break;
+
+                    case (int)VectorX.Right:
+                        vx = speed; // 右に進む移動量を入れる
+                        X += vx;
+
+                        // もし、右空中移動中に、左キーが押されたら
+                        if (Input.GetKey("left") || Input.GetAxis("Horizontal") < 0)   //else if でも同時押し対策NG
+                        {
+                            vx = -speed; // 左に進む移動量を入れる
+                            leftFlag = true;
+
+                            X += vx　* 0.2f;
+                        }
+
+                        break;
+
+
+                    case (int)VectorX.Left:
+                        vx = -speed; // 左に進む移動量を入れる
+                        X += vx;
+
+                        // もし、左空中移動中に、右キーが押されたら
+                        if (Input.GetKey("right") || Input.GetAxis("Horizontal") > 0)
+                        {
+                            vx = speed; // 右に進む移動量を入れる
+                            leftFlag = false;
+
+                            X += vx * 0.2f;
+                        }
+                        break;
+                }
+
+                // 空中制御 疑似Z軸
+                switch (JumpZ)
+                {
+                    case (int)VectorY.None:
+                        //FC・再っぽく、垂直ジャンプからのY入力は受け付けない　とりあえず。
+                        break;
+
+                    case (int)VectorY.Up:
+                        vz = speed * 0.4f; // 上に進む移動量を入れる(熱血っぽく奥行きは移動量小)
+                        Z += vz;
+                        break;
+
+                    case (int)VectorY.Down:
+                        vz = -speed * 0.4f; // 下に進む移動量を入れる(熱血っぽく奥行きは移動量小)
+                        Z += vz;
+                        break;
+                }
+            }
+
+            #endregion
+
         }
 
         #endregion  移動
@@ -202,6 +311,36 @@ public class NekketsuAction : MonoBehaviour
 
                     // ジャンプ加速度の計算を行う
                     jumpAccelerate = true;
+
+                    // 空中制御用に、ジャンプした瞬間に入力していたキーを覚えておく(X軸)
+                    if (Input.GetKey("right") || Input.GetAxis("Horizontal") > 0)
+                    {
+                        JumpX = (int)VectorX.Right;
+                    }
+                    else if (Input.GetKey("left") || Input.GetAxis("Horizontal") < 0)
+                    {
+                        JumpX = (int)VectorX.Left;
+                    }
+                    else
+                    {
+                        // 垂直ジャンプであれば、向いていた方向を覚えておく。
+                        JumpX = (int)VectorX.None;
+                        leftJumpFlag = leftFlag;
+                    }
+
+                    // 空中制御用に、ジャンプした瞬間に入力していたキーを覚えておく(Z軸)
+                    if (Input.GetKey("up") || Input.GetAxis("Vertical") > 0)
+                    {
+                        JumpZ = (int)VectorY.Up;
+                    }
+                    else if (Input.GetKey("down") || Input.GetAxis("Vertical") < 0)
+                    {
+                        JumpZ = (int)VectorY.Down;
+                    }
+                    else
+                    {
+                        JumpZ = (int)VectorY.None;
+                    }
                 }
             }
             else
@@ -374,4 +513,19 @@ public class NekketsuAction : MonoBehaviour
 
     }
 
+    #region Enum ジャンプの瞬間のX・Z軸入力方向(空中制御用)
+    protected enum VectorX
+    {
+        None,
+        Left,
+        Right,
+    }
+
+    protected enum VectorY
+    {
+        None,
+        Up,
+        Down,
+    }
+    #endregion
 }
