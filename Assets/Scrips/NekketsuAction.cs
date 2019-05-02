@@ -43,6 +43,9 @@ public class NekketsuAction : MonoBehaviour
     bool squatFlag = false;  //しゃがみ状態フラグ
     float nowTimesquat = 0f; //しゃがみ状態硬直時間を計測
 
+    bool brakeFlag = false;  //ブレーキフラグ
+    float nowTimebrake = 0f; //ブレーキフラグ時間を計測
+
     #endregion
 
     void Start()
@@ -166,9 +169,26 @@ public class NekketsuAction : MonoBehaviour
                 // ダッシュ中に逆方向を押した場合
                 if (leftDash != leftFlag)
                 {
+                    if (leftDash)
+                    {
+                        vx = -speed; // 左に進む移動量を入れる
+                        X += vx * 1.35f;
+                    }
+                    else
+                    {
+                        vx = speed; // 右に進む移動量を入れる
+                        X += vx * 1.35f;
+                    }
+
                     dashFlag = false;
                     pushMove = false;
                     canDash = false;
+
+                    // ブレーキ状態
+                    if (!jumpFlag)
+                    {
+                        brakeFlag = true;
+                    }
                 }
                 else
                 {
@@ -184,6 +204,30 @@ public class NekketsuAction : MonoBehaviour
                         vx = speed; // 右に進む移動量を入れる
                         X += vx * 1.35f;
                     }
+                }
+            }
+
+            // ブレーキ処理
+            if (!jumpFlag && brakeFlag)
+            {
+                if (leftFlag)
+                {
+                    vx = speed; // 右に進む移動量を入れる
+                    X += vx * 1.35f;
+                }
+                else
+                {
+                    vx = -speed; // 左に進む移動量を入れる
+                    X += vx * 1.35f;
+                }
+                // ブレーキ状態の時間計測
+                nowTimebrake += Time.deltaTime;
+
+                // ブレーキ状態解除
+                if (nowTimebrake > 0.25f)
+                {
+                    brakeFlag = false;
+                    nowTimebrake = 0;
                 }
             }
 
@@ -295,7 +339,7 @@ public class NekketsuAction : MonoBehaviour
         #endregion  移動
 
         #region ジャンプ処理
-        if (!squatFlag)
+        if (!squatFlag && !brakeFlag)
         {
             // もし、ジャンプキーが押されたとき
             if (Input.GetKey("a") || Input.GetKey("joystick button 2"))
@@ -470,7 +514,7 @@ public class NekketsuAction : MonoBehaviour
         #endregion
 
         #region アニメ処理(ここでやるかは仮)
-        if (!jumpFlag && !squatFlag)
+        if (!jumpFlag && !squatFlag && !brakeFlag)
         {
             if ((Input.GetKey("right") || Input.GetAxis("Horizontal") > 0)
                 || (Input.GetKey("left") || Input.GetAxis("Horizontal") < 0)
@@ -499,13 +543,19 @@ public class NekketsuAction : MonoBehaviour
         }
         else
         {
-            if (!squatFlag)
+            if (brakeFlag)
             {
-                animator.Play("UmaJump");
+                animator.Play("UmaBrake");
             }
-            else
+
+            if (squatFlag)
             {
                 animator.Play("UmaJumpShagami");
+            }
+
+            if (jumpFlag)
+            {
+                animator.Play("UmaJump");
             }
         }
 
