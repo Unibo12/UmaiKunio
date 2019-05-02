@@ -213,12 +213,12 @@ public class NekketsuAction : MonoBehaviour
                 if (leftFlag)
                 {
                     vx = speed; // 右に進む移動量を入れる
-                    X += vx * 1.35f;
+                    X += vx * 1.25f;
                 }
                 else
                 {
                     vx = -speed; // 左に進む移動量を入れる
-                    X += vx * 1.35f;
+                    X += vx * 1.25f;
                 }
                 // ブレーキ状態の時間計測
                 nowTimebrake += Time.deltaTime;
