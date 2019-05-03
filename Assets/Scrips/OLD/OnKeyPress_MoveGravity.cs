@@ -9,7 +9,7 @@ public class OnKeyPress_MoveGravity : MonoBehaviour {
 	public float jumppower = 0.1f;  // ジャンプ力：Inspectorで指定
 
 	float vx = 0;
-	bool leftFlag = false; // 左向きかどうか
+	//bool leftFlag = false; // 左向きかどうか
 	bool pushFlag = false; // スペースキーを押しっぱなしかどうか
 	    
     Vector3 pos;
@@ -34,7 +34,7 @@ public class OnKeyPress_MoveGravity : MonoBehaviour {
         if (Input.GetKey("right") || Input.GetAxis("Horizontal") > 0)
         { 
 			vx = speed; // 右に進む移動量を入れる
-			leftFlag = false;
+			//leftFlag = false;
 
             pos.x += vx;
         }
@@ -42,7 +42,7 @@ public class OnKeyPress_MoveGravity : MonoBehaviour {
         if (Input.GetKey("left") || Input.GetAxis("Horizontal") < 0)
         { 
 			vx = -speed; // 左に進む移動量を入れる
-			leftFlag = true;
+			//leftFlag = true;
 
             pos.x += vx;
         }
