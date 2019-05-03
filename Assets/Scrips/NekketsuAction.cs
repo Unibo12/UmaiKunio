@@ -10,48 +10,42 @@ public class NekketsuAction : MonoBehaviour
     Animator animator;  // アニメ変更用
 
     public float speed = 0.08f;             // スピード
-    //public float jumppower = 0.05f;        // ジャンプ力
     public float Gravity = -0.006f;         // 内部での重力
     public float InitalVelocity = 0.19f;     // 内部での初速
     public float nextButtonDownTimeDash = 1f;   // ダッシュを受け付ける時間
 
-    float X = 0;    //内部での横
-    float Y = 0;    //内部での高さ
-    float Z = 0;    //内部での奥行き
-    float vx = 0;   //内部X値用変数
-    float vy = 0;   //内部Y値用変数
-    float vz = 0;   //内部Z値用変数
-    float gravity;  //内部での重力
+    public float X = 0;    //内部での横
+    public float Y = 0;    //内部での高さ
+    public float Z = 0;    //内部での奥行き
+    public float vx = 0;   //内部X値用変数
+    public float vy = 0;   //内部Y値用変数
+    public float vz = 0;   //内部Z値用変数
 
-    bool leftFlag = false; // 左向きかどうか
+    public bool leftFlag = false; // 左向きかどうか
+    public bool jumpFlag = false; // ジャンプして空中にいるか
+    public bool dashFlag = false;   //走っているか否か
+    public bool squatFlag = false;  //しゃがみ状態フラグ
+    public bool brakeFlag = false;  //ブレーキフラグ
+
     bool pushJump = false; // ジャンプキーを押しっぱなしかどうか
-    bool jumpFlag = false; // ジャンプして空中にいるか
     bool miniJumpFlag = false; // 小ジャンプ
-
     bool jumpAccelerate = false;    //ジャンプ加速度の計算を行うフラグ
-
     int JumpX = 0; // ジャンプの瞬間に入力していた疑似Xの方向(左、右、ニュートラル)
     int JumpZ = 0; // ジャンプの瞬間に入力していた疑似Zの方向(手前、奥、ニュートラル)
     bool leftJumpFlag = false; // ジャンプの瞬間に向いていた方向。左向きかどうか
+    float nowTimesquat = 0f; //しゃがみ状態硬直時間を計測
 
-    bool dashFlag = false;   //走っているか否か
     bool pushMove = false;   //走る事前準備として、左右移動ボタンが既に押されているか否か
     bool leftDash = false;   //走ろうとする方向(左を正とする)
     bool canDash = false;    //走ることが出来る状態か
     float nowTimeDash = 0f;  //最初に移動ボタンが押されてからの経過時間
-
-    bool squatFlag = false;  //しゃがみ状態フラグ
-    float nowTimesquat = 0f; //しゃがみ状態硬直時間を計測
-
-    bool brakeFlag = false;  //ブレーキフラグ
-    float nowTimebrake = 0f; //ブレーキフラグ時間を計測
+    float nowTimebrake = 0f; //ブレーキ時間を計測
 
     #endregion
 
     void Start()
     {   
         // 最初に行う
-        gravity = Gravity;
         pos = transform.position;
 
         animator = this.GetComponent<Animator>();
@@ -427,8 +421,7 @@ public class NekketsuAction : MonoBehaviour
 
                     if (InitalVelocity != 0)
                     {
-                        // 重力変数・内部Y軸変数を初期値に戻す
-                        gravity = Gravity;
+                        // 内部Y軸変数を初期値に戻す
                         vy = 0;
                     }
                 }
@@ -457,6 +450,20 @@ public class NekketsuAction : MonoBehaviour
                 }
             }
         }
+
+        // しゃがみ状態の処理
+        if (squatFlag)
+        {
+            // しゃがみ状態の時間計測
+            nowTimesquat += Time.deltaTime;
+
+            // しゃがみ状態解除
+            if (nowTimesquat > 0.15f)
+            {
+                squatFlag = false;
+                nowTimesquat = 0;
+            }
+        }
         #endregion
 
         #region 画面への描画
@@ -467,26 +474,7 @@ public class NekketsuAction : MonoBehaviour
         pos.x = X;
         pos.y = Z + Y;
 
-        // しゃがみ状態でなければ移動する
-        if (!squatFlag)
-        {
-            transform.position = pos;
-        }
-        else
-        {
-            // しゃがみ状態は移動不可
-            animator.Play("UmaJumpShagami");
-
-            // しゃがみ状態の時間計測
-            nowTimesquat += Time.deltaTime;
-            
-            // しゃがみ状態解除
-            if (nowTimesquat > 0.15f)
-            {
-                squatFlag = false;
-                nowTimesquat = 0;
-            }
-        }
+        transform.position = pos;
         #endregion
 
         #region スプライト反転処理
