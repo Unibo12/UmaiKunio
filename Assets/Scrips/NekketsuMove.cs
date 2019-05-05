@@ -13,13 +13,11 @@ public class NekketsuMove
     float nowTimeDash = 0f;  //最初に移動ボタンが押されてからの経過時間
     float nowTimebrake = 0f; //ブレーキ時間を計測
 
-    // 移動処理を行う前に、熱血アクションの共通変数を最新化
+    // 移動処理を行う前に、熱血アクションの共通変数を取得
     public void UpdateMove()
     {
-        GObj = GameObject.Find("UmaGr1"); //UmaGr1をオブジェクトの名前から取得して変数に格納する
-        NAct = GObj.GetComponent<NekketsuAction>(); //UmaGr1の中にあるNekketsuActionを取得して変数に格納する
-
-        MoveMain();
+        GObj = GameObject.Find("UmaGr1"); //オブジェクトの名前からゲームオブジェクトを取得する。
+        NAct = GObj.GetComponent<NekketsuAction>(); //UmaGr1の中にあるNekketsuActionを参照する。
     }
 
     public void MoveMain()

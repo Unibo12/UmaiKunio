@@ -31,17 +31,14 @@ public class NekketsuJump
     }
     #endregion
 
-    // ジャンプ処理を行う前に、熱血アクションの共通変数を最新化
+    // ジャンプ処理を行う前に、熱血アクションの共通変数を取得
     public void UpdateJump()
     {
-        GObj = GameObject.Find("UmaGr1"); //UmaGr1をオブジェクトの名前から取得して変数に格納する
-        NAct = GObj.GetComponent<NekketsuAction>(); //UmaGr1の中にあるNekketsuActionを取得して変数に格納する
-
-        DashMain();
-
+        GObj = GameObject.Find("UmaGr1"); //オブジェクトの名前からゲームオブジェクトを取得する。
+        NAct = GObj.GetComponent<NekketsuAction>(); //UmaGr1の中にあるNekketsuActionを参照する。
     }
 
-    void DashMain()
+    public void JumpMain()
     {
         #region 空中制御
 

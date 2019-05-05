@@ -39,6 +39,12 @@ public class NekketsuAction : MonoBehaviour
         // 最初に行う
         pos = transform.position;
         animator = this.GetComponent<Animator>();
+
+        // 移動処理呼び出し
+        NDash.UpdateMove();
+
+        // ジャンプ処理呼び出し
+        NJump.UpdateJump();
     }
 
     void Update()
@@ -48,10 +54,10 @@ public class NekketsuAction : MonoBehaviour
         vz = 0;
 
         // 移動処理呼び出し
-        NDash.UpdateMove();
+        NDash.MoveMain();
 
         // ジャンプ処理呼び出し
-        NJump.UpdateJump();
+        NJump.JumpMain();
 
         #region 画面への描画
         // 入力された内部XYZをtransformに設定する。
