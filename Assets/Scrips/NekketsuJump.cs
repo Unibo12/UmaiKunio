@@ -36,14 +36,6 @@ public class NekketsuJump
         NAct = nekketsuAction; //UmaGr1の中にあるNekketsuActionを参照する。
     }
 
-
-    // ジャンプ処理を行う前に、熱血アクションの共通変数を取得
-    // public void UpdateJump()
-    // {
-    //     GObj = GameObject.Find("UmaGr1"); //オブジェクトの名前からゲームオブジェクトを取得する。
-    //     NAct = GObj.GetComponent<NekketsuAction>(); //UmaGr1の中にあるNekketsuActionを参照する。
-    // }
-
     public void JumpMain()
     {
         #region 空中制御
@@ -143,7 +135,9 @@ public class NekketsuJump
         if (!NAct.squatFlag && !NAct.brakeFlag)
         {
             // もし、ジャンプキーが押されたとき
-            if (Input.GetKey("a") || Input.GetKey("joystick button 2"))
+            if (Input.GetKey("a") || Input.GetKey("joystick button 2")
+                || (Input.GetKey("z") || Input.GetKey("joystick button 0"))
+                && (Input.GetKey("x") || Input.GetKey("joystick button 1")))
             {
                 // 着地済みかつ、ジャンプキー押しっぱなしでなければ
                 if (NAct.Y <= 0 && pushJump == false)

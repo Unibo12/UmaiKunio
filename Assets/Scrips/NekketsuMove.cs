@@ -18,13 +18,6 @@ public class NekketsuMove
         NAct = nekketsuAction;
     }
 
-    // 移動処理を行う前に、熱血アクションの共通変数を取得
-    // public void UpdateMove()
-    // {
-    //     GObj = GameObject.Find("UmaGr1"); //オブジェクトの名前からゲームオブジェクトを取得する。
-    //     NAct = GObj.GetComponent<NekketsuAction>(); //UmaGr1の中にあるNekketsuActionを参照する。
-    // }
-
     public void MoveMain()
     {
         if (!NAct.squatFlag)
