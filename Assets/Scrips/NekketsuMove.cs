@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class NekketsuMove
 {
-    GameObject GObj; //ゲームオブジェクトそのものが入る変数
+    // GameObject GObj; //ゲームオブジェクトそのものが入る変数
     NekketsuAction NAct; //NekketsuActionが入る変数
 
     bool pushMove = false;   //ダッシュする事前準備として、左右移動ボタンが既に押されているか否か
@@ -13,12 +13,17 @@ public class NekketsuMove
     float nowTimeDash = 0f;  //最初に移動ボタンが押されてからの経過時間
     float nowTimebrake = 0f; //ブレーキ時間を計測
 
-    // 移動処理を行う前に、熱血アクションの共通変数を取得
-    public void UpdateMove()
+    public NekketsuMove(NekketsuAction nekketsuAction)
     {
-        GObj = GameObject.Find("UmaGr1"); //オブジェクトの名前からゲームオブジェクトを取得する。
-        NAct = GObj.GetComponent<NekketsuAction>(); //UmaGr1の中にあるNekketsuActionを参照する。
+        NAct = nekketsuAction;
     }
+
+    // 移動処理を行う前に、熱血アクションの共通変数を取得
+    // public void UpdateMove()
+    // {
+    //     GObj = GameObject.Find("UmaGr1"); //オブジェクトの名前からゲームオブジェクトを取得する。
+    //     NAct = GObj.GetComponent<NekketsuAction>(); //UmaGr1の中にあるNekketsuActionを参照する。
+    // }
 
     public void MoveMain()
     {

@@ -29,8 +29,8 @@ public class NekketsuAction : MonoBehaviour
 
     Vector3 pos;        // 最終的な描画で使用
     Animator animator;  // アニメ変更用
-    private NekketsuMove NDash = new NekketsuMove(); //NekketsuDashを呼び出す際に使用
-    private NekketsuJump NJump = new NekketsuJump(); //NekketsuJumpを呼び出す際に使用
+    private NekketsuMove NDash; //NekketsuDashを呼び出す際に使用
+    private NekketsuJump NJump; //NekketsuJumpを呼び出す際に使用
 
     #endregion
 
@@ -40,11 +40,15 @@ public class NekketsuAction : MonoBehaviour
         pos = transform.position;
         animator = this.GetComponent<Animator>();
 
-        // 移動処理呼び出し
-        NDash.UpdateMove();
+        // 生成（コンストラクタ）の引数にNekketsuActionを渡してやる
+        NDash = new NekketsuMove(this); 
+        NJump = new NekketsuJump(this); 
 
-        // ジャンプ処理呼び出し
-        NJump.UpdateJump();
+        // // 移動処理呼び出し
+        // NDash.UpdateMove();
+
+        // // ジャンプ処理呼び出し
+        // NJump.UpdateJump();
     }
 
     void Update()
