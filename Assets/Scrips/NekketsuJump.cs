@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class NekketsuJump
 {
-    GameObject GObj; //ゲームオブジェクトそのものが入る変数
+    // GameObject GObj; //ゲームオブジェクトそのものが入る変数
     NekketsuAction NAct; //NekketsuActionが入る変数
 
     bool pushJump = false; // ジャンプキーを押しっぱなしかどうか
@@ -31,12 +31,18 @@ public class NekketsuJump
     }
     #endregion
 
-    // ジャンプ処理を行う前に、熱血アクションの共通変数を取得
-    public void UpdateJump()
+    public NekketsuJump(NekketsuAction nekketsuAction)
     {
-        GObj = GameObject.Find("UmaGr1"); //オブジェクトの名前からゲームオブジェクトを取得する。
-        NAct = GObj.GetComponent<NekketsuAction>(); //UmaGr1の中にあるNekketsuActionを参照する。
+        NAct = nekketsuAction; //UmaGr1の中にあるNekketsuActionを参照する。
     }
+
+
+    // ジャンプ処理を行う前に、熱血アクションの共通変数を取得
+    // public void UpdateJump()
+    // {
+    //     GObj = GameObject.Find("UmaGr1"); //オブジェクトの名前からゲームオブジェクトを取得する。
+    //     NAct = GObj.GetComponent<NekketsuAction>(); //UmaGr1の中にあるNekketsuActionを参照する。
+    // }
 
     public void JumpMain()
     {
