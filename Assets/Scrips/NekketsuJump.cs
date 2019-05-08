@@ -306,7 +306,7 @@ public class NekketsuJump
             nowTimesquat += Time.deltaTime;
 
             // しゃがみ状態解除
-            if (nowTimesquat > 0.15f)
+            if (nowTimesquat > 0.1f)
             {
                 NAct.squatFlag = false;
                 nowTimesquat = 0;

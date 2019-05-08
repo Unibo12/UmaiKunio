@@ -58,47 +58,26 @@ public class NekketsuInput
         //Input.GetButton Input.GetButtonDown InputGetButtonUp から判断したほうがよいのでは？
 
         #region ジャンプステータス判定
-        if (Input.GetKey("a") || Input.GetKey("joystick button 2")
+
+        if (Input.GetKeyDown("a") || Input.GetKeyDown("joystick button 2")
+                || (Input.GetKeyDown("z") || Input.GetKeyDown("joystick button 0"))
+                && (Input.GetKeyDown("x") || Input.GetKeyDown("joystick button 1")))
+        {
+            NAct.JumpButtonState = (int)JumpButtonPushState.PushMoment;
+        }
+        else if(Input.GetKey("a") || Input.GetKey("joystick button 2")
                 || (Input.GetKey("z") || Input.GetKey("joystick button 0"))
                 && (Input.GetKey("x") || Input.GetKey("joystick button 1")))
         {
-            if (!NAct.jumpFlag
-                && NAct.JumpButtonState == (int)JumpButtonPushState.None
-                && NAct.JumpButtonState != (int)JumpButtonPushState.PushButton)
-            {
-                NAct.JumpButtonState = (int)JumpButtonPushState.PushMoment;
-            }
-            else if (NAct.jumpFlag
-                && NAct.JumpButtonState == (int)JumpButtonPushState.PushMoment
-                && NAct.JumpButtonState != (int)JumpButtonPushState.None)
-            {
-                NAct.JumpButtonState = (int)JumpButtonPushState.PushButton;
-            }
+            NAct.JumpButtonState = (int)JumpButtonPushState.PushButton;
         }
-        else
+        else if (Input.GetKeyUp("a") || Input.GetKeyUp("joystick button 2")
+                || (Input.GetKeyUp("z") || Input.GetKeyUp("joystick button 0"))
+                && (Input.GetKeyUp("x") || Input.GetKeyUp("joystick button 1")))
         {
-            if (NAct.jumpFlag
-                && (NAct.JumpButtonState == (int)JumpButtonPushState.PushButton
-                || NAct.JumpButtonState == (int)JumpButtonPushState.PushMoment))
-            {
-                NAct.JumpButtonState = (int)JumpButtonPushState.ReleaseButton;
-            }
-            // ★ジャンプボタン押しっぱなし対策必要★
-            //else if (ButtonState == (int)JumpButtonPushState.ReleaseButton)
-            //{
-            //    ButtonState = (int)JumpButtonPushState.None;
-            //}
-
-            //if ( NAct.Y <= 0)
-            //{
-            //    if (ButtonState != (int)JumpButtonPushState.PushButton)
-            //    {
-            //        ButtonState = (int)JumpButtonPushState.None;
-            //    }
-            //}
-
-            // ★ジャンプボタン押しっぱなし対策必要★
+            NAct.JumpButtonState = (int)JumpButtonPushState.ReleaseButton;
         }
+
         #endregion
 
         #region 十字キー入力
