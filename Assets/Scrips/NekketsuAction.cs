@@ -25,12 +25,18 @@ public class NekketsuAction : MonoBehaviour
     public bool dashFlag = false;   //走っているか否か
     public bool squatFlag = false;  //しゃがみ状態フラグ
     public bool brakeFlag = false;  //ブレーキフラグ
+
+    public int JumpButtonState = 0; //ジャンプボタン押下ステータス
+    public int XInputState = 0; //疑似Xに対する入力ステータス
+    public int ZInputState = 0; //疑似Zに対する入力ステータス
+
     // *****共通変数*****
 
     Vector3 pos;        // 最終的な描画で使用
     Animator animator;  // アニメ変更用
     private NekketsuMove NDash; //NekketsuDashを呼び出す際に使用
     private NekketsuJump NJump; //NekketsuJumpを呼び出す際に使用
+    private NekketsuInput NInput; //NekketsuInputを呼び出す際に使用
 
     #endregion
 
@@ -42,13 +48,8 @@ public class NekketsuAction : MonoBehaviour
 
         // 生成（コンストラクタ）の引数にNekketsuActionを渡してやる
         NDash = new NekketsuMove(this); 
-        NJump = new NekketsuJump(this); 
-
-        // // 移動処理呼び出し
-        // NDash.UpdateMove();
-
-        // // ジャンプ処理呼び出し
-        // NJump.UpdateJump();
+        NJump = new NekketsuJump(this);
+        NInput = new NekketsuInput(this);
     }
 
     void Update()
@@ -56,6 +57,9 @@ public class NekketsuAction : MonoBehaviour
 
         vx = 0;
         vz = 0;
+
+        // インプット処理呼び出し
+        NInput.InputMain();
 
         // 移動処理呼び出し
         NDash.MoveMain();

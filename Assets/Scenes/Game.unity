@@ -1109,6 +1109,9 @@ MonoBehaviour:
   dashFlag: 0
   squatFlag: 0
   brakeFlag: 0
+  JumpButtonState: 0
+  XInputState: 0
+  ZInputState: 0
 --- !u!82 &1363921162
 AudioSource:
   m_ObjectHideFlags: 0

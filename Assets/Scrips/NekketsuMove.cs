@@ -18,6 +18,32 @@ public class NekketsuMove
         NAct = nekketsuAction;
     }
 
+    #region Enum 十字入力ステータス（疑似X、左右）
+    protected enum XInputState
+    {
+        XNone,           //Buttonを押していない状態
+        XLeftPushMoment,     //Buttonを押した瞬間
+        XLeftPushButton,     //Buttonを押している状態
+        XLeftReleaseButton,  //Buttonを離した瞬間
+        XRightPushMoment,     //Buttonを押した瞬間
+        XRightPushButton,     //Buttonを押している状態
+        XRightReleaseButton,  //Buttonを離した瞬間
+    }
+    #endregion
+
+    #region Enum 十字入力ステータス（疑似Z、手前・奥）
+    protected enum ZInputState
+    {
+        ZNone,           //Buttonを押していない状態
+        ZFrontPushMoment,     //Buttonを押した瞬間
+        ZFrontPushButton,     //Buttonを押している状態
+        ZFrontReleaseButton,  //Buttonを離した瞬間
+        ZBackPushMoment,     //Buttonを押した瞬間
+        ZBackPushButton,     //Buttonを押している状態
+        ZBackReleaseButton,  //Buttonを離した瞬間
+    }
+    #endregion
+
     public void MoveMain()
     {
         if (!NAct.squatFlag)
@@ -25,7 +51,8 @@ public class NekketsuMove
             #region 歩き
 
             // もし、右キーが押されたら
-            if (Input.GetKey("right") || Input.GetAxis("Horizontal") > 0)
+            if (NAct.XInputState == (int)XInputState.XRightPushMoment
+                || NAct.XInputState == (int)XInputState.XRightPushButton)
             {
                 NAct.vx = NAct.speed; // 右に進む移動量を入れる
                 NAct.leftFlag = false;
@@ -35,8 +62,9 @@ public class NekketsuMove
                     NAct.X += NAct.vx;
                 }
             }
-            // もし、左キーが押されたら
-            else if (Input.GetKey("left") || Input.GetAxis("Horizontal") < 0)   //else if でも同時押し対策NG
+            // もし、左キーが押されたら ★else if でもキーボード同時押し対策NG★
+            else if (NAct.XInputState == (int)XInputState.XLeftPushMoment
+                    || NAct.XInputState == (int)XInputState.XLeftPushButton)
             {
                 NAct.vx = -NAct.speed; // 左に進む移動量を入れる
                 NAct.leftFlag = true;
@@ -48,7 +76,8 @@ public class NekketsuMove
             }
 
             // もし、上キーが押されたら
-            if (Input.GetKey("up") || Input.GetAxis("Vertical") > 0)
+            if (NAct.ZInputState == (int)ZInputState.ZBackPushMoment
+                || NAct.ZInputState == (int)ZInputState.ZBackPushButton)
             {
                 NAct.vz = NAct.speed * 0.5f; // 上に進む移動量を入れる(熱血っぽく奥行きは移動量小)
 
@@ -57,7 +86,8 @@ public class NekketsuMove
                     NAct.Z += NAct.vz;
                 }
             }
-            if (Input.GetKey("down") || Input.GetAxis("Vertical") < 0)
+            else if (NAct.ZInputState == (int)ZInputState.ZFrontPushMoment
+                    || NAct.ZInputState == (int)ZInputState.ZFrontPushButton)
             { // もし、下キーが押されたら
                 NAct.vz = -NAct.speed * 0.5f; // 下に進む移動量を入れる(熱血っぽく奥行きは移動量小)
 
@@ -74,8 +104,10 @@ public class NekketsuMove
             if (!NAct.dashFlag)
             {
                 // 非ダッシュ状態で、横移動中か？
-                if ((Input.GetKey("right") || Input.GetAxis("Horizontal") > 0)
-                    || (Input.GetKey("left") || Input.GetAxis("Horizontal") < 0))
+                if ((NAct.XInputState == (int)XInputState.XRightPushMoment
+                    || NAct.XInputState == (int)XInputState.XRightPushButton)
+                    || (NAct.XInputState == (int)XInputState.XLeftPushMoment
+                        || NAct.XInputState == (int)XInputState.XLeftPushButton))
                 {
                     if (!pushMove)
                     {
