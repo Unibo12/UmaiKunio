@@ -111,40 +111,40 @@ void Update()
                 || (Input.GetKey("down") || Input.GetAxis("Vertical") < 0)
                 || dashFlag)
             {
-                animator.Play("UmaGr");
+                animator.Play("Walk");
             }
             else if ((Input.GetKey("z") || Input.GetKey("joystick button 0")))
             {
-                animator.Play("UmaHiji");
+                animator.Play("Hiji");
             }
             else if ((Input.GetKey("x") || Input.GetKey("joystick button 1")))
             {
-                animator.Play("UmaHarite");
+                animator.Play("Dosukoi");
             }
             else if ((Input.GetKey("s") || Input.GetKey("joystick button 3")))
             {
-                animator.Play("UmaThrow");
+                animator.Play("Throw");
             }
             else
             {
-                animator.Play("UmaGrTACHI");
+                animator.Play("Standing");
             }
         }
         else
         {
             if (brakeFlag)
             {
-                animator.Play("UmaBrake");
+                animator.Play("Brake");
             }
 
             if (squatFlag)
             {
-                animator.Play("UmaJumpShagami");
+                animator.Play("Squat");
             }
 
             if (jumpFlag)
             {
-                animator.Play("UmaJump");
+                animator.Play("Jump");
             }
         }
 
