@@ -32,9 +32,9 @@ public class NekketsuAction : MonoBehaviour
     public bool squatFlag = false;  //しゃがみ状態フラグ
     public bool brakeFlag = false;  //ブレーキフラグ
 
-    public NekketsuTypeDefinition.JumpButtonPushState JumpButtonState; //ジャンプボタン押下ステータス
-    public NekketsuTypeDefinition.XInputState XInputState = 0; //疑似Xに対する入力ステータス
-    public NekketsuTypeDefinition.ZInputState ZInputState = 0; //疑似Zに対する入力ステータス
+    public JumpButtonPushState JumpButtonState; //ジャンプボタン押下ステータス
+    public XInputState XInputState = 0; //疑似Xに対する入力ステータス
+    public ZInputState ZInputState = 0; //疑似Zに対する入力ステータス
 
     // *****共通変数*****
 

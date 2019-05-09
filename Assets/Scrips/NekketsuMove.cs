@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using NTD = NekketsuTypeDefinition;
 public class NekketsuMove
 {
     // GameObject GObj; //ゲームオブジェクトそのものが入る変数
@@ -25,8 +24,8 @@ public class NekketsuMove
             #region 歩き
 
             // もし、右キーが押されたら
-            if (NAct.XInputState == NTD.XInputState.XRightPushMoment
-                || NAct.XInputState == NTD.XInputState.XRightPushButton)
+            if (NAct.XInputState == XInputState.XRightPushMoment
+                || NAct.XInputState == XInputState.XRightPushButton)
             {
                 NAct.vx = NAct.speed; // 右に進む移動量を入れる
                 if (!NAct.brakeFlag)
@@ -40,8 +39,8 @@ public class NekketsuMove
                 }
             }
             // もし、左キーが押されたら ★else if でもキーボード同時押し対策NG★
-            else if (NAct.XInputState == NTD.XInputState.XLeftPushMoment
-                    || NAct.XInputState == NTD.XInputState.XLeftPushButton)
+            else if (NAct.XInputState == XInputState.XLeftPushMoment
+                    || NAct.XInputState == XInputState.XLeftPushButton)
             {
                 NAct.vx = -NAct.speed; // 左に進む移動量を入れる
 
@@ -57,8 +56,8 @@ public class NekketsuMove
             }
 
             // もし、上キーが押されたら
-            if (NAct.ZInputState == NTD.ZInputState.ZBackPushMoment
-                || NAct.ZInputState == NTD.ZInputState.ZBackPushButton)
+            if (NAct.ZInputState == ZInputState.ZBackPushMoment
+                || NAct.ZInputState == ZInputState.ZBackPushButton)
             {
                 NAct.vz = NAct.speed * 0.5f; // 上に進む移動量を入れる(熱血っぽく奥行きは移動量小)
 
@@ -67,8 +66,8 @@ public class NekketsuMove
                     NAct.Z += NAct.vz;
                 }
             }
-            else if (NAct.ZInputState == NTD.ZInputState.ZFrontPushMoment
-                    || NAct.ZInputState == NTD.ZInputState.ZFrontPushButton)
+            else if (NAct.ZInputState == ZInputState.ZFrontPushMoment
+                    || NAct.ZInputState == ZInputState.ZFrontPushButton)
             { // もし、下キーが押されたら
                 NAct.vz = -NAct.speed * 0.5f; // 下に進む移動量を入れる(熱血っぽく奥行きは移動量小)
 
@@ -85,10 +84,10 @@ public class NekketsuMove
             if (!NAct.dashFlag)
             {
                 // 非ダッシュ状態で、横移動中か？
-                if ((NAct.XInputState == NTD.XInputState.XRightPushMoment
-                    || NAct.XInputState == NTD.XInputState.XRightPushButton)
-                    || (NAct.XInputState == NTD.XInputState.XLeftPushMoment
-                        || NAct.XInputState == NTD.XInputState.XLeftPushButton))
+                if ((NAct.XInputState == XInputState.XRightPushMoment
+                    || NAct.XInputState == XInputState.XRightPushButton)
+                    || (NAct.XInputState == XInputState.XLeftPushMoment
+                        || NAct.XInputState == XInputState.XLeftPushButton))
                 {
                     if (!pushMove)
                     {

@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using NTD = NekketsuTypeDefinition;
 
 public class NekketsuInput
 {
@@ -24,19 +23,19 @@ public class NekketsuInput
                 || (Input.GetKeyDown("z") || Input.GetKeyDown("joystick button 0"))
                 && (Input.GetKeyDown("x") || Input.GetKeyDown("joystick button 1")))
         {
-            NAct.JumpButtonState = NTD.JumpButtonPushState.PushMoment;
+            NAct.JumpButtonState = JumpButtonPushState.PushMoment;
         }
         else if(Input.GetKey("a") || Input.GetKey("joystick button 2")
                 || (Input.GetKey("z") || Input.GetKey("joystick button 0"))
                 && (Input.GetKey("x") || Input.GetKey("joystick button 1")))
         {
-            NAct.JumpButtonState = NTD.JumpButtonPushState.PushButton;
+            NAct.JumpButtonState = JumpButtonPushState.PushButton;
         }
         else if (Input.GetKeyUp("a") || Input.GetKeyUp("joystick button 2")
                 || (Input.GetKeyUp("z") || Input.GetKeyUp("joystick button 0"))
                 && (Input.GetKeyUp("x") || Input.GetKeyUp("joystick button 1")))
         {
-            NAct.JumpButtonState = NTD.JumpButtonPushState.ReleaseButton;
+            NAct.JumpButtonState = JumpButtonPushState.ReleaseButton;
         }
 
         #endregion
@@ -45,91 +44,91 @@ public class NekketsuInput
 
         if (Input.GetKey("right") || Input.GetAxis("Horizontal") > 0)
         {
-            if (NAct.XInputState == NTD.XInputState.XNone
-                || NAct.XInputState == NTD.XInputState.XLeftPushMoment
-                || NAct.XInputState == NTD.XInputState.XLeftPushButton
-                || NAct.XInputState == NTD.XInputState.XLeftReleaseButton)
+            if (NAct.XInputState == XInputState.XNone
+                || NAct.XInputState == XInputState.XLeftPushMoment
+                || NAct.XInputState == XInputState.XLeftPushButton
+                || NAct.XInputState == XInputState.XLeftReleaseButton)
             {
-                NAct.XInputState = NTD.XInputState.XRightPushMoment;
+                NAct.XInputState = XInputState.XRightPushMoment;
             }
-            else if(NAct.XInputState == NTD.XInputState.XRightPushMoment)
+            else if(NAct.XInputState == XInputState.XRightPushMoment)
             {
-                NAct.XInputState = NTD.XInputState.XRightPushButton;
+                NAct.XInputState = XInputState.XRightPushButton;
             }
         }
         else if (Input.GetKey("left") || Input.GetAxis("Horizontal") < 0)
         {
-            if (NAct.XInputState == NTD.XInputState.XNone
-                || NAct.XInputState == NTD.XInputState.XRightPushMoment
-                || NAct.XInputState == NTD.XInputState.XRightPushButton
-                || NAct.XInputState == NTD.XInputState.XRightReleaseButton)
+            if (NAct.XInputState == XInputState.XNone
+                || NAct.XInputState == XInputState.XRightPushMoment
+                || NAct.XInputState == XInputState.XRightPushButton
+                || NAct.XInputState == XInputState.XRightReleaseButton)
             {
-                NAct.XInputState = NTD.XInputState.XLeftPushMoment;
+                NAct.XInputState = XInputState.XLeftPushMoment;
             }
-            else if (NAct.XInputState == NTD.XInputState.XLeftPushMoment)
+            else if (NAct.XInputState == XInputState.XLeftPushMoment)
             {
-                NAct.XInputState = NTD.XInputState.XLeftPushButton;
+                NAct.XInputState = XInputState.XLeftPushButton;
             }
         }
         else
         {
-            if (NAct.XInputState == NTD.XInputState.XRightPushButton)
+            if (NAct.XInputState == XInputState.XRightPushButton)
             {
-                NAct.XInputState = NTD.XInputState.XRightReleaseButton;
+                NAct.XInputState = XInputState.XRightReleaseButton;
             }
-            else if (NAct.XInputState == NTD.XInputState.XLeftPushButton)
+            else if (NAct.XInputState == XInputState.XLeftPushButton)
             {
-                NAct.XInputState = NTD.XInputState.XLeftReleaseButton;
+                NAct.XInputState = XInputState.XLeftReleaseButton;
             }
-            else if (NAct.XInputState == NTD.XInputState.XRightReleaseButton
-                || NAct.XInputState == NTD.XInputState.XLeftReleaseButton)
+            else if (NAct.XInputState == XInputState.XRightReleaseButton
+                || NAct.XInputState == XInputState.XLeftReleaseButton)
             {
-                NAct.XInputState = NTD.XInputState.XNone;
+                NAct.XInputState = XInputState.XNone;
             }
         }
 
         if (Input.GetKey("up") || Input.GetAxis("Vertical") > 0)
         {
-            if (NAct.ZInputState == NTD.ZInputState.ZNone
-                || NAct.ZInputState == NTD.ZInputState.ZFrontPushMoment
-                || NAct.ZInputState == NTD.ZInputState.ZFrontPushButton
-                || NAct.ZInputState == NTD.ZInputState.ZFrontReleaseButton)
+            if (NAct.ZInputState == ZInputState.ZNone
+                || NAct.ZInputState == ZInputState.ZFrontPushMoment
+                || NAct.ZInputState == ZInputState.ZFrontPushButton
+                || NAct.ZInputState == ZInputState.ZFrontReleaseButton)
             {
-                NAct.ZInputState = NTD.ZInputState.ZBackPushMoment;
+                NAct.ZInputState = ZInputState.ZBackPushMoment;
             }
-            else if (NAct.ZInputState == NTD.ZInputState.ZBackPushMoment)
+            else if (NAct.ZInputState == ZInputState.ZBackPushMoment)
             {
-                NAct.ZInputState = NTD.ZInputState.ZBackPushButton;
+                NAct.ZInputState = ZInputState.ZBackPushButton;
             }
         }
         else if (Input.GetKey("down") || Input.GetAxis("Vertical") < 0)
         {
-            if (NAct.ZInputState == NTD.ZInputState.ZNone
-                || NAct.ZInputState == NTD.ZInputState.ZBackPushMoment
-                || NAct.ZInputState == NTD.ZInputState.ZBackPushButton
-                || NAct.ZInputState == NTD.ZInputState.ZBackReleaseButton)
+            if (NAct.ZInputState == ZInputState.ZNone
+                || NAct.ZInputState == ZInputState.ZBackPushMoment
+                || NAct.ZInputState == ZInputState.ZBackPushButton
+                || NAct.ZInputState == ZInputState.ZBackReleaseButton)
             {
-                NAct.ZInputState = NTD.ZInputState.ZFrontPushMoment;
+                NAct.ZInputState = ZInputState.ZFrontPushMoment;
             }
-            else if (NAct.ZInputState == NTD.ZInputState.ZFrontPushMoment)
+            else if (NAct.ZInputState == ZInputState.ZFrontPushMoment)
             {
-                NAct.ZInputState = NTD.ZInputState.ZFrontPushButton;
+                NAct.ZInputState = ZInputState.ZFrontPushButton;
             }
         }
         else
         {
-            if (NAct.ZInputState == NTD.ZInputState.ZBackPushButton)
+            if (NAct.ZInputState == ZInputState.ZBackPushButton)
             {
-                NAct.ZInputState = NTD.ZInputState.ZBackReleaseButton;
+                NAct.ZInputState = ZInputState.ZBackReleaseButton;
             }
-            else if (NAct.ZInputState == NTD.ZInputState.ZFrontPushButton)
+            else if (NAct.ZInputState == ZInputState.ZFrontPushButton)
             {
-                NAct.ZInputState = NTD.ZInputState.ZFrontReleaseButton;
+                NAct.ZInputState = ZInputState.ZFrontReleaseButton;
             }
-            else if (NAct.ZInputState == NTD.ZInputState.ZBackReleaseButton
-                     || NAct.ZInputState == NTD.ZInputState.ZFrontReleaseButton)
+            else if (NAct.ZInputState == ZInputState.ZBackReleaseButton
+                     || NAct.ZInputState == ZInputState.ZFrontReleaseButton)
             {
-                NAct.ZInputState = NTD.ZInputState.ZNone;
+                NAct.ZInputState = ZInputState.ZNone;
             }
         }
         #endregion
