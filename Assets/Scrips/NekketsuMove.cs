@@ -29,9 +29,12 @@ public class NekketsuMove
                 || NAct.XInputState == NTD.XInputState.XRightPushButton)
             {
                 NAct.vx = NAct.speed; // 右に進む移動量を入れる
-                NAct.leftFlag = false;
+                if (!NAct.brakeFlag)
+                {
+                    NAct.leftFlag = false;
+                }
 
-                if (!NAct.dashFlag && !NAct.jumpFlag)
+                if (!NAct.dashFlag && !NAct.jumpFlag && !NAct.brakeFlag)
                 {
                     NAct.X += NAct.vx;
                 }
@@ -41,9 +44,13 @@ public class NekketsuMove
                     || NAct.XInputState == NTD.XInputState.XLeftPushButton)
             {
                 NAct.vx = -NAct.speed; // 左に進む移動量を入れる
-                NAct.leftFlag = true;
 
-                if (!NAct.dashFlag && !NAct.jumpFlag)
+                if (!NAct.brakeFlag)
+                {
+                    NAct.leftFlag = true;
+                }
+
+                if (!NAct.dashFlag && !NAct.jumpFlag && !NAct.brakeFlag)
                 {
                     NAct.X += NAct.vx;
                 }
@@ -125,45 +132,50 @@ public class NekketsuMove
             else
             {   //ダッシュ済の場合
 
-                // ダッシュ中に逆方向を押した場合
-                if (leftDash != NAct.leftFlag)
+                if (!NAct.brakeFlag)
                 {
-                    if (leftDash)
+                    // ダッシュ中に逆方向を押した場合
+                    if (leftDash != NAct.leftFlag)
                     {
-                        NAct.vx = -NAct.speed; // 左に進む移動量を入れる
-                        NAct.X += NAct.vx * 1.35f;
+                        if (leftDash)
+                        {
+                            NAct.vx = -NAct.speed; // 左に進む移動量を入れる
+                            NAct.X += NAct.vx * 1.35f;
+                        }
+                        else
+                        {
+                            NAct.vx = NAct.speed; // 右に進む移動量を入れる
+                            NAct.X += NAct.vx * 1.35f;
+                        }
+
+                        NAct.dashFlag = false;
+                        pushMove = false;
+                        canDash = false;
+
+                        // ブレーキ状態
+                        if (!NAct.jumpFlag)
+                        {
+                            NAct.brakeFlag = true;
+                        }
                     }
                     else
                     {
-                        NAct.vx = NAct.speed; // 右に進む移動量を入れる
-                        NAct.X += NAct.vx * 1.35f;
-                    }
-
-                    NAct.dashFlag = false;
-                    pushMove = false;
-                    canDash = false;
-
-                    // ブレーキ状態
-                    if (!NAct.jumpFlag)
-                    {
-                        NAct.brakeFlag = true;
-                    }
-                }
-                else
-                {
-                    // ダッシュ中の加速を計算する。
-                    // ダッシュ中は方向キー入力なしで自動で進む。(クロカン・障害ふう)
-                    if (NAct.leftFlag)
-                    {
-                        NAct.vx = -NAct.speed; // 左に進む移動量を入れる
-                        NAct.X += NAct.vx * 1.35f;
-                    }
-                    else
-                    {
-                        NAct.vx = NAct.speed; // 右に進む移動量を入れる
-                        NAct.X += NAct.vx * 1.35f;
+                        // ダッシュ中の加速を計算する。
+                        // ダッシュ中は方向キー入力なしで自動で進む。(クロカン・障害ふう)
+                        if (NAct.leftFlag)
+                        {
+                            NAct.vx = -NAct.speed; // 左に進む移動量を入れる
+                            NAct.X += NAct.vx * 1.35f;
+                        }
+                        else
+                        {
+                            NAct.vx = NAct.speed; // 右に進む移動量を入れる
+                            NAct.X += NAct.vx * 1.35f;
+                        }
                     }
                 }
+
+
             }
 
             // ブレーキ処理
@@ -183,7 +195,7 @@ public class NekketsuMove
                 nowTimebrake += Time.deltaTime;
 
                 // ブレーキ状態解除
-                if (nowTimebrake > 0.25f)
+                if (nowTimebrake > 0.2f)
                 {
                     NAct.brakeFlag = false;
                     nowTimebrake = 0;

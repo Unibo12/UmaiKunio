@@ -24,10 +24,9 @@ public class NekketsuJump
     {
         #region 空中制御
 
-        if (!NAct.squatFlag)
+        if (!NAct.squatFlag && NAct.jumpFlag)
         {
-
-            if (NAct.jumpFlag && !NAct.dashFlag)
+            if (!NAct.dashFlag)
             {
                 // 空中制御 疑似X軸
                 switch (JumpX)
@@ -42,7 +41,7 @@ public class NekketsuJump
                                 if (NAct.XInputState == NTD.XInputState.XRightPushMoment
                                     || NAct.XInputState == NTD.XInputState.XRightPushButton)
                                 {
-                                    NAct.vx = NAct.speed; // 右に進む移動量を入れる
+                                    NAct.vx = +NAct.speed * 0.8f; // 右に進む移動量を入れる
                                     NAct.leftFlag = false;
 
                                     NAct.X += NAct.vx;
@@ -54,7 +53,7 @@ public class NekketsuJump
                                 if (NAct.XInputState == NTD.XInputState.XLeftPushMoment
                                     || NAct.XInputState == NTD.XInputState.XLeftPushButton)
                                 {
-                                    NAct.vx = -NAct.speed; // 左に進む移動量を入れる
+                                    NAct.vx = +-NAct.speed * 0.8f; // 左に進む移動量を入れる
                                     NAct.leftFlag = true;
 
                                     NAct.X += NAct.vx;
@@ -79,7 +78,6 @@ public class NekketsuJump
 
                         break;
 
-
                     case NTD.VectorX.Left:
                         NAct.vx = -NAct.speed; // 左に進む移動量を入れる
                         NAct.X += NAct.vx;
@@ -95,24 +93,24 @@ public class NekketsuJump
                         }
                         break;
                 }
+            }
 
-                // 空中制御 疑似Z軸
-                switch (JumpZ)
-                {
-                    case NTD.VectorZ.None:
-                        //FC・再っぽく、垂直ジャンプからのZ入力は受け付けない　とりあえず。
-                        break;
+            // 空中制御 疑似Z軸
+            switch (JumpZ)
+            {
+                case NTD.VectorZ.None:
+                    //FC・再っぽく、垂直ジャンプからのZ入力は受け付けない　とりあえず。
+                    break;
 
-                    case NTD.VectorZ.Up:
-                        NAct.vz = NAct.speed * 0.4f; // 上に進む移動量を入れる(熱血っぽく奥行きは移動量小)
-                        NAct.Z += NAct.vz;
-                        break;
+                case NTD.VectorZ.Up:
+                    NAct.vz = NAct.speed * 0.4f; // 上に進む移動量を入れる(熱血っぽく奥行きは移動量小)
+                    NAct.Z += NAct.vz;
+                    break;
 
-                    case NTD.VectorZ.Down:
-                        NAct.vz = -NAct.speed * 0.4f; // 下に進む移動量を入れる(熱血っぽく奥行きは移動量小)
-                        NAct.Z += NAct.vz;
-                        break;
-                }
+                case NTD.VectorZ.Down:
+                    NAct.vz = -NAct.speed * 0.4f; // 下に進む移動量を入れる(熱血っぽく奥行きは移動量小)
+                    NAct.Z += NAct.vz;
+                    break;
             }
         }
 
