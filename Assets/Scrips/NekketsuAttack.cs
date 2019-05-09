@@ -1,22 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using NTD = NekketsuTypeDefinition;
 
 public class NekketsuAttack
 {
     int nowAttack = 0; // 現在の攻撃パターン格納変数
-
-    #region Enum 攻撃パターン(とりあえずクロカン障害のみ)
-    protected enum attackPattern
-    {
-        None,
-        DosukoiSide,
-        DosukoiBack,
-        DosukoiFront,
-        Hiji,
-        JumpKick,
-    }
-    #endregion
 
     NekketsuAction NAct; //NekketsuActionが入る変数
     public NekketsuAttack(NekketsuAction nekketsuAction)

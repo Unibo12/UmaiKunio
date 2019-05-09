@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using NTD = NekketsuTypeDefinition;
 
 public class NekketsuJump
 {
@@ -9,66 +10,10 @@ public class NekketsuJump
 
     bool miniJumpFlag = false; // 小ジャンプ
     bool jumpAccelerate = false;    //ジャンプ加速度の計算を行うフラグ
-    int JumpX = 0; // ジャンプの瞬間に入力していた疑似Xの方向(左、右、ニュートラル)
-    int JumpZ = 0; // ジャンプの瞬間に入力していた疑似Zの方向(手前、奥、ニュートラル)
+    NTD.VectorX JumpX = 0; // ジャンプの瞬間に入力していた疑似Xの方向(左、右、ニュートラル)
+    NTD.VectorZ JumpZ = 0; // ジャンプの瞬間に入力していた疑似Zの方向(手前、奥、ニュートラル)
     bool leftJumpFlag = false; // ジャンプの瞬間に向いていた方向。左向きかどうか
     float nowTimesquat = 0f; //しゃがみ状態硬直時間を計測
-
-    #region 列挙体 Enum
-
-    #region Enum ジャンプボタン押下ステータス
-    protected enum JumpButtonPushState
-    {
-        None,           //Buttonを押していない状態
-        PushMoment,     //Buttonを押した瞬間
-        PushButton,     //Buttonを押している状態
-        ReleaseButton,  //Buttonを離した瞬間
-    }
-    #endregion
-
-    #region Enum ジャンプの瞬間のX・Z軸入力方向(空中制御用)
-    protected enum VectorX
-    {
-        None,
-        Left,
-        Right,
-    }
-
-    protected enum VectorZ
-    {
-        None,
-        Up,
-        Down,
-    }
-    #endregion
-
-    #region Enum 十字入力ステータス（疑似X、左右）
-    protected enum XInputState
-    {
-        XNone,           //Buttonを押していない状態
-        XLeftPushMoment,     //Buttonを押した瞬間
-        XLeftPushButton,     //Buttonを押している状態
-        XLeftReleaseButton,  //Buttonを離した瞬間
-        XRightPushMoment,     //Buttonを押した瞬間
-        XRightPushButton,     //Buttonを押している状態
-        XRightReleaseButton,  //Buttonを離した瞬間
-    }
-    #endregion
-
-    #region Enum 十字入力ステータス（疑似Z、手前・奥）
-    protected enum ZInputState
-    {
-        ZNone,           //Buttonを押していない状態
-        ZFrontPushMoment,     //Buttonを押した瞬間
-        ZFrontPushButton,     //Buttonを押している状態
-        ZFrontReleaseButton,  //Buttonを離した瞬間
-        ZBackPushMoment,     //Buttonを押した瞬間
-        ZBackPushButton,     //Buttonを押している状態
-        ZBackReleaseButton,  //Buttonを離した瞬間
-    }
-    #endregion
-
-    #endregion
 
     public NekketsuJump(NekketsuAction nekketsuAction)
     {
@@ -87,15 +32,15 @@ public class NekketsuJump
                 // 空中制御 疑似X軸
                 switch (JumpX)
                 {
-                    case (int)VectorX.None:
+                    case NTD.VectorX.None:
 
-                        if (JumpZ == (int)VectorZ.None)
+                        if (JumpZ == NTD.VectorZ.None)
                         {
                             if (!leftJumpFlag)
                             {
                                 // 右向き時の垂直ジャンプ中に右キーが押されたら
-                                if (NAct.XInputState == (int)XInputState.XRightPushMoment
-                                    || NAct.XInputState == (int)XInputState.XRightPushButton)
+                                if (NAct.XInputState == NTD.XInputState.XRightPushMoment
+                                    || NAct.XInputState == NTD.XInputState.XRightPushButton)
                                 {
                                     NAct.vx = NAct.speed; // 右に進む移動量を入れる
                                     NAct.leftFlag = false;
@@ -106,8 +51,8 @@ public class NekketsuJump
                             else
                             {
                                 // 左向き時の垂直ジャンプ中に左キーが押されたら ★else if でもキーボード同時押し対策NG★
-                                if (NAct.XInputState == (int)XInputState.XLeftPushMoment
-                                    || NAct.XInputState == (int)XInputState.XLeftPushButton)
+                                if (NAct.XInputState == NTD.XInputState.XLeftPushMoment
+                                    || NAct.XInputState == NTD.XInputState.XLeftPushButton)
                                 {
                                     NAct.vx = -NAct.speed; // 左に進む移動量を入れる
                                     NAct.leftFlag = true;
@@ -118,13 +63,13 @@ public class NekketsuJump
                         }
                         break;
 
-                    case (int)VectorX.Right:
+                    case NTD.VectorX.Right:
                         NAct.vx = NAct.speed; // 右に進む移動量を入れる
                         NAct.X += NAct.vx;
 
                         // もし、右空中移動中に、左キーが押されたら  ★else if でもキーボード同時押し対策NG★
-                        if (NAct.XInputState == (int)XInputState.XLeftPushMoment
-                            || NAct.XInputState == (int)XInputState.XLeftPushButton)
+                        if (NAct.XInputState == NTD.XInputState.XLeftPushMoment
+                            || NAct.XInputState == NTD.XInputState.XLeftPushButton)
                         {
                             NAct.vx = -NAct.speed; // 左に進む移動量を入れる
                             NAct.leftFlag = true;
@@ -135,13 +80,13 @@ public class NekketsuJump
                         break;
 
 
-                    case (int)VectorX.Left:
+                    case NTD.VectorX.Left:
                         NAct.vx = -NAct.speed; // 左に進む移動量を入れる
                         NAct.X += NAct.vx;
 
                         // もし、左空中移動中に、右キーが押されたら
-                        if (NAct.XInputState == (int)XInputState.XRightPushMoment
-                            || NAct.XInputState == (int)XInputState.XRightPushButton)
+                        if (NAct.XInputState == NTD.XInputState.XRightPushMoment
+                            || NAct.XInputState == NTD.XInputState.XRightPushButton)
                         {
                             NAct.vx = NAct.speed; // 右に進む移動量を入れる
                             NAct.leftFlag = false;
@@ -154,16 +99,16 @@ public class NekketsuJump
                 // 空中制御 疑似Z軸
                 switch (JumpZ)
                 {
-                    case (int)VectorZ.None:
+                    case NTD.VectorZ.None:
                         //FC・再っぽく、垂直ジャンプからのZ入力は受け付けない　とりあえず。
                         break;
 
-                    case (int)VectorZ.Up:
+                    case NTD.VectorZ.Up:
                         NAct.vz = NAct.speed * 0.4f; // 上に進む移動量を入れる(熱血っぽく奥行きは移動量小)
                         NAct.Z += NAct.vz;
                         break;
 
-                    case (int)VectorZ.Down:
+                    case NTD.VectorZ.Down:
                         NAct.vz = -NAct.speed * 0.4f; // 下に進む移動量を入れる(熱血っぽく奥行きは移動量小)
                         NAct.Z += NAct.vz;
                         break;
@@ -179,7 +124,7 @@ public class NekketsuJump
         {
             // ジャンプした瞬間
             if (!NAct.jumpFlag
-                && NAct.JumpButtonState == (int)JumpButtonPushState.PushMoment)
+                && NAct.JumpButtonState == NTD.JumpButtonPushState.PushMoment)
             {
                 // 着地状態
                 if (NAct.Y <= 0)
@@ -190,37 +135,37 @@ public class NekketsuJump
                     jumpAccelerate = true; // ジャンプ加速度の計算を行う
 
                     // 空中制御用に、ジャンプした瞬間に入力していたキーを覚えておく(X軸)
-                    if (NAct.XInputState == (int)XInputState.XRightPushMoment
-                        || NAct.XInputState == (int)XInputState.XRightPushButton)
+                    if (NAct.XInputState == NTD.XInputState.XRightPushMoment
+                        || NAct.XInputState == NTD.XInputState.XRightPushButton)
                     {
-                        JumpX = (int)VectorX.Right;
+                        JumpX = NTD.VectorX.Right;
                     }
-                    else if (NAct.XInputState == (int)XInputState.XLeftPushMoment
-                            || NAct.XInputState == (int)XInputState.XLeftPushButton)
+                    else if (NAct.XInputState == NTD.XInputState.XLeftPushMoment
+                            || NAct.XInputState == NTD.XInputState.XLeftPushButton)
                     {
-                        JumpX = (int)VectorX.Left;
+                        JumpX = NTD.VectorX.Left;
                     }
                     else
                     {
                         // 垂直ジャンプであれば、向いていた方向を覚えておく。
-                        JumpX = (int)VectorX.None;
+                        JumpX = NTD.VectorX.None;
                         leftJumpFlag = NAct.leftFlag;
                     }
 
                     // 空中制御用に、ジャンプした瞬間に入力していたキーを覚えておく(Z軸)
-                    if (NAct.ZInputState == (int)ZInputState.ZBackPushMoment
-                        || NAct.ZInputState == (int)ZInputState.ZBackPushButton)
+                    if (NAct.ZInputState == NTD.ZInputState.ZBackPushMoment
+                        || NAct.ZInputState == NTD.ZInputState.ZBackPushButton)
                     {
-                        JumpZ = (int)VectorZ.Up;
+                        JumpZ = NTD.VectorZ.Up;
                     }
-                    else if (NAct.ZInputState == (int)ZInputState.ZFrontPushMoment
-                            || NAct.ZInputState == (int)ZInputState.ZFrontPushButton)
+                    else if (NAct.ZInputState == NTD.ZInputState.ZFrontPushMoment
+                            || NAct.ZInputState == NTD.ZInputState.ZFrontPushButton)
                     {
-                        JumpZ = (int)VectorZ.Down;
+                        JumpZ = NTD.VectorZ.Down;
                     }
                     else
                     {
-                        JumpZ = (int)VectorZ.None;
+                        JumpZ = NTD.VectorZ.None;
                     }
                 }
             }
@@ -230,7 +175,7 @@ public class NekketsuJump
             {
                 // ジャンプボタンが離されたかつ、上昇中かつ、小ジャンプフラグが立ってない
                 // 小ジャンプ処理
-                if (NAct.JumpButtonState == (int)JumpButtonPushState.ReleaseButton 
+                if (NAct.JumpButtonState == NTD.JumpButtonPushState.ReleaseButton 
                     && NAct.vy > 0 
                     && !miniJumpFlag)
                 {
@@ -252,7 +197,7 @@ public class NekketsuJump
                     NAct.jumpFlag = false;
 
                     // ★ジャンプボタン押しっぱなし対策必要★
-                    NAct.JumpButtonState = (int)JumpButtonPushState.None;
+                    NAct.JumpButtonState = NTD.JumpButtonPushState.None;
                     // ★ジャンプボタン押しっぱなし対策必要★
 
                     NAct.dashFlag = false; //ダッシュ中であれば、着地時にダッシュ解除
@@ -278,10 +223,10 @@ public class NekketsuJump
             {
                 // ジャンプ時、横移動の初速を考慮
                 if (NAct.jumpFlag &&
-                    (NAct.XInputState == (int)XInputState.XRightPushMoment
-                    || NAct.XInputState == (int)XInputState.XRightPushButton)
-                    || (NAct.XInputState == (int)XInputState.XLeftPushMoment
-                       || NAct.XInputState == (int)XInputState.XLeftPushButton))
+                    (NAct.XInputState == NTD.XInputState.XRightPushMoment
+                    || NAct.XInputState == NTD.XInputState.XRightPushButton)
+                    || (NAct.XInputState == NTD.XInputState.XLeftPushMoment
+                       || NAct.XInputState == NTD.XInputState.XLeftPushButton))
                 {
                     if (NAct.leftFlag)
                     {

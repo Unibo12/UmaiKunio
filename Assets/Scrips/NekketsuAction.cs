@@ -7,6 +7,12 @@ public class NekketsuAction : MonoBehaviour
 {
     #region 変数定義
 
+    Vector3 pos;        // 最終的な描画で使用
+    Animator animator;  // アニメ変更用
+    private NekketsuMove NDash; //NekketsuDashを呼び出す際に使用
+    private NekketsuJump NJump; //NekketsuJumpを呼び出す際に使用
+    private NekketsuInput NInput; //NekketsuInputを呼び出す際に使用
+
     // *****共通変数*****
     public float speed = 0.08f;                 // スピード
     public float Gravity = -0.006f;             // 内部での重力
@@ -26,17 +32,11 @@ public class NekketsuAction : MonoBehaviour
     public bool squatFlag = false;  //しゃがみ状態フラグ
     public bool brakeFlag = false;  //ブレーキフラグ
 
-    public int JumpButtonState = 0; //ジャンプボタン押下ステータス
-    public int XInputState = 0; //疑似Xに対する入力ステータス
-    public int ZInputState = 0; //疑似Zに対する入力ステータス
+    public NekketsuTypeDefinition.JumpButtonPushState JumpButtonState; //ジャンプボタン押下ステータス
+    public NekketsuTypeDefinition.XInputState XInputState = 0; //疑似Xに対する入力ステータス
+    public NekketsuTypeDefinition.ZInputState ZInputState = 0; //疑似Zに対する入力ステータス
 
     // *****共通変数*****
-
-    Vector3 pos;        // 最終的な描画で使用
-    Animator animator;  // アニメ変更用
-    private NekketsuMove NDash; //NekketsuDashを呼び出す際に使用
-    private NekketsuJump NJump; //NekketsuJumpを呼び出す際に使用
-    private NekketsuInput NInput; //NekketsuInputを呼び出す際に使用
 
     #endregion
 
@@ -52,7 +52,7 @@ public class NekketsuAction : MonoBehaviour
         NInput = new NekketsuInput(this);
     }
 
-    void Update()
+void Update()
     { // ずっと行う
 
         vx = 0;
