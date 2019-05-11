@@ -105,12 +105,15 @@ void Update()
         #region アニメ処理(ここでやるかは仮)
         if (!jumpFlag && !squatFlag && !brakeFlag)
         {
-            if ((Input.GetKey("right") || Input.GetAxis("Horizontal") > 0)
-                || (Input.GetKey("left") || Input.GetAxis("Horizontal") < 0)
-                || (Input.GetKey("up") || Input.GetAxis("Vertical") > 0)
-                || (Input.GetKey("down") || Input.GetAxis("Vertical") < 0)
-                || dashFlag)
+            if ((XInputState != XInputState.XNone
+                && XInputState != XInputState.XRightReleaseButton
+                && XInputState != XInputState.XLeftReleaseButton)
+                    ||(ZInputState != ZInputState.ZNone
+                    && ZInputState != ZInputState.ZBackReleaseButton
+                    && ZInputState != ZInputState.ZFrontReleaseButton)
+                        || dashFlag)
             {
+                //左右キー押していないor左右キー離した瞬間ではない
                 animator.Play("Walk");
             }
             else if ((Input.GetKey("z") || Input.GetKey("joystick button 0")))

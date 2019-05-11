@@ -193,9 +193,7 @@ public class NekketsuJump
                 {
                     NAct.jumpFlag = false;
 
-                    // ★ジャンプボタン押しっぱなし対策必要★
-                    NAct.JumpButtonState = JumpButtonPushState.None;
-                    // ★ジャンプボタン押しっぱなし対策必要★
+                    NAct.JumpButtonState = JumpButtonPushState.None; // ジャンプボタン非押下状態とする。
 
                     NAct.dashFlag = false; //ダッシュ中であれば、着地時にダッシュ解除
 

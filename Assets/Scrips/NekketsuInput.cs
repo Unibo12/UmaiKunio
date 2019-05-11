@@ -13,9 +13,7 @@ public class NekketsuInput
 
     public void InputMain()
     {
-
-        //TODO:藤堂
-        //Input.GetButton Input.GetButtonDown InputGetButtonUp から判断したほうがよいのでは？
+        //ボタン入力はInput.GetButton Input.GetButtonDown InputGetButtonUp から判断する。
 
         #region ジャンプステータス判定
 
@@ -42,7 +40,65 @@ public class NekketsuInput
 
         #region 十字キー入力
 
-        if (Input.GetKey("right") || Input.GetAxis("Horizontal") > 0)
+        #region キーボード方向キー
+
+        if (Input.GetKeyDown("right"))
+        {
+            NAct.XInputState = XInputState.XRightPushMoment;
+        }
+        else if (Input.GetKey("right"))
+        {
+            NAct.XInputState = XInputState.XRightPushButton;
+        }
+        else if (Input.GetKeyUp("right"))
+        {
+            NAct.XInputState = XInputState.XRightReleaseButton;
+        }
+
+        if (Input.GetKeyDown("left"))
+        {
+            NAct.XInputState = XInputState.XLeftPushMoment;
+        }
+        else if (Input.GetKey("left"))
+        {
+            NAct.XInputState = XInputState.XLeftPushButton;
+        }
+        else if (Input.GetKeyUp("left"))
+        {
+            NAct.XInputState = XInputState.XLeftReleaseButton;
+        }
+
+        if (Input.GetKeyDown("up"))
+        {
+            NAct.ZInputState = ZInputState.ZBackPushMoment;
+        }
+        else if (Input.GetKey("up"))
+        {
+            NAct.ZInputState = ZInputState.ZBackPushButton;
+        }
+        else if (Input.GetKeyUp("up"))
+        {
+            NAct.ZInputState = ZInputState.ZBackReleaseButton;
+        }
+
+        if (Input.GetKeyDown("down"))
+        {
+            NAct.ZInputState = ZInputState.ZFrontPushMoment;
+        }
+        else if (Input.GetKey("down"))
+        {
+            NAct.ZInputState = ZInputState.ZFrontPushButton;
+        }
+        else if (Input.GetKeyUp("down"))
+        {
+            NAct.ZInputState = ZInputState.ZFrontReleaseButton;
+        }
+
+        #endregion
+
+        #region コントロールスティック ※見直し必要
+
+        if (Input.GetAxis("Horizontal") > 0)
         {
             if (NAct.XInputState == XInputState.XNone
                 || NAct.XInputState == XInputState.XLeftPushMoment
@@ -51,12 +107,12 @@ public class NekketsuInput
             {
                 NAct.XInputState = XInputState.XRightPushMoment;
             }
-            else if(NAct.XInputState == XInputState.XRightPushMoment)
+            else if (NAct.XInputState == XInputState.XRightPushMoment)
             {
                 NAct.XInputState = XInputState.XRightPushButton;
             }
         }
-        else if (Input.GetKey("left") || Input.GetAxis("Horizontal") < 0)
+        else if (Input.GetAxis("Horizontal") < 0)
         {
             if (NAct.XInputState == XInputState.XNone
                 || NAct.XInputState == XInputState.XRightPushMoment
@@ -87,7 +143,7 @@ public class NekketsuInput
             }
         }
 
-        if (Input.GetKey("up") || Input.GetAxis("Vertical") > 0)
+        if (Input.GetAxis("Vertical") > 0)
         {
             if (NAct.ZInputState == ZInputState.ZNone
                 || NAct.ZInputState == ZInputState.ZFrontPushMoment
@@ -101,7 +157,7 @@ public class NekketsuInput
                 NAct.ZInputState = ZInputState.ZBackPushButton;
             }
         }
-        else if (Input.GetKey("down") || Input.GetAxis("Vertical") < 0)
+        else if (Input.GetAxis("Vertical") < 0)
         {
             if (NAct.ZInputState == ZInputState.ZNone
                 || NAct.ZInputState == ZInputState.ZBackPushMoment
@@ -131,6 +187,9 @@ public class NekketsuInput
                 NAct.ZInputState = ZInputState.ZNone;
             }
         }
+
+        #endregion
+
         #endregion
     }
 }
