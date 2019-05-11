@@ -58,7 +58,7 @@ public enum VectorZ
 
 
 #region Enum 攻撃パターン(とりあえずクロカン障害のみ)
-public enum attackPattern
+public enum AttackPattern
 {
     None,
     DosukoiSide,

@@ -12,6 +12,7 @@ public class NekketsuAction : MonoBehaviour
     private NekketsuMove NDash; //NekketsuDashを呼び出す際に使用
     private NekketsuJump NJump; //NekketsuJumpを呼び出す際に使用
     private NekketsuInput NInput; //NekketsuInputを呼び出す際に使用
+    private NekketsuAttack NAttack; //NekketsuAttackを呼び出す際に使用
 
     // *****共通変数*****
     public float speed = 0.08f;                 // スピード
@@ -26,6 +27,8 @@ public class NekketsuAction : MonoBehaviour
     public float vy = 0;   //内部Y値用変数
     public float vz = 0;   //内部Z値用変数
 
+    public Rect hurtBox = new Rect (0,0,0.7f,1.6f);
+
     public bool leftFlag = false; // 左向きかどうか
     public bool jumpFlag = false; // ジャンプして空中にいるか
     public bool dashFlag = false;   //走っているか否か
@@ -35,6 +38,10 @@ public class NekketsuAction : MonoBehaviour
     public JumpButtonPushState JumpButtonState; //ジャンプボタン押下ステータス
     public XInputState XInputState = 0; //疑似Xに対する入力ステータス
     public ZInputState ZInputState = 0; //疑似Zに対する入力ステータス
+    public AttackPattern NowAttack = 0; // 現在の攻撃パターン格納変数
+
+    public float[] hitJudgment = new float[2] { 100, 100 };
+
 
     // *****共通変数*****
 
@@ -50,9 +57,10 @@ public class NekketsuAction : MonoBehaviour
         NDash = new NekketsuMove(this); 
         NJump = new NekketsuJump(this);
         NInput = new NekketsuInput(this);
+        NAttack = new NekketsuAttack(this);
     }
 
-void Update()
+    void Update()
     { // ずっと行う
 
         vx = 0;
@@ -66,6 +74,9 @@ void Update()
 
         // ジャンプ処理呼び出し
         NJump.JumpMain();
+
+        // 攻撃処理呼び出し
+        NAttack.AttackMain();
 
         #region 画面への描画
         // 入力された内部XYZをtransformに設定する。
@@ -130,7 +141,19 @@ void Update()
             }
             else
             {
-                animator.Play("Standing");
+                //animator.Play("Standing");
+
+                //★★★テスト★★★
+                if (false)
+                {
+                    animator.Play("UmaHoge");
+                }
+                else
+                {
+                    animator.Play("Standing");
+
+                }
+
             }
         }
         else
@@ -155,5 +178,11 @@ void Update()
 
     }
 
+    void OnDrawGizmos()
+    {
+        // 喰らい判定のギズモを表示
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireCube(transform.position, new Vector3(hurtBox.width, hurtBox.height, 1));
+    }
 
 }

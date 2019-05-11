@@ -191,5 +191,45 @@ public class NekketsuInput
         #endregion
 
         #endregion
+
+        #region 攻撃処理
+        if (!NAct.jumpFlag && !NAct.squatFlag && !NAct.brakeFlag)
+        {
+            if ((Input.GetKey("z") || Input.GetKey("joystick button 0")))
+            {
+                NAct.NowAttack = AttackPattern.Hiji;
+            }
+            else if ((Input.GetKey("x") || Input.GetKey("joystick button 1")))
+            {
+                NAct.NowAttack = AttackPattern.DosukoiSide;
+            }
+            else if ((Input.GetKey("s") || Input.GetKey("joystick button 3")))
+            {
+                //animator.Play("UmaThrow");
+            }
+            else
+            {
+                NAct.NowAttack = AttackPattern.None;
+            }
+        }
+        else
+        {
+            if (NAct.brakeFlag)
+            {
+                //animator.Play("UmaBrake");
+            }
+
+            if (NAct.squatFlag)
+            {
+                //animator.Play("UmaJumpShagami");
+            }
+
+            if (NAct.jumpFlag)
+            {
+                //animator.Play("UmaJump");
+            }
+        }
+
+        #endregion
     }
 }
