@@ -7,7 +7,7 @@ public class DamageTest : MonoBehaviour
     Vector3 pos;        // 最終的な描画で使用
     Animator animator;  // アニメ変更用
 
-    private NekketsuHurtBox NHurtBox; //NekketsuAttackを呼び出す際に使用
+    private NekketsuHurtBox NHurtBox;
 
     public float X = 0;    //内部での横
     public float Y = 0;    //内部での高さ
@@ -25,6 +25,8 @@ public class DamageTest : MonoBehaviour
         // 最初に行う
         pos = transform.position;
         animator = this.GetComponent<Animator>();
+
+        //NHurtBox = new NekketsuHurtBox(this);
 
     }
 

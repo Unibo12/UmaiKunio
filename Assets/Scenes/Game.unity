@@ -169,6 +169,7 @@ GameObject:
   m_Component:
   - component: {fileID: 260764038}
   - component: {fileID: 260764037}
+  - component: {fileID: 260764039}
   m_Layer: 0
   m_Name: mk2500 (1)
   m_TagString: Untagged
@@ -232,12 +233,33 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 260764036}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.69, y: 0.94, z: 3.12}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.517096, y: 0.517096, z: 0.517096}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &260764039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 260764036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53d6eb11ad337134d9cbc6a24b666601, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  X: 0
+  Y: 0
+  Z: 0
+  hitBoxTEST:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 0
+    height: 0
 --- !u!1 &270831795
 GameObject:
   m_ObjectHideFlags: 0
@@ -1027,6 +1049,7 @@ MonoBehaviour:
   XInputState: 0
   ZInputState: 0
   NowAttack: 0
+  NowDamage: 0
   hitJudgment:
   - 0
   - 0
@@ -1906,6 +1929,7 @@ MonoBehaviour:
   XInputState: 0
   ZInputState: 0
   NowAttack: 0
+  NowDamage: 0
   hitJudgment:
   - 0
   - 0

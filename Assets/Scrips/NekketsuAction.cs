@@ -94,10 +94,11 @@ public class NekketsuAction : MonoBehaviour
         pos.x = X;
         pos.y = Z + Y;
 
+        transform.position = pos;
+
         // 喰らい判定の移動
         hurtBox = new Rect(X, Z, 0.7f, 1.6f);
 
-    transform.position = pos;
         #endregion
 
         #region スプライト反転処理
@@ -125,64 +126,65 @@ public class NekketsuAction : MonoBehaviour
         #endregion
 
         #region アニメ処理(ここでやるかは仮)
-        if (!jumpFlag && !squatFlag && !brakeFlag)
-        {
-            if ((XInputState != XInputState.XNone
-                && XInputState != XInputState.XRightReleaseButton
-                && XInputState != XInputState.XLeftReleaseButton)
-                    ||(ZInputState != ZInputState.ZNone
-                    && ZInputState != ZInputState.ZBackReleaseButton
-                    && ZInputState != ZInputState.ZFrontReleaseButton)
-                        || dashFlag)
-            {
-                //左右キー押していないor左右キー離した瞬間ではない
-                animator.Play("Walk");
-            }
-            else if ((Input.GetKey("z") || Input.GetKey("joystick button 0")))
-            {
-                animator.Play("Hiji");
-            }
-            else if ((Input.GetKey("x") || Input.GetKey("joystick button 1")))
-            {
-                animator.Play("Dosukoi");
-            }
-            else if ((Input.GetKey("s") || Input.GetKey("joystick button 3")))
-            {
-                animator.Play("Throw");
-            }
-            else
-            {
-                //animator.Play("Standing");
 
-                //★★★テスト★★★
-                if (NowDamage == DamagePattern.groggy)
+
+        //★★★当たり判定テスト★★★
+        if (NowDamage == DamagePattern.groggy)
+        {
+            animator.Play("UmaHoge");
+        }
+        else
+        {
+            if (!jumpFlag && !squatFlag && !brakeFlag)
+            {
+                if ((XInputState != XInputState.XNone
+                    && XInputState != XInputState.XRightReleaseButton
+                    && XInputState != XInputState.XLeftReleaseButton)
+                        || (ZInputState != ZInputState.ZNone
+                        && ZInputState != ZInputState.ZBackReleaseButton
+                        && ZInputState != ZInputState.ZFrontReleaseButton)
+                            || dashFlag)
                 {
-                    animator.Play("UmaHoge");
+                    //左右キー押していないor左右キー離した瞬間ではない
+                    animator.Play("Walk");
+                }
+                else if ((Input.GetKey("z") || Input.GetKey("joystick button 0")))
+                {
+                    animator.Play("Hiji");
+                }
+                else if ((Input.GetKey("x") || Input.GetKey("joystick button 1")))
+                {
+                    animator.Play("Dosukoi");
+                }
+                else if ((Input.GetKey("s") || Input.GetKey("joystick button 3")))
+                {
+                    animator.Play("Throw");
                 }
                 else
                 {
                     animator.Play("Standing");
                 }
+            }
+            else
+            {
+                if (brakeFlag)
+                {
+                    animator.Play("Brake");
+                }
 
+                if (squatFlag)
+                {
+                    animator.Play("Squat");
+                }
+
+                if (jumpFlag)
+                {
+                    animator.Play("Jump");
+                }
             }
         }
-        else
-        {
-            if (brakeFlag)
-            {
-                animator.Play("Brake");
-            }
 
-            if (squatFlag)
-            {
-                animator.Play("Squat");
-            }
 
-            if (jumpFlag)
-            {
-                animator.Play("Jump");
-            }
-        }
 
         #endregion
 
