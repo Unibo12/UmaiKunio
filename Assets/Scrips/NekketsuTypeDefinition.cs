@@ -69,6 +69,14 @@ public enum AttackPattern
 }
 #endregion
 
+#region Enum 攻撃喰らいパターン
+public enum DamagePattern
+{
+    None,
+    groggy
+}
+#endregion
+
 #endregion
 
 public class NekketsuTypeDefinition
