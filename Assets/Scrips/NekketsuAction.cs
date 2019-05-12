@@ -131,7 +131,21 @@ public class NekketsuAction : MonoBehaviour
         //★★★当たり判定テスト★★★
         if (NowDamage == DamagePattern.groggy)
         {
-            animator.Play("UmaHoge");
+            if ((XInputState != XInputState.XNone
+                && XInputState != XInputState.XRightReleaseButton
+                && XInputState != XInputState.XLeftReleaseButton)
+                    || (ZInputState != ZInputState.ZNone
+                    && ZInputState != ZInputState.ZBackReleaseButton
+                    && ZInputState != ZInputState.ZFrontReleaseButton)
+                        || dashFlag)
+            {
+                //左右キー押していないor左右キー離した瞬間ではない
+                animator.Play("UmaHogeWalk");
+            }
+            else
+            {
+                animator.Play("UmaHoge");
+            }
         }
         else
         {
