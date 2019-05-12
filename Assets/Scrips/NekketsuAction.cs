@@ -97,7 +97,7 @@ public class NekketsuAction : MonoBehaviour
         transform.position = pos;
 
         // 喰らい判定の移動
-        hurtBox = new Rect(X, Z, 0.7f, 1.6f);
+        hurtBox = new Rect(X, Y, 0.7f, 1.6f);
 
         #endregion
 

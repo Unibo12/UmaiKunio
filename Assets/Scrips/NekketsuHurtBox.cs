@@ -31,8 +31,7 @@ public class NekketsuHurtBox
         //★★★
 
 
-        if (DmgTest.Y == NAct.Y
-            && (DmgTest.Z - 0.4f <= NAct.Z && NAct.Z <= DmgTest.Z + 0.4f)
+        if ((DmgTest.Z - 0.4f <= NAct.Z && NAct.Z <= DmgTest.Z + 0.4f)
             && NAct.hurtBox.Overlaps(DmgTest.hitBoxTEST))
         {
             NAct.NowDamage = DamagePattern.groggy;
