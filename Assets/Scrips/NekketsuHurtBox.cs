@@ -22,14 +22,12 @@ public class NekketsuHurtBox
         //DamageTest.csで指定された座標に移動すると、喰らい判定が発生するテスト
 
         //★★★
-        //ここで正しく取得できていない為、内部の疑似X・Yが0固定になってしまう？
-        //(0,0)以外がうまくいかない。
+        //Nullが入ってしまう。
         if (DmgTest == null)
         {
             DmgTest = new DamageTest(this);
         }
         //★★★
-
 
         if ((DmgTest.Z - 0.4f <= NAct.Z && NAct.Z <= DmgTest.Z + 0.4f)
             && NAct.hurtBox.Overlaps(DmgTest.hitBoxTEST))
@@ -40,6 +38,5 @@ public class NekketsuHurtBox
         {
             NAct.NowDamage = DamagePattern.None;
         }
-
     }
 }

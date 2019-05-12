@@ -251,9 +251,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53d6eb11ad337134d9cbc6a24b666601, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  X: 0
+  X: 2
   Y: 0
-  Z: 0
+  Z: -2
   hitBoxTEST:
     serializedVersion: 2
     x: 0

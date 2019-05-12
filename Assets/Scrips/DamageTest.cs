@@ -9,14 +9,24 @@ public class DamageTest : MonoBehaviour
 
     private NekketsuHurtBox NHurtBox;
 
-    public float X = 0;    //内部での横
-    public float Y = 0;    //内部での高さ
-    public float Z = 0;    //内部での奥行き
+    public float X;    //内部での横
+    public float Y;    //内部での高さ
+    public float Z;    //内部での奥行き
 
-    public Rect hitBoxTEST = new Rect(0, 0, 0.7f, 1.6f);
+    // ここのタイミングで値設定してしまうと、NG？
+    //public Rect hitBoxTEST = new Rect(0, 0, 0.7f, 1.6f);
+    public Rect hitBoxTEST;
 
     public DamageTest(NekketsuHurtBox nekketsuHurtBox)
     {
+        //★★★
+        //下記XYZ変数を変更しても、
+        //インスペクターの変数と同期されない。→描画がずれる問題あり。
+        X = 2;
+        Y = 0;
+        Z = -2;
+        hitBoxTEST = new Rect(X, Y, 0.7f, 1.6f);
+
         NHurtBox = nekketsuHurtBox;
     }
 
@@ -37,11 +47,12 @@ public class DamageTest : MonoBehaviour
 
         // 基本的に、描画位置はジャンプなどのキャラ状態かかわらず、同じように内部座標を描画座標に適用する
         // （適用できるように、必要ならば内部座標の段階で調整をしておく）
+
         pos.x = X;
         pos.y = Z + Y;
 
         // 喰らい判定の移動
-        hitBoxTEST = new Rect(X, Z, 0.7f, 1.6f);
+        hitBoxTEST = new Rect(X, Y, 0.7f, 1.6f);
 
         transform.position = pos;
         #endregion
