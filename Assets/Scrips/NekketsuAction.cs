@@ -252,9 +252,9 @@ public class NekketsuAction : MonoBehaviour
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireCube(transform.position, new Vector3(hurtBox.width, hurtBox.height, 0));
 
-        // 当たり判定のギズモを表示
+        // 攻撃判定のギズモを表示
         Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(transform.position, new Vector3(hitBox.width, hitBox.height, 0));
+        Gizmos.DrawWireCube(new Vector3(hitBox.x , Z + hitBox.y), new Vector3(hitBox.width, hitBox.height, 0));
 
     }
 

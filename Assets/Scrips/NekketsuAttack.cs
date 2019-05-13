@@ -14,32 +14,36 @@ public class NekketsuAttack
 
         //★★★　値は適当なので再度調整すべし
 
+
+        float hitBoxX = NAct.X;
+        float hitBoxY = NAct.Y;
+
         switch (NAct.NowAttack)
         {
             case AttackPattern.Hiji:
                 if (!NAct.leftFlag)
                 {
-                    NAct.hitBox = new Rect(NAct.X - 0.5f, NAct.Y, 0.8f, 0.5f);
+                    NAct.hitBox = new Rect(hitBoxX - 0.5f, hitBoxY, 0.4f, 0.5f);
                 }
                 else
                 {
-                    NAct.hitBox = new Rect(NAct.X + 0.5f, NAct.Y, 0.8f, 0.5f);
+                    NAct.hitBox = new Rect(hitBoxX + 0.5f, hitBoxY, 0.4f, 0.5f);
                 }
                 break;
 
             case AttackPattern.DosukoiSide:
                 if (NAct.leftFlag)
                 {
-                    NAct.hitBox = new Rect(NAct.X - 0.5f, NAct.Y, 0.8f, 0.5f);
+                    NAct.hitBox = new Rect(hitBoxX - 0.5f, hitBoxY + 0.2f, 0.4f, 0.5f);
                 }
                 else
                 {
-                    NAct.hitBox = new Rect(NAct.X + 0.5f, NAct.Y, 0.8f, 0.5f);
+                    NAct.hitBox = new Rect(hitBoxX + 0.5f, hitBoxY + 0.2f, 0.4f, 0.5f);
                 }
                 break;
 
             default:
-                NAct.hitBox = new Rect(NAct.X, NAct.Y, 0, 0);
+                NAct.hitBox = new Rect(hitBoxX, hitBoxY, 0, 0);
                 break;
         }
 
