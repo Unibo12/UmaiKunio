@@ -14,6 +14,7 @@ public class NekketsuAction : MonoBehaviour
     private NekketsuInput NInput; //NekketsuInputを呼び出す際に使用
     private NekketsuAttack NAttack; //NekketsuAttackを呼び出す際に使用
     private NekketsuHurtBox NHurtBox; //
+    private UmaiboSandbag UmaSandbag; //
 
     // *****共通変数*****
     public float speed = 0.08f;                 // スピード
@@ -29,7 +30,7 @@ public class NekketsuAction : MonoBehaviour
     public float vz = 0;   //内部Z値用変数
 
     public Rect hurtBox = new Rect (0,0,0.7f,1.6f);
-    public Rect hittBox = new Rect(0, 0, 0, 0);
+    public Rect hitBox = new Rect(0, 0, 0, 0);
 
     public bool leftFlag = false; // 左向きかどうか
     public bool jumpFlag = false; // ジャンプして空中にいるか
@@ -63,6 +64,7 @@ public class NekketsuAction : MonoBehaviour
         NInput = new NekketsuInput(this);
         NAttack = new NekketsuAttack(this);
         NHurtBox = new NekketsuHurtBox(this);
+        UmaSandbag = new UmaiboSandbag(this);
     }
 
     void Update()
@@ -127,6 +129,8 @@ public class NekketsuAction : MonoBehaviour
 
         #region アニメ処理(ここでやるかは仮)
 
+        // ★TODOまもる
+        // getKeyを使用しないでアニメ処理させる。
 
         //★★★当たり判定テスト★★★
         if (NowDamage == DamagePattern.groggy)
@@ -159,14 +163,42 @@ public class NekketsuAction : MonoBehaviour
                         && ZInputState != ZInputState.ZFrontReleaseButton)
                             || dashFlag)
                 {
-                    //左右キー押していないor左右キー離した瞬間ではない
-                    animator.Play("Walk");
+                    if ((Input.GetKey("z") || Input.GetKey("joystick button 0")))
+                    {
+                            animator.Play("Hiji");
+                    }
+                    else if ((Input.GetKey("x") || Input.GetKey("joystick button 1")))
+                    {
+                        if (ZInputState == ZInputState.ZBackPushMoment
+                            || ZInputState == ZInputState.ZBackPushButton)
+                        {
+                            animator.Play("DosukoiBack");
+                        }
+                        else if (ZInputState == ZInputState.ZFrontPushMoment
+                                 || ZInputState == ZInputState.ZFrontPushButton)
+                        {
+                            animator.Play("DosukoiFront");
+                        }
+                        else
+                        {
+                            animator.Play("Dosukoi");
+                        }
+                    }
+                    else if ((Input.GetKey("s") || Input.GetKey("joystick button 3")))
+                    {
+                        animator.Play("Throw");
+                    }
+                    else
+                    {
+                        //左右キー押していないor左右キー離した瞬間ではない
+                        animator.Play("Walk");
+                    }
                 }
                 else if ((Input.GetKey("z") || Input.GetKey("joystick button 0")))
                 {
                     animator.Play("Hiji");
                 }
-                else if ((Input.GetKey("x") || Input.GetKey("joystick button 1")))
+                else if((Input.GetKey("x") || Input.GetKey("joystick button 1"))) 
                 {
                     animator.Play("Dosukoi");
                 }
@@ -198,17 +230,33 @@ public class NekketsuAction : MonoBehaviour
             }
         }
 
-
-
         #endregion
 
     }
+
+    public List<float> returnXYZ()
+    {
+        return new List<float> { X, Y, Z };
+    }
+
+    public float returnZ()
+    {
+        return Z;
+    }
+
+
 
     void OnDrawGizmos()
     {
         // 喰らい判定のギズモを表示
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireCube(transform.position, new Vector3(hurtBox.width, hurtBox.height, 0));
+
+        // 当たり判定のギズモを表示
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(transform.position, new Vector3(hitBox.width, hitBox.height, 0));
+
     }
+
 
 }

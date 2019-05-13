@@ -2,32 +2,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DamageTest : MonoBehaviour
+public class UmaiboSandbag : MonoBehaviour
 {
+
+    //★デバッグ用の　喰らい判定を持ったオブジェクトにアタッチする
+    //★サンドバッグとしてつかう。
+
+
     Vector3 pos;        // 最終的な描画で使用
     Animator animator;  // アニメ変更用
-
-    private NekketsuHurtBox NHurtBox;
 
     public float X;    //内部での横
     public float Y;    //内部での高さ
     public float Z;    //内部での奥行き
 
-    // ここのタイミングで値設定してしまうと、NG？
-    //public Rect hitBoxTEST = new Rect(0, 0, 0.7f, 1.6f);
-    public Rect hitBoxTEST;
+    public Rect UmaiboSandbagHitBox;
 
-    public DamageTest(NekketsuHurtBox nekketsuHurtBox)
+    GameObject playerObjct;
+    NekketsuAction NActScript;
+
+    NekketsuAction NAct; //NekketsuActionが入る変数
+    public UmaiboSandbag(NekketsuAction nekketsuAction)
     {
-        //★★★
-        //下記XYZ変数を変更しても、
-        //インスペクターの変数と同期されない。→描画がずれる問題あり。
-        X = 2;
-        Y = 0;
-        Z = -2;
-        hitBoxTEST = new Rect(X, Y, 0.7f, 1.6f);
-
-        NHurtBox = nekketsuHurtBox;
+        NAct = nekketsuAction;
     }
 
     void Start()
@@ -36,8 +33,9 @@ public class DamageTest : MonoBehaviour
         pos = transform.position;
         animator = this.GetComponent<Animator>();
 
-        //NHurtBox = new NekketsuHurtBox(this);
 
+        playerObjct = GameObject.Find("Umaibou");
+        NActScript = playerObjct.GetComponent<NekketsuAction>();
     }
 
     void Update()
@@ -52,17 +50,26 @@ public class DamageTest : MonoBehaviour
         pos.y = Z + Y;
 
         // 喰らい判定の移動
-        hitBoxTEST = new Rect(X, Y, 0.7f, 1.6f);
+        UmaiboSandbagHitBox = new Rect(X, Y, 0.7f, 1.6f);
 
         transform.position = pos;
         #endregion
 
+        if ((Z - 0.4f <= NActScript.Z && NActScript.Z <= Z + 0.4f)
+            && NActScript.hitBox.Overlaps(UmaiboSandbagHitBox))
+        {
+            animator.Play("UmaHitFrontWh");
+        }
+        else
+        {
+            animator.Play("UmaStamdingWh");
+        }
     }
 
     void OnDrawGizmos()
     {
         // 喰らい判定のギズモを表示
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(transform.position, new Vector3(hitBoxTEST.width, hitBoxTEST.height, 0));
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireCube(transform.position, new Vector3(UmaiboSandbagHitBox.width, UmaiboSandbagHitBox.height, 0));
     }
 }

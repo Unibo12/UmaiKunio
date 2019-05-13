@@ -11,23 +11,24 @@ public class NekketsuAttack
     }
     public void AttackMain()
     {
-        NAct.hitJudgment[0] = 0;
-        NAct.hitJudgment[1] = 0;
+
+        //★★★　値は適当なので再度調整すべし
 
         switch (NAct.NowAttack)
         {
             case AttackPattern.Hiji:
-                NAct.hitJudgment[0] = NAct.X - 0.5f;
-                NAct.hitJudgment[1] = NAct.Z;
+                NAct.hitBox = new Rect(NAct.X -0.5f, NAct.Y, 0.8f, 0.5f);
                 break;
 
             case AttackPattern.DosukoiSide:
-                NAct.hitJudgment[0] = NAct.X + 0.5f;
-                NAct.hitJudgment[1] = NAct.Z;
+                NAct.hitBox = new Rect(NAct.X +0.5f, NAct.Y, 0.8f, 0.5f);
                 break;
 
             default:
+                NAct.hitBox = new Rect(NAct.X, NAct.Y, 0, 0);
                 break;
         }
+
+
     }
 }
