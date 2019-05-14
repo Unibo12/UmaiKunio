@@ -165,23 +165,53 @@ public class NekketsuAction : MonoBehaviour
                 {
                     if ((Input.GetKey("z") || Input.GetKey("joystick button 0")))
                     {
-                            animator.Play("Hiji");
-                    }
-                    else if ((Input.GetKey("x") || Input.GetKey("joystick button 1")))
-                    {
-                        if (ZInputState == ZInputState.ZBackPushMoment
+                        if ((ZInputState == ZInputState.ZBackPushMoment
                             || ZInputState == ZInputState.ZBackPushButton)
+                            && leftFlag)
                         {
                             animator.Play("DosukoiBack");
                         }
-                        else if (ZInputState == ZInputState.ZFrontPushMoment
+                        else if ((ZInputState == ZInputState.ZFrontPushMoment
                                  || ZInputState == ZInputState.ZFrontPushButton)
+                                 && leftFlag)
                         {
                             animator.Play("DosukoiFront");
                         }
+                        else if (XInputState == XInputState.XLeftPushMoment
+                                 || XInputState == XInputState.XLeftPushButton
+                                 || leftFlag)
+                        {
+                            animator.Play("DosukoiWalk");
+                        }
                         else
                         {
-                            animator.Play("Dosukoi");
+                            animator.Play("HjiWalk");
+                        }
+                    }
+                    else if ((Input.GetKey("x") || Input.GetKey("joystick button 1")))
+                    {
+                        if ((ZInputState == ZInputState.ZBackPushMoment
+                            || ZInputState == ZInputState.ZBackPushButton)
+                            && !leftFlag)
+
+                        {
+                            animator.Play("DosukoiBack");
+                        }
+                        else if ((ZInputState == ZInputState.ZFrontPushMoment
+                                 || ZInputState == ZInputState.ZFrontPushButton)
+                                 && !leftFlag)
+                        {
+                            animator.Play("DosukoiFront");
+                        }
+                        else if (XInputState == XInputState.XRightPushMoment
+                                 || XInputState == XInputState.XRightPushButton
+                                 || !leftFlag)
+                        {
+                            animator.Play("DosukoiWalk");
+                        }
+                        else
+                        {
+                            animator.Play("HjiWalk");
                         }
                     }
                     else if ((Input.GetKey("s") || Input.GetKey("joystick button 3")))
@@ -196,11 +226,26 @@ public class NekketsuAction : MonoBehaviour
                 }
                 else if ((Input.GetKey("z") || Input.GetKey("joystick button 0")))
                 {
-                    animator.Play("Hiji");
+                    if (leftFlag)
+                    {
+                        animator.Play("Dosukoi");
+                    }
+                    else
+                    {
+                        animator.Play("Hiji");
+                    }
+
                 }
                 else if((Input.GetKey("x") || Input.GetKey("joystick button 1"))) 
                 {
-                    animator.Play("Dosukoi");
+                    if (leftFlag)
+                    {
+                        animator.Play("Hiji");
+                    }
+                    else
+                    {
+                        animator.Play("Dosukoi");
+                    }
                 }
                 else if ((Input.GetKey("s") || Input.GetKey("joystick button 3")))
                 {
@@ -234,18 +279,6 @@ public class NekketsuAction : MonoBehaviour
 
     }
 
-    public List<float> returnXYZ()
-    {
-        return new List<float> { X, Y, Z };
-    }
-
-    public float returnZ()
-    {
-        return Z;
-    }
-
-
-
     void OnDrawGizmos()
     {
         // 喰らい判定のギズモを表示
@@ -257,6 +290,4 @@ public class NekketsuAction : MonoBehaviour
         Gizmos.DrawWireCube(new Vector3(hitBox.x , Z + hitBox.y), new Vector3(hitBox.width, hitBox.height, 0));
 
     }
-
-
 }

@@ -21,25 +21,11 @@ public class NekketsuAttack
         switch (NAct.NowAttack)
         {
             case AttackPattern.Hiji:
-                if (!NAct.leftFlag)
-                {
-                    NAct.hitBox = new Rect(hitBoxX - 0.5f, hitBoxY, 0.4f, 0.5f);
-                }
-                else
-                {
-                    NAct.hitBox = new Rect(hitBoxX + 0.5f, hitBoxY, 0.4f, 0.5f);
-                }
+                NAct.hitBox = new Rect(hitBoxX - 0.5f, hitBoxY, 0.4f, 0.5f);
                 break;
 
             case AttackPattern.DosukoiSide:
-                if (NAct.leftFlag)
-                {
-                    NAct.hitBox = new Rect(hitBoxX - 0.5f, hitBoxY + 0.2f, 0.4f, 0.5f);
-                }
-                else
-                {
-                    NAct.hitBox = new Rect(hitBoxX + 0.5f, hitBoxY + 0.2f, 0.4f, 0.5f);
-                }
+                NAct.hitBox = new Rect(hitBoxX + 0.5f, hitBoxY + 0.2f, 0.4f, 0.5f);
                 break;
 
             default:
