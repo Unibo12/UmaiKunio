@@ -1321,7 +1321,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 0.08
   Gravity: -0.006
-  InitalVelocity: 0.19
+  InitalVelocity: 0.188
   nextButtonDownTimeDash: 1
   X: 0
   Y: 0

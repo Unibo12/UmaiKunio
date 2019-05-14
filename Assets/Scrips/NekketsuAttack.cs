@@ -12,20 +12,49 @@ public class NekketsuAttack
     public void AttackMain()
     {
 
-        //★★★　値は適当なので再度調整すべし
-
+        //★値はざっくりなので再度調整すべし
+        //★アニメーションのコマに合わせて当たり判定を変える必要があるので、
+        //★Unityのアニメーションウインドウからやるべし
 
         float hitBoxX = NAct.X;
         float hitBoxY = NAct.Y;
 
         switch (NAct.NowAttack)
         {
+            //ひじうち、コマによって当たり判定が変わるのでこのままだとNG
             case AttackPattern.Hiji:
-                NAct.hitBox = new Rect(hitBoxX - 0.5f, hitBoxY, 0.4f, 0.5f);
+                if (NAct.leftFlag)
+                {
+                    NAct.hitBox = new Rect(hitBoxX + 0.5f, hitBoxY, 0.4f, 0.5f);
+                }
+                else
+                {
+                    NAct.hitBox = new Rect(hitBoxX - 0.5f, hitBoxY, 0.4f, 0.5f);
+                }
                 break;
 
+            //どすこい、コマによって当たり判定が変わるのでこのままだとNG
             case AttackPattern.DosukoiSide:
-                NAct.hitBox = new Rect(hitBoxX + 0.5f, hitBoxY + 0.2f, 0.4f, 0.5f);
+                if (NAct.leftFlag)
+                {
+                    NAct.hitBox = new Rect(hitBoxX - 0.5f, hitBoxY + 0.2f, 0.4f, 0.5f);
+                }
+                else
+                {
+                    NAct.hitBox = new Rect(hitBoxX + 0.5f, hitBoxY + 0.2f, 0.4f, 0.5f);
+                }
+                break;
+
+            //JK、当たり判定は変わらないはずなのでこれでOK？
+            case AttackPattern.JumpKick:
+                if (NAct.leftFlag)
+                {
+                    NAct.hitBox = new Rect(hitBoxX - 0.2f, hitBoxY - 0.65f, 0.8f, 0.4f);
+                }
+                else
+                {
+                    NAct.hitBox = new Rect(hitBoxX + 0.2f, hitBoxY - 0.65f, 0.8f, 0.4f);
+                }
                 break;
 
             default:

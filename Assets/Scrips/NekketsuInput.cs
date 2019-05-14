@@ -193,15 +193,43 @@ public class NekketsuInput
         #endregion
 
         #region 攻撃処理
-        if (!NAct.jumpFlag && !NAct.squatFlag && !NAct.brakeFlag)
+        if (!NAct.squatFlag && !NAct.brakeFlag)
         {
             if ((Input.GetKey("z") || Input.GetKey("joystick button 0")))
             {
-                NAct.NowAttack = AttackPattern.Hiji;
+                if (NAct.leftFlag)
+                {
+                    NAct.NowAttack = AttackPattern.DosukoiSide;
+                }
+                else
+                {
+                    if (NAct.jumpFlag)
+                    {
+                        NAct.NowAttack = AttackPattern.JumpKick;
+                    }
+                    else
+                    {
+                        NAct.NowAttack = AttackPattern.Hiji;
+                    }
+                }
             }
             else if ((Input.GetKey("x") || Input.GetKey("joystick button 1")))
             {
-                NAct.NowAttack = AttackPattern.DosukoiSide;
+                if (NAct.leftFlag)
+                {
+                    if (NAct.jumpFlag)
+                    {
+                        NAct.NowAttack = AttackPattern.JumpKick;
+                    }
+                    else
+                    {
+                        NAct.NowAttack = AttackPattern.Hiji;
+                    }
+                }
+                else
+                {
+                    NAct.NowAttack = AttackPattern.DosukoiSide;
+                }
             }
             else if ((Input.GetKey("s") || Input.GetKey("joystick button 3")))
             {

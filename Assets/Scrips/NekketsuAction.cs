@@ -19,7 +19,7 @@ public class NekketsuAction : MonoBehaviour
     // *****共通変数*****
     public float speed = 0.08f;                 // スピード
     public float Gravity = -0.006f;             // 内部での重力
-    public float InitalVelocity = 0.19f;        // 内部での初速
+    public float InitalVelocity = 0.188f;        // 内部での初速
     public float nextButtonDownTimeDash = 1f;   // ダッシュを受け付ける時間
 
     public float X = 0;    //内部での横
@@ -130,7 +130,8 @@ public class NekketsuAction : MonoBehaviour
         #region アニメ処理(ここでやるかは仮)
 
         // ★TODOまもる
-        // getKeyを使用しないでアニメ処理させる。
+        // ①getKeyを使用しないでアニメ処理させる。
+        // ②Unityのアニメーションからスクリプト呼び出しをやってみる。
 
         //★★★当たり判定テスト★★★
         if (NowDamage == DamagePattern.groggy)
@@ -153,65 +154,116 @@ public class NekketsuAction : MonoBehaviour
         }
         else
         {
-            if (!jumpFlag && !squatFlag && !brakeFlag)
+            if (!squatFlag && !brakeFlag)
             {
-                if ((XInputState != XInputState.XNone
-                    && XInputState != XInputState.XRightReleaseButton
-                    && XInputState != XInputState.XLeftReleaseButton)
-                        || (ZInputState != ZInputState.ZNone
-                        && ZInputState != ZInputState.ZBackReleaseButton
-                        && ZInputState != ZInputState.ZFrontReleaseButton)
-                            || dashFlag)
+
+                if (jumpFlag)
                 {
-                    if ((Input.GetKey("z") || Input.GetKey("joystick button 0")))
+                    if (NowAttack == AttackPattern.JumpKick)
                     {
-                        if ((ZInputState == ZInputState.ZBackPushMoment
-                            || ZInputState == ZInputState.ZBackPushButton)
-                            && leftFlag)
+                        animator.Play("Brake");
+                    }
+                    else if(NowAttack == AttackPattern.DosukoiSide)
+                    {
+                        animator.Play("Dosukoi");
+                    }
+                    else
+                    {
+                        animator.Play("Jump");
+                    }
+                }
+                else
+                {
+                    if ((XInputState != XInputState.XNone
+                        && XInputState != XInputState.XRightReleaseButton
+                        && XInputState != XInputState.XLeftReleaseButton)
+                            || (ZInputState != ZInputState.ZNone
+                            && ZInputState != ZInputState.ZBackReleaseButton
+                            && ZInputState != ZInputState.ZFrontReleaseButton)
+                                || dashFlag)
+                    {
+                        if ((Input.GetKey("z") || Input.GetKey("joystick button 0")))
                         {
-                            animator.Play("DosukoiBack");
+                            if ((ZInputState == ZInputState.ZBackPushMoment
+                                || ZInputState == ZInputState.ZBackPushButton)
+                                && leftFlag)
+                            {
+                                animator.Play("DosukoiBack");
+                            }
+                            else if ((ZInputState == ZInputState.ZFrontPushMoment
+                                     || ZInputState == ZInputState.ZFrontPushButton)
+                                     && leftFlag)
+                            {
+                                animator.Play("DosukoiFront");
+                            }
+                            else if (XInputState == XInputState.XLeftPushMoment
+                                     || XInputState == XInputState.XLeftPushButton
+                                     || leftFlag)
+                            {
+                                animator.Play("DosukoiWalk");
+                            }
+                            else
+                            {
+                                animator.Play("HjiWalk");
+                            }
                         }
-                        else if ((ZInputState == ZInputState.ZFrontPushMoment
-                                 || ZInputState == ZInputState.ZFrontPushButton)
-                                 && leftFlag)
+                        else if ((Input.GetKey("x") || Input.GetKey("joystick button 1")))
                         {
-                            animator.Play("DosukoiFront");
+                            if ((ZInputState == ZInputState.ZBackPushMoment
+                                || ZInputState == ZInputState.ZBackPushButton)
+                                && !leftFlag)
+
+                            {
+                                animator.Play("DosukoiBack");
+                            }
+                            else if ((ZInputState == ZInputState.ZFrontPushMoment
+                                     || ZInputState == ZInputState.ZFrontPushButton)
+                                     && !leftFlag)
+                            {
+                                animator.Play("DosukoiFront");
+                            }
+                            else if (XInputState == XInputState.XRightPushMoment
+                                     || XInputState == XInputState.XRightPushButton
+                                     || !leftFlag)
+                            {
+                                animator.Play("DosukoiWalk");
+                            }
+                            else
+                            {
+                                animator.Play("HjiWalk");
+                            }
                         }
-                        else if (XInputState == XInputState.XLeftPushMoment
-                                 || XInputState == XInputState.XLeftPushButton
-                                 || leftFlag)
+                        else if ((Input.GetKey("s") || Input.GetKey("joystick button 3")))
                         {
-                            animator.Play("DosukoiWalk");
+                            animator.Play("Throw");
                         }
                         else
                         {
-                            animator.Play("HjiWalk");
+                            //左右キー押していないor左右キー離した瞬間ではない
+                            animator.Play("Walk");
                         }
+                    }
+                    else if ((Input.GetKey("z") || Input.GetKey("joystick button 0")))
+                    {
+                        if (leftFlag)
+                        {
+                            animator.Play("Dosukoi");
+                        }
+                        else
+                        {
+                            animator.Play("Hiji");
+                        }
+
                     }
                     else if ((Input.GetKey("x") || Input.GetKey("joystick button 1")))
                     {
-                        if ((ZInputState == ZInputState.ZBackPushMoment
-                            || ZInputState == ZInputState.ZBackPushButton)
-                            && !leftFlag)
-
+                        if (leftFlag)
                         {
-                            animator.Play("DosukoiBack");
-                        }
-                        else if ((ZInputState == ZInputState.ZFrontPushMoment
-                                 || ZInputState == ZInputState.ZFrontPushButton)
-                                 && !leftFlag)
-                        {
-                            animator.Play("DosukoiFront");
-                        }
-                        else if (XInputState == XInputState.XRightPushMoment
-                                 || XInputState == XInputState.XRightPushButton
-                                 || !leftFlag)
-                        {
-                            animator.Play("DosukoiWalk");
+                            animator.Play("Hiji");
                         }
                         else
                         {
-                            animator.Play("HjiWalk");
+                            animator.Play("Dosukoi");
                         }
                     }
                     else if ((Input.GetKey("s") || Input.GetKey("joystick button 3")))
@@ -220,40 +272,8 @@ public class NekketsuAction : MonoBehaviour
                     }
                     else
                     {
-                        //左右キー押していないor左右キー離した瞬間ではない
-                        animator.Play("Walk");
+                        animator.Play("Standing");
                     }
-                }
-                else if ((Input.GetKey("z") || Input.GetKey("joystick button 0")))
-                {
-                    if (leftFlag)
-                    {
-                        animator.Play("Dosukoi");
-                    }
-                    else
-                    {
-                        animator.Play("Hiji");
-                    }
-
-                }
-                else if((Input.GetKey("x") || Input.GetKey("joystick button 1"))) 
-                {
-                    if (leftFlag)
-                    {
-                        animator.Play("Hiji");
-                    }
-                    else
-                    {
-                        animator.Play("Dosukoi");
-                    }
-                }
-                else if ((Input.GetKey("s") || Input.GetKey("joystick button 3")))
-                {
-                    animator.Play("Throw");
-                }
-                else
-                {
-                    animator.Play("Standing");
                 }
             }
             else
@@ -266,11 +286,6 @@ public class NekketsuAction : MonoBehaviour
                 if (squatFlag)
                 {
                     animator.Play("Squat");
-                }
-
-                if (jumpFlag)
-                {
-                    animator.Play("Jump");
                 }
             }
         }
