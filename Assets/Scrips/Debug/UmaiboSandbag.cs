@@ -19,7 +19,7 @@ public class UmaiboSandbag : MonoBehaviour
     public Rect UmaiboSandbagHitBox;
 
     GameObject playerObjct;
-    NekketsuAction NActScript;
+    NekketsuManager Nmng;
 
     NekketsuAction NAct; //NekketsuActionが入る変数
     public UmaiboSandbag(NekketsuAction nekketsuAction)
@@ -33,9 +33,11 @@ public class UmaiboSandbag : MonoBehaviour
         pos = transform.position;
         animator = this.GetComponent<Animator>();
 
+        //Nmng = new NekketsuManager(this);
 
-        playerObjct = GameObject.Find("Umaibou");
-        NActScript = playerObjct.GetComponent<NekketsuAction>();
+        playerObjct = GameObject.Find("NekketsuManager");
+        Nmng = playerObjct.GetComponent<NekketsuManager>();
+
     }
 
     void Update()
@@ -55,10 +57,22 @@ public class UmaiboSandbag : MonoBehaviour
         transform.position = pos;
         #endregion
 
-        if ((Z - 0.4f <= NActScript.Z && NActScript.Z <= Z + 0.4f)
-            && NActScript.hitBox.Overlaps(UmaiboSandbagHitBox))
+
+        // どすこい奥手前は、Z -0.4で処理できない。今後のためにも改良すべし
+        if ((Z - 0.4f <= Nmng.Umaibou.Z && Nmng.Umaibou.Z <= Z + 0.4f)
+            && Nmng.Umaibou.hitBox.Overlaps(UmaiboSandbagHitBox))
         {
             animator.Play("UmaHitFrontWh");
+
+            // ノックバックもどき仮
+            if (UmaiboSandbagHitBox.x < Nmng.Umaibou.hitBox.x)
+            {
+                X -= 0.01f;
+            }
+            else
+            {
+                X += 0.01f;
+            }
         }
         else
         {
