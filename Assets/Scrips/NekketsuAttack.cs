@@ -61,7 +61,5 @@ public class NekketsuAttack
                 NAct.hitBox = new Rect(hitBoxX, hitBoxY, 0, 0);
                 break;
         }
-
-
     }
 }

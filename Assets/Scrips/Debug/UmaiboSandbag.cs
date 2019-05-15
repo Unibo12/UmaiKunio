@@ -8,7 +8,6 @@ public class UmaiboSandbag : MonoBehaviour
     //★デバッグ用の　喰らい判定を持ったオブジェクトにアタッチする
     //★サンドバッグとしてつかう。
 
-
     Vector3 pos;        // 最終的な描画で使用
     Animator animator;  // アニメ変更用
 
@@ -42,6 +41,9 @@ public class UmaiboSandbag : MonoBehaviour
 
     void Update()
     {
+        Vector3 scale = transform.localScale;
+
+
         #region 画面への描画
         // 入力された内部XYZをtransformに設定する。
 
@@ -57,7 +59,6 @@ public class UmaiboSandbag : MonoBehaviour
         transform.position = pos;
         #endregion
 
-
         // どすこい奥手前は、Z -0.4で処理できない。今後のためにも改良すべし
         if ((Z - 0.4f <= Nmng.Umaibou.Z && Nmng.Umaibou.Z <= Z + 0.4f)
             && Nmng.Umaibou.hitBox.Overlaps(UmaiboSandbagHitBox))
@@ -68,11 +69,15 @@ public class UmaiboSandbag : MonoBehaviour
             if (UmaiboSandbagHitBox.x < Nmng.Umaibou.hitBox.x)
             {
                 X -= 0.01f;
+                scale.x = 1; // そのまま（右向き）
             }
             else
             {
                 X += 0.01f;
+                scale.x = -1; // 反転する（左向き）
             }
+
+            transform.localScale = scale;
         }
         else
         {

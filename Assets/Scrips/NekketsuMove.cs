@@ -111,7 +111,7 @@ public class NekketsuMove
                 {
                     // 非ダッシュ状態で、ダッシュ準備済か？
                     // 1度左右キーが押された状態で、ダッシュ受付時間内にもう一度左右キーが押された時
-                    if (pushMove)
+                    if (pushMove && !NAct.brakeFlag)
                     {
                         //　時間計測
                         nowTimeDash += Time.deltaTime;
