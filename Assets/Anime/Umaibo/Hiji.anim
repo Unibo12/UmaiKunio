@@ -70,9 +70,18 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0
-    functionName: 
+    functionName: Hiji
     data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
+    objectReferenceParameter: {fileID: 11500000, guid: c2180855117551649aac4b5b60a839e5,
+      type: 3}
+    floatParameter: 1
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.14285715
+    functionName: Hiji
+    data: 
+    objectReferenceParameter: {fileID: 11500000, guid: c2180855117551649aac4b5b60a839e5,
+      type: 3}
+    floatParameter: 2
     intParameter: 0
     messageOptions: 0

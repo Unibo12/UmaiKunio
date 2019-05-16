@@ -12,7 +12,6 @@ public class NekketsuAction : MonoBehaviour
     private NekketsuMove NDash; //NekketsuDashを呼び出す際に使用
     private NekketsuJump NJump; //NekketsuJumpを呼び出す際に使用
     private NekketsuInput NInput; //NekketsuInputを呼び出す際に使用
-    private NekketsuAttack NAttack; //NekketsuAttackを呼び出す際に使用
     private NekketsuHurtBox NHurtBox; //
     private UmaiboSandbag UmaSandbag; //
 
@@ -62,7 +61,6 @@ public class NekketsuAction : MonoBehaviour
         NDash = new NekketsuMove(this); 
         NJump = new NekketsuJump(this);
         NInput = new NekketsuInput(this);
-        NAttack = new NekketsuAttack(this);
         NHurtBox = new NekketsuHurtBox(this);
         UmaSandbag = new UmaiboSandbag(this);
     }
@@ -81,9 +79,6 @@ public class NekketsuAction : MonoBehaviour
 
         // ジャンプ処理呼び出し
         NJump.JumpMain();
-
-        // 攻撃処理呼び出し
-        NAttack.AttackMain();
 
         // 攻撃喰らい判定
         NHurtBox.HurtBoxMain();
@@ -161,7 +156,7 @@ public class NekketsuAction : MonoBehaviour
                 {
                     if (NowAttack == AttackPattern.JumpKick)
                     {
-                        animator.Play("Brake");
+                        animator.Play("JumpKick");
                     }
                     else if(NowAttack == AttackPattern.DosukoiSide)
                     {
@@ -291,18 +286,6 @@ public class NekketsuAction : MonoBehaviour
         }
 
         #endregion
-
-    }
-
-    void OnDrawGizmos()
-    {
-        // 喰らい判定のギズモを表示
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireCube(transform.position, new Vector3(hurtBox.width, hurtBox.height, 0));
-
-        // 攻撃判定のギズモを表示
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(new Vector3(hitBox.x , Z + hitBox.y), new Vector3(hitBox.width, hitBox.height, 0));
 
     }
 }

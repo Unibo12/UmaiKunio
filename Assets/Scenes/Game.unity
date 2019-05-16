@@ -1274,6 +1274,7 @@ GameObject:
   - component: {fileID: 820763014}
   - component: {fileID: 820763015}
   - component: {fileID: 820763013}
+  - component: {fileID: 820763016}
   m_Layer: 0
   m_Name: Umaibou
   m_TagString: Untagged
@@ -1440,6 +1441,18 @@ MonoBehaviour:
   throwX: 4
   throwY: 8
   offsetY: 1
+--- !u!114 &820763016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 820763009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2180855117551649aac4b5b60a839e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &945995172
 GameObject:
   m_ObjectHideFlags: 0
@@ -3319,7 +3332,7 @@ GameObject:
   - component: {fileID: 2094875585}
   - component: {fileID: 2094875584}
   - component: {fileID: 2094875587}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
