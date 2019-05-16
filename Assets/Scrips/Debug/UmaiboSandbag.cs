@@ -20,11 +20,10 @@ public class UmaiboSandbag : MonoBehaviour
     GameObject playerObjct;
     NekketsuManager Nmng;
 
-    NekketsuAction NAct; //NekketsuActionが入る変数
-    public UmaiboSandbag(NekketsuAction nekketsuAction)
-    {
-        NAct = nekketsuAction;
-    }
+    public AudioClip audioClip1;
+    public AudioClip audioClip2;
+    public AudioClip audioClip3;
+    private AudioSource audioSource;
 
     void Start()
     {
@@ -36,6 +35,8 @@ public class UmaiboSandbag : MonoBehaviour
 
         playerObjct = GameObject.Find("NekketsuManager");
         Nmng = playerObjct.GetComponent<NekketsuManager>();
+
+        audioSource = gameObject.GetComponent<AudioSource>();
 
     }
 
@@ -70,6 +71,12 @@ public class UmaiboSandbag : MonoBehaviour
             {
                 X -= 0.01f;
                 scale.x = 1; // そのまま（右向き）
+
+                //うるさい！
+                //audioSource.clip = audioClip1;
+                //audioSource.Play();
+                //audioSource.Play();
+
             }
             else
             {

@@ -7,11 +7,18 @@ public class NekketsuAttack : MonoBehaviour
     GameObject playerObjct;
     NekketsuManager Nmng;
 
+    public AudioClip audioClip1;
+    public AudioClip audioClip2;
+    public AudioClip audioClip3;
+    private AudioSource audioSource;
+
     // Start is called before the first frame update
     void Start()
     {
         playerObjct = GameObject.Find("NekketsuManager");
         Nmng = playerObjct.GetComponent<NekketsuManager>();
+
+        audioSource = gameObject.GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -40,12 +47,82 @@ public class NekketsuAttack : MonoBehaviour
         switch (timing)
         {
             case 1:
-                Nmng.Umaibou.hitBox = new Rect(hitBoxX, hitBoxY, 0, 0);
+                Nmng.Umaibou.hitBox
+                    = new Rect(hitBoxX + (0.6f * leftMinusVector),
+                               hitBoxY + 0.2f,
+                               0.6f, 0.5f);
+
+                audioSource.clip = audioClip1;
+                audioSource.Play();
                 break;
 
             case 2:
                 Nmng.Umaibou.hitBox
                     = new Rect(hitBoxX + (0.6f * leftMinusVector),
+                               hitBoxY + 0.2f,
+                               0.6f, 0.5f);
+                break;
+
+            default:
+                break;
+        }
+
+    }
+
+    void DosukoiBack(float timing)
+    {
+        float hitBoxX = Nmng.Umaibou.X;
+        float hitBoxY = Nmng.Umaibou.Y;
+        // 左方向の場合はマイナス値とする。
+        float leftMinusVector = (Nmng.Umaibou.leftFlag) ? -1 : 1;
+
+        switch (timing)
+        {
+            case 1:
+                Nmng.Umaibou.hitBox
+                    = new Rect(hitBoxX + (0.3f * leftMinusVector),
+                               hitBoxY + 0.2f,
+                               0.4f, 0.5f);
+
+                audioSource.clip = audioClip1;
+                audioSource.Play();
+                break;
+
+            case 2:
+                Nmng.Umaibou.hitBox
+                    = new Rect(hitBoxX + (0.3f * leftMinusVector),
+                               hitBoxY + 0.2f,
+                               0.4f, 0.5f);
+                break;
+
+            default:
+                break;
+        }
+
+    }
+
+    void DosukoiFront(float timing)
+    {
+        float hitBoxX = Nmng.Umaibou.X;
+        float hitBoxY = Nmng.Umaibou.Y;
+        // 左方向の場合はマイナス値とする。
+        float leftMinusVector = (Nmng.Umaibou.leftFlag) ? -1 : 1;
+
+        switch (timing)
+        {
+            case 1:
+                Nmng.Umaibou.hitBox
+                    = new Rect(hitBoxX + (0.1f * leftMinusVector),
+                               hitBoxY + 0.2f,
+                               0.6f, 0.5f);
+
+                audioSource.clip = audioClip1;
+                audioSource.Play();
+                break;
+
+            case 2:
+                Nmng.Umaibou.hitBox
+                    = new Rect(hitBoxX + (0.1f * leftMinusVector),
                                hitBoxY + 0.2f,
                                0.6f, 0.5f);
                 break;
@@ -67,29 +144,24 @@ public class NekketsuAttack : MonoBehaviour
         {
             case 1:
                 Nmng.Umaibou.hitBox =
-                    new Rect(hitBoxX + (0.4f * RightMinusVector),
-                             hitBoxY,
+                    new Rect(hitBoxX + (0.6f * RightMinusVector),
+                             hitBoxY + 0.2f,
                              0.4f, 0.4f);
+
+                audioSource.clip = audioClip1;
+                audioSource.Play();
+
                 break;
 
             case 2:
                 Nmng.Umaibou.hitBox =
-                    new Rect(hitBoxX + (0.4f * RightMinusVector),
-                             hitBoxY,
+                    new Rect(hitBoxX + (0.6f * RightMinusVector),
+                             hitBoxY + 0.2f,
                              0.4f, 0.4f);
                 break;
 
             default:
                 break;
-        }
-
-        if (Nmng.Umaibou.leftFlag)
-        {
-            Nmng.Umaibou.hitBox = new Rect(hitBoxX + 0.5f, hitBoxY, 0.4f, 0.5f);
-        }
-        else
-        {
-            Nmng.Umaibou.hitBox = new Rect(hitBoxX - 0.5f, hitBoxY, 0.4f, 0.5f);
         }
     }
 
@@ -108,6 +180,10 @@ public class NekketsuAttack : MonoBehaviour
                     new Rect(hitBoxX + ( 0.2f * leftMinusVector),
                              hitBoxY - 0.65f,
                              0.8f, 0.4f);
+
+                audioSource.clip = audioClip1;
+                audioSource.Play();
+
                 break;
 
             default:
@@ -115,15 +191,5 @@ public class NekketsuAttack : MonoBehaviour
         }
     }
 
-    void OnDrawGizmos()
-    {
-        // 喰らい判定のギズモを表示
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireCube(transform.position, new Vector3(Nmng.Umaibou.hurtBox.width, Nmng.Umaibou.hurtBox.height, 0));
 
-        // 攻撃判定のギズモを表示
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(new Vector3(Nmng.Umaibou.hitBox.x, Nmng.Umaibou.Z + Nmng.Umaibou.hitBox.y), new Vector3(Nmng.Umaibou.hitBox.width, Nmng.Umaibou.hitBox.height, 0));
-
-    }
 }

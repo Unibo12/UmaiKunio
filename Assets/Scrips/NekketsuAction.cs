@@ -43,9 +43,10 @@ public class NekketsuAction : MonoBehaviour
     public AttackPattern NowAttack = 0; // 現在の攻撃パターン格納変数
     public DamagePattern NowDamage = 0; // 現在の攻撃喰らいパターン格納変数
 
-
-    public float[] hitJudgment = new float[2] { 100, 100 };
-
+    public AudioClip Brake;
+    public AudioClip Jump;
+    public AudioClip audioClip3;
+    private AudioSource audioSource;
 
     // *****共通変数*****
 
@@ -56,13 +57,13 @@ public class NekketsuAction : MonoBehaviour
         // 最初に行う
         pos = transform.position;
         animator = this.GetComponent<Animator>();
+        audioSource = gameObject.GetComponent<AudioSource>();
 
         // 生成（コンストラクタ）の引数にNekketsuActionを渡してやる
         NDash = new NekketsuMove(this); 
         NJump = new NekketsuJump(this);
         NInput = new NekketsuInput(this);
         NHurtBox = new NekketsuHurtBox(this);
-        UmaSandbag = new UmaiboSandbag(this);
     }
 
     void Update()
@@ -286,6 +287,40 @@ public class NekketsuAction : MonoBehaviour
         }
 
         #endregion
+
+    }
+
+
+    void Sound(string soundName)
+    {
+        switch (soundName)
+        {
+            case "Brake":
+                audioSource.clip = Brake;
+                audioSource.Play();
+                break;
+
+            case "Jump":
+                if (Y < 10f)
+                {
+                    audioSource.clip = Jump;
+                    audioSource.Play();
+                }
+                break;
+        }
+
+    }
+
+
+void OnDrawGizmos()
+    {
+        // 喰らい判定のギズモを表示
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireCube(transform.position, new Vector3(hurtBox.width, hurtBox.height, 0));
+
+        // 攻撃判定のギズモを表示
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(new Vector3(hitBox.x, Z + hitBox.y), new Vector3(hitBox.width, hitBox.height, 0.1f));
 
     }
 }

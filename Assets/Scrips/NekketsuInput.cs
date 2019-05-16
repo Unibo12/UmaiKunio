@@ -199,7 +199,20 @@ public class NekketsuInput
             {
                 if (NAct.leftFlag)
                 {
-                    NAct.NowAttack = AttackPattern.DosukoiSide;
+                    if (NAct.ZInputState == ZInputState.ZBackPushMoment
+                        || NAct.ZInputState == ZInputState.ZBackPushButton)
+                    {
+                        NAct.NowAttack = AttackPattern.DosukoiBack;
+                    }
+                    else if (NAct.ZInputState == ZInputState.ZFrontPushMoment
+                             || NAct.ZInputState == ZInputState.ZFrontPushButton)
+                    {
+                        NAct.NowAttack = AttackPattern.DosukoiFront;
+                    }
+                    else
+                    {
+                        NAct.NowAttack = AttackPattern.DosukoiSide;
+                    }
                 }
                 else
                 {
@@ -228,7 +241,20 @@ public class NekketsuInput
                 }
                 else
                 {
-                    NAct.NowAttack = AttackPattern.DosukoiSide;
+                    if (NAct.ZInputState == ZInputState.ZBackPushMoment
+                        || NAct.ZInputState == ZInputState.ZBackPushButton)
+                    {
+                        NAct.NowAttack = AttackPattern.DosukoiBack;
+                    }
+                    else if (NAct.ZInputState == ZInputState.ZFrontPushMoment
+                             || NAct.ZInputState == ZInputState.ZFrontPushButton)
+                    {
+                            NAct.NowAttack = AttackPattern.DosukoiFront;
+                    }
+                    else
+                    {
+                        NAct.NowAttack = AttackPattern.DosukoiSide;
+                    }
                 }
             }
             else if ((Input.GetKey("s") || Input.GetKey("joystick button 3")))
