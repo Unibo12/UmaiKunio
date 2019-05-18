@@ -78,7 +78,6 @@ public enum DamagePattern
 #endregion
 
 #endregion
-
 public class NekketsuTypeDefinition
 {
 

@@ -12,8 +12,8 @@ public class NekketsuAction : MonoBehaviour
     private NekketsuMove NDash; //NekketsuDashを呼び出す際に使用
     private NekketsuJump NJump; //NekketsuJumpを呼び出す際に使用
     private NekketsuInput NInput; //NekketsuInputを呼び出す際に使用
-    private NekketsuHurtBox NHurtBox; //
-    private UmaiboSandbag UmaSandbag; //
+    private NekketsuHurtBox NHurtBox; //NekketsuHurtBoxを呼び出す際に使用
+    private NekketsuStateChange NStateChange;
 
     // *****共通変数*****
     public float speed = 0.08f;                 // スピード
@@ -64,6 +64,7 @@ public class NekketsuAction : MonoBehaviour
         NJump = new NekketsuJump(this);
         NInput = new NekketsuInput(this);
         NHurtBox = new NekketsuHurtBox(this);
+        NStateChange = new NekketsuStateChange(this);
     }
 
     void Update()
@@ -74,6 +75,9 @@ public class NekketsuAction : MonoBehaviour
 
         // インプット処理呼び出し
         NInput.InputMain();
+
+        // 入力されたインプット内容でステータスを変更
+        NStateChange.StateChangeMain();
 
         // 移動処理呼び出し
         NDash.MoveMain();
