@@ -9,11 +9,17 @@ public class NekketsuAction : MonoBehaviour
 
     Vector3 pos;        // 最終的な描画で使用
     Animator animator;  // アニメ変更用
+
+    GameObject gameObjct;
+    private NekketsuSound NSound;
+    private NekketsuAttack NAttack;
+
     private NekketsuMove NDash; //NekketsuDashを呼び出す際に使用
     private NekketsuJump NJump; //NekketsuJumpを呼び出す際に使用
     private NekketsuInput NInput; //NekketsuInputを呼び出す際に使用
     private NekketsuHurtBox NHurtBox; //NekketsuHurtBoxを呼び出す際に使用
     private NekketsuStateChange NStateChange;
+    //private NekketsuSound NSound;
 
     // *****共通変数*****
     public float speed = 0.08f;                 // スピード
@@ -36,17 +42,13 @@ public class NekketsuAction : MonoBehaviour
     public bool dashFlag = false;   //走っているか否か
     public bool squatFlag = false;  //しゃがみ状態フラグ
     public bool brakeFlag = false;  //ブレーキフラグ
+    public bool AttackFlag = false;  //攻撃フラグ(空中攻撃を出しっぱなしにする)
 
     public JumpButtonPushState JumpButtonState; //ジャンプボタン押下ステータス
     public XInputState XInputState = 0; //疑似Xに対する入力ステータス
     public ZInputState ZInputState = 0; //疑似Zに対する入力ステータス
     public AttackPattern NowAttack = 0; // 現在の攻撃パターン格納変数
     public DamagePattern NowDamage = 0; // 現在の攻撃喰らいパターン格納変数
-
-    public AudioClip Brake;
-    public AudioClip Jump;
-    public AudioClip audioClip3;
-    private AudioSource audioSource;
 
     // *****共通変数*****
 
@@ -57,7 +59,10 @@ public class NekketsuAction : MonoBehaviour
         // 最初に行う
         pos = transform.position;
         animator = this.GetComponent<Animator>();
-        audioSource = gameObject.GetComponent<AudioSource>();
+
+        gameObjct = GameObject.Find("Umaibou");
+        NSound = gameObjct.GetComponent<NekketsuSound>();
+        NAttack = gameObjct.GetComponent<NekketsuAttack>();
 
         // 生成（コンストラクタ）の引数にNekketsuActionを渡してやる
         NDash = new NekketsuMove(this); 
@@ -65,6 +70,7 @@ public class NekketsuAction : MonoBehaviour
         NInput = new NekketsuInput(this);
         NHurtBox = new NekketsuHurtBox(this);
         NStateChange = new NekketsuStateChange(this);
+        //NSound= new NekketsuSound(this);
     }
 
     void Update()
@@ -78,6 +84,12 @@ public class NekketsuAction : MonoBehaviour
 
         // 入力されたインプット内容でステータスを変更
         NStateChange.StateChangeMain();
+
+        // 効果音の処理
+        NSound.SoundMain();
+
+        // 攻撃の処理
+        NAttack.AttackMain();
 
         // 移動処理呼び出し
         NDash.MoveMain();
@@ -129,11 +141,6 @@ public class NekketsuAction : MonoBehaviour
 
         #region アニメ処理(ここでやるかは仮)
 
-        // ★TODOまもる
-        // ①getKeyを使用しないでアニメ処理させる。
-        // ②Unityのアニメーションからスクリプト呼び出しをやってみる。
-
-        //★★★当たり判定テスト★★★
         if (NowDamage == DamagePattern.groggy)
         {
             if ((XInputState != XInputState.XNone
@@ -295,25 +302,25 @@ public class NekketsuAction : MonoBehaviour
     }
 
 
-    void Sound(string soundName)
-    {
-        switch (soundName)
-        {
-            case "Brake":
-                audioSource.clip = Brake;
-                audioSource.Play();
-                break;
+    //void Sound(string soundName)
+    //{
+    //    switch (soundName)
+    //    {
+    //        case "Brake":
+    //            audioSource.clip = Brake;
+    //            audioSource.Play();
+    //            break;
 
-            case "Jump":
-                if (Y < 10f)
-                {
-                    audioSource.clip = Jump;
-                    audioSource.Play();
-                }
-                break;
-        }
+    //        case "Jump":
+    //            if (Y < 10f)
+    //            {
+    //                audioSource.clip = Jump;
+    //                audioSource.Play();
+    //            }
+    //            break;
+    //    }
 
-    }
+    //}
 
 
 void OnDrawGizmos()

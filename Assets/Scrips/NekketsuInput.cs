@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class NekketsuInput
 {
-    // GameObject GObj; //ゲームオブジェクトそのものが入る変数s
     NekketsuAction NAct; //NekketsuActionが入る変数
-        
+
     public NekketsuInput(NekketsuAction nekketsuAction)
     {
         NAct = nekketsuAction;
@@ -14,10 +13,10 @@ public class NekketsuInput
 
     public void InputMain()
     {
-        //NStateChange = new NekketsuStateChange(this);
-
-
-        //ボタン入力はInput.GetButton Input.GetButtonDown InputGetButtonUp から判断する。
+        //ボタン入力
+        //Input.GetButton       ：押した瞬間
+        //Input.GetButtonDown   ：押している状態
+        //Input.GetButtonUp     ：押している状態から離した瞬間
 
         #region ジャンプステータス判定
 
@@ -27,7 +26,7 @@ public class NekketsuInput
         {
             NAct.JumpButtonState = JumpButtonPushState.PushMoment;
         }
-        else if(Input.GetKey("a") || Input.GetKey("joystick button 2")
+        else if (Input.GetKey("a") || Input.GetKey("joystick button 2")
                 || (Input.GetKey("z") || Input.GetKey("joystick button 0"))
                 && (Input.GetKey("x") || Input.GetKey("joystick button 1")))
         {
@@ -195,74 +194,5 @@ public class NekketsuInput
         #endregion
 
         #endregion
-
-        #region 攻撃処理
-
-
-        if ((Input.GetKey("z") || Input.GetKey("joystick button 0")))
-        {
-            if (NAct.leftFlag)
-            {
-                DosukoiVector();
-            }
-            else
-            {
-                if (NAct.jumpFlag)
-                {
-                    NAct.NowAttack = AttackPattern.JumpKick;
-                }
-                else
-                {
-                    NAct.NowAttack = AttackPattern.Hiji;
-                }
-            }
-        }
-        else if ((Input.GetKey("x") || Input.GetKey("joystick button 1")))
-        {
-
-
-            if (NAct.leftFlag)
-            {
-                if (NAct.jumpFlag)
-                {
-                    NAct.NowAttack = AttackPattern.JumpKick;
-                }
-                else
-                {
-                    NAct.NowAttack = AttackPattern.Hiji;
-                }
-            }
-            else
-            {
-                DosukoiVector();
-            }
-        }
-        else if ((Input.GetKey("s") || Input.GetKey("joystick button 3")))
-        {
-            //animator.Play("UmaThrow");
-        }
-        else
-        {
-            NAct.NowAttack = AttackPattern.None;
-        }
-        #endregion
-    }
-
-    void DosukoiVector()
-    {
-        if (NAct.ZInputState == ZInputState.ZBackPushMoment
-            || NAct.ZInputState == ZInputState.ZBackPushButton)
-        {
-            NAct.NowAttack = AttackPattern.DosukoiBack;
-        }
-        else if (NAct.ZInputState == ZInputState.ZFrontPushMoment
-                 || NAct.ZInputState == ZInputState.ZFrontPushButton)
-        {
-            NAct.NowAttack = AttackPattern.DosukoiFront;
-        }
-        else
-        {
-            NAct.NowAttack = AttackPattern.DosukoiSide;
-        }
     }
 }
