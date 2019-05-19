@@ -37,12 +37,7 @@ public class NekketsuAttack : MonoBehaviour
 
     void None()
     {
-        float hitBoxX = Nmng.Umaibou.X;
-        float hitBoxY = Nmng.Umaibou.Y;
-
-        // width,height　が0だと　当たり判定残ってる？ので　-1
-        Nmng.Umaibou.hitBox = new Rect(hitBoxX, hitBoxY, -1, -1);
-
+        Nmng.Umaibou.hitBox = new Rect(0, 0, 0, 0);
     }
 
     void DosukoiSide(float timing)
