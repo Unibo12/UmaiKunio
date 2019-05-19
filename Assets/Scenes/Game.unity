@@ -895,14 +895,12 @@ MonoBehaviour:
   dashFlag: 0
   squatFlag: 0
   brakeFlag: 0
+  AttackFlag: 0
   JumpButtonState: 0
   XInputState: 0
   ZInputState: 0
   NowAttack: 0
   NowDamage: 0
-  Brake: {fileID: 8300000, guid: 069364118ec7903418bcbd7ebe0013c0, type: 3}
-  Jump: {fileID: 8300000, guid: e3058e10d591e00489fd2de06892be1b, type: 3}
-  audioClip3: {fileID: 0}
 --- !u!114 &820763014
 MonoBehaviour:
   m_ObjectHideFlags: 0

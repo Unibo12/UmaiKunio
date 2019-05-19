@@ -65,6 +65,7 @@ public enum AttackPattern
     DosukoiBack,
     DosukoiFront,
     Hiji,
+    HijiWalk,
     JumpKick,
 }
 #endregion

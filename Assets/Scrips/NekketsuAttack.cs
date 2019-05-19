@@ -27,6 +27,14 @@ public class NekketsuAttack : MonoBehaviour
         //Nmng.Umaibou.hitBox = new Rect(hitBoxX, hitBoxY, 0, 0);
     }
 
+    public void AttackMain()
+    {
+        if (Nmng.Umaibou.NowAttack == AttackPattern.None)
+        {
+            None();
+        }
+    }
+
     void None()
     {
         float hitBoxX = Nmng.Umaibou.X;
@@ -34,14 +42,6 @@ public class NekketsuAttack : MonoBehaviour
 
         Nmng.Umaibou.hitBox = new Rect(hitBoxX, hitBoxY, 0, 0);
 
-    }
-
-    public void AttackMain()
-    {
-        if (Nmng.Umaibou.NowAttack == AttackPattern.None)
-        {
-            None();
-        }
     }
 
     void DosukoiSide(float timing)
