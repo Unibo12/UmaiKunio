@@ -38,6 +38,10 @@ public class NekketsuAttack : MonoBehaviour
 
     public void AttackMain()
     {
+        if (Nmng.Umaibou.NowAttack == AttackPattern.None)
+        {
+            None();
+        }
     }
 
     void DosukoiSide(float timing)

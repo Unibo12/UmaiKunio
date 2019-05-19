@@ -14,9 +14,9 @@ public class NekketsuInput
     public void InputMain()
     {
         //ボタン入力
-        //Input.GetButton       ：押した瞬間
-        //Input.GetButtonDown   ：押している状態
-        //Input.GetButtonUp     ：押している状態から離した瞬間
+        //Input.GetKeyDown   ：押した瞬間
+        //Input.GetKey       ：押している状態
+        //Input.GetKeyUp     ：押している状態から離した瞬間
 
         #region ジャンプステータス判定
 

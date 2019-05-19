@@ -86,7 +86,7 @@ public class NekketsuAction : MonoBehaviour
         NStateChange.StateChangeMain();
 
         // 効果音の処理
-        NSound.SoundMain();
+        //NSound.SoundMain();
 
         // 攻撃の処理
         NAttack.AttackMain();
