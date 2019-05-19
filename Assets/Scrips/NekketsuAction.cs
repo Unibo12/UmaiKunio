@@ -13,6 +13,8 @@ public class NekketsuAction : MonoBehaviour
     GameObject gameObjct;
     private NekketsuSound NSound;
     private NekketsuAttack NAttack;
+    public NekketsuManager Nmng;
+
 
     private NekketsuMove NDash; //NekketsuDashを呼び出す際に使用
     private NekketsuJump NJump; //NekketsuJumpを呼び出す際に使用
@@ -63,6 +65,9 @@ public class NekketsuAction : MonoBehaviour
         gameObjct = GameObject.Find("Umaibou");
         NSound = gameObjct.GetComponent<NekketsuSound>();
         NAttack = gameObjct.GetComponent<NekketsuAttack>();
+
+        gameObjct = GameObject.Find("sports_run_syoumen_man2");
+        Nmng = gameObjct.GetComponent<NekketsuManager>();
 
         // 生成（コンストラクタ）の引数にNekketsuActionを渡してやる
         NDash = new NekketsuMove(this); 
@@ -346,11 +351,29 @@ public class NekketsuAction : MonoBehaviour
                             break;
 
                         case AttackPattern.DosukoiSide:
-                            animator.Play("Dosukoi");
+
+                            if (vx == 0 && vz == 0)
+                            {
+                                animator.Play("Dosukoi");
+                            }
+                            else
+                            {
+                                animator.Play("DosukoiWalk");
+                            }
+                            
                             break;
 
                         case AttackPattern.Hiji:
-                            animator.Play("Hiji");
+
+                            if (vx == 0 && vz == 0)
+                            {
+                                animator.Play("Hiji");
+                            }
+                            else
+                            {
+                                animator.Play("HjiWalk");
+                            }
+
                             break;
 
                         case AttackPattern.JumpKick:

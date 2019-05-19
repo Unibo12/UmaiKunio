@@ -40,7 +40,8 @@ public class NekketsuAttack : MonoBehaviour
         float hitBoxX = Nmng.Umaibou.X;
         float hitBoxY = Nmng.Umaibou.Y;
 
-        Nmng.Umaibou.hitBox = new Rect(hitBoxX, hitBoxY, 0, 0);
+        // width,height　が0だと　当たり判定残ってる？ので　-1
+        Nmng.Umaibou.hitBox = new Rect(hitBoxX, hitBoxY, -1, -1);
 
     }
 

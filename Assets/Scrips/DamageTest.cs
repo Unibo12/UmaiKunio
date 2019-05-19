@@ -13,30 +13,14 @@ public class DamageTest : MonoBehaviour
     public float Y;    //内部での高さ
     public float Z;    //内部での奥行き
 
-    // ここのタイミングで値設定してしまうと、NG？
-    //public Rect hitBoxTEST = new Rect(0, 0, 0.7f, 1.6f);
     public Rect hitBoxTEST;
 
-    public DamageTest(NekketsuHurtBox nekketsuHurtBox)
-    {
-        //★★★
-        //下記XYZ変数を変更しても、
-        //インスペクターの変数と同期されない。→描画がずれる問題あり。
-        X = 2;
-        Y = 0;
-        Z = -2;
-        hitBoxTEST = new Rect(X, Y, 0.7f, 1.6f);
-
-        NHurtBox = nekketsuHurtBox;
-    }
 
     void Start()
     {
         // 最初に行う
         pos = transform.position;
         animator = this.GetComponent<Animator>();
-
-        //NHurtBox = new NekketsuHurtBox(this);
 
     }
 
@@ -52,7 +36,10 @@ public class DamageTest : MonoBehaviour
         pos.y = Z + Y;
 
         // 喰らい判定の移動
-        hitBoxTEST = new Rect(X, Y, 0.7f, 1.6f);
+        hitBoxTEST = 
+            new Rect(X, Y,
+                    this.gameObject.GetComponent<RectTransform>().rect.width,
+                    this.gameObject.GetComponent<RectTransform>().rect.height);
 
         transform.position = pos;
         #endregion

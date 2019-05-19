@@ -12,25 +12,12 @@ public class NekketsuHurtBox
         NAct = nekketsuAction;
     }
 
-    public NekketsuHurtBox(DamageTest damageTest)
-    {
-        DmgTest = damageTest;
-    }
-
     public void HurtBoxMain()
     {
         //DamageTest.csで指定された座標に移動すると、喰らい判定が発生するテスト
 
-        //★★★
-        //Nullが入ってしまう。
-        if (DmgTest == null)
-        {
-            DmgTest = new DamageTest(this);
-        }
-        //★★★
-
-        if ((DmgTest.Z - 0.4f <= NAct.Z && NAct.Z <= DmgTest.Z + 0.4f)
-            && NAct.hurtBox.Overlaps(DmgTest.hitBoxTEST))
+        if ((NAct.Nmng.uni.Z - 0.4f <= NAct.Z && NAct.Z <= NAct.Nmng.uni.Z + 0.4f)
+            && NAct.hurtBox.Overlaps(NAct.Nmng.uni.hitBoxTEST))
         {
             NAct.NowDamage = DamagePattern.groggy;
         }
@@ -38,5 +25,6 @@ public class NekketsuHurtBox
         {
             NAct.NowDamage = DamagePattern.None;
         }
+
     }
 }
