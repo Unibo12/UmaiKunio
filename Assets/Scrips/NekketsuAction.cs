@@ -324,7 +324,8 @@ public class NekketsuAction : MonoBehaviour
             {
                 if (jumpFlag)
                 {
-                    if (NowAttack == AttackPattern.JumpKick)
+                    if (NowAttack == AttackPattern.JumpKick
+                        && Y >= 0)
                     {
                         animator.Play("JumpKick");
                     }
@@ -367,17 +368,19 @@ public class NekketsuAction : MonoBehaviour
                             if (vx == 0 && vz == 0)
                             {
                                 animator.Play("Hiji");
-                                NowAttack = AttackPattern.None;
                             }
                             else
                             {
                                 animator.Play("HjiWalk");
-                                NowAttack = AttackPattern.None;
                             }
 
                             break;
 
                         case AttackPattern.JumpKick:
+                            if (jumpFlag)
+                            {
+
+                            }
                             animator.Play("JumpKick");
                             break;
 
@@ -386,10 +389,13 @@ public class NekketsuAction : MonoBehaviour
                             if (vx == 0 && vz == 0)
                             {
                                 //animator.Play("Stanging");
+                                animator.SetBool("Walk", false);
+
                             }
                             else
                             {
-                                animator.Play("Walk");
+                                //animator.Play("Walk");
+                                animator.SetBool("Walk", true);
                             }
 
                             break;
