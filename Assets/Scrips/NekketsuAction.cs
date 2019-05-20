@@ -329,9 +329,10 @@ public class NekketsuAction : MonoBehaviour
                     {
                         animator.Play("JumpKick");
                     }
-                    else if (NowAttack == AttackPattern.DosukoiSide)
+                    else if (NowAttack == AttackPattern.DosukoiSide
+                             && Y >= 0)
                     {
-                        animator.Play("Dosukoi");
+                        animator.Play("UmaHariteJump");
                     }
                     else
                     {

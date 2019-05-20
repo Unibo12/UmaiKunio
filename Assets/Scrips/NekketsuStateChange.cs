@@ -34,7 +34,14 @@ public class NekketsuStateChange
             {
                 if (NAct.jumpFlag)
                 {
-                    NAct.NowAttack = AttackPattern.JumpKick;
+                    if (NAct.leftFlag)
+                    {
+                        NAct.NowAttack = AttackPattern.JumpDosukoiSide;
+                    }
+                    else
+                    {
+                        NAct.NowAttack = AttackPattern.JumpKick;                      
+                    }
                 }
                 else
                 {
@@ -55,7 +62,17 @@ public class NekketsuStateChange
             {
                 if (NAct.jumpFlag)
                 {
-                    NAct.NowAttack = AttackPattern.JumpKick;
+                    if (NAct.jumpFlag)
+                    {
+                        if (NAct.leftFlag)
+                        {
+                            NAct.NowAttack = AttackPattern.JumpKick;
+                        }
+                        else
+                        {
+                            NAct.NowAttack = AttackPattern.JumpDosukoiSide;
+                        }
+                    }
                 }
                 else
                 {

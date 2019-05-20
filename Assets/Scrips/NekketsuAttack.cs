@@ -47,8 +47,6 @@ public class NekketsuAttack : MonoBehaviour
         // 左方向の場合はマイナス値とする。
         float leftMinusVector = (Nmng.Umaibou.leftFlag) ? -1 : 1;
 
-
-
         switch (timing)
         {
             case 1:
