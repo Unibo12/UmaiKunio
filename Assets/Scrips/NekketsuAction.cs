@@ -8,7 +8,7 @@ public class NekketsuAction : MonoBehaviour
     #region 変数定義
 
     Vector3 pos;        // 最終的な描画で使用
-    Animator animator;  // アニメ変更用
+    public Animator animator;  // アニメ変更用
 
     GameObject gameObjct;
     private NekketsuSound NSound;
@@ -322,7 +322,6 @@ public class NekketsuAction : MonoBehaviour
         {
             if (!squatFlag && !brakeFlag)
             {
-
                 if (jumpFlag)
                 {
                     if (NowAttack == AttackPattern.JumpKick)
@@ -368,10 +367,12 @@ public class NekketsuAction : MonoBehaviour
                             if (vx == 0 && vz == 0)
                             {
                                 animator.Play("Hiji");
+                                NowAttack = AttackPattern.None;
                             }
                             else
                             {
                                 animator.Play("HjiWalk");
+                                NowAttack = AttackPattern.None;
                             }
 
                             break;

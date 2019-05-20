@@ -47,9 +47,12 @@ public class NekketsuAttack : MonoBehaviour
         // 左方向の場合はマイナス値とする。
         float leftMinusVector = (Nmng.Umaibou.leftFlag) ? -1 : 1;
 
+
+
         switch (timing)
         {
             case 1:
+                Nmng.Umaibou.NowAttack = AttackPattern.DosukoiSide;
                 Nmng.Umaibou.hitBox
                     = new Rect(hitBoxX + (0.6f * leftMinusVector),
                                hitBoxY + 0.2f,
@@ -57,13 +60,18 @@ public class NekketsuAttack : MonoBehaviour
 
                 audioSource.clip = audioClip1;
                 audioSource.Play();
+
                 break;
 
             case 2:
+                Nmng.Umaibou.NowAttack = AttackPattern.DosukoiSide;
                 Nmng.Umaibou.hitBox
                     = new Rect(hitBoxX + (0.6f * leftMinusVector),
                                hitBoxY + 0.2f,
                                0.6f, 0.5f);
+
+                Nmng.Umaibou.NowAttack = AttackPattern.None;
+
                 break;
 
             default:
@@ -96,6 +104,9 @@ public class NekketsuAttack : MonoBehaviour
                     = new Rect(hitBoxX + (0.3f * leftMinusVector),
                                hitBoxY + 0.2f,
                                0.4f, 0.5f);
+
+                Nmng.Umaibou.NowAttack = AttackPattern.None;
+
                 break;
 
             default:
@@ -128,6 +139,9 @@ public class NekketsuAttack : MonoBehaviour
                     = new Rect(hitBoxX + (0.1f * leftMinusVector),
                                hitBoxY + 0.2f,
                                0.6f, 0.5f);
+
+                Nmng.Umaibou.NowAttack = AttackPattern.None;
+
                 break;
 
             default:
@@ -161,6 +175,9 @@ public class NekketsuAttack : MonoBehaviour
                     new Rect(hitBoxX + (0.6f * RightMinusVector),
                              hitBoxY + 0.2f,
                              0.4f, 0.4f);
+
+                Nmng.Umaibou.NowAttack = AttackPattern.None;
+
                 break;
 
             default:
@@ -186,6 +203,13 @@ public class NekketsuAttack : MonoBehaviour
 
                 audioSource.clip = audioClip1;
                 audioSource.Play();
+
+                if (!Nmng.Umaibou.jumpFlag
+                    || Nmng.Umaibou.Y <= 0
+                    || Nmng.Umaibou.squatFlag)
+                {
+                    Nmng.Umaibou.NowAttack = AttackPattern.None;
+                }
 
                 break;
 

@@ -80,8 +80,7 @@ AnimationClip:
   - time: 0.1
     functionName: DosukoiSide
     data: 
-    objectReferenceParameter: {fileID: 11500000, guid: c2180855117551649aac4b5b60a839e5,
-      type: 3}
+    objectReferenceParameter: {fileID: 0}
     floatParameter: 2
     intParameter: 0
     messageOptions: 0

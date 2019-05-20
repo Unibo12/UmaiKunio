@@ -22,9 +22,9 @@ public class NekketsuStateChange
         #region 攻撃処理
 
         //★押した瞬間に攻撃発生するだけで良いので、
-        //★GetKeyDownにしたいが、変更すると当たり判定がうまくいかなくなる。
+        //★GetKeyDownDownにしたいが、変更すると当たり判定がうまくいかなくなる。
 
-        if ((Input.GetKey("z") || Input.GetKey("joystick button 0")))
+        if ((Input.GetKeyDown("z") || Input.GetKeyDown("joystick button 0")))
         {
             if (NAct.leftFlag)
             {
@@ -46,11 +46,10 @@ public class NekketsuStateChange
                     {
                         NAct.NowAttack = AttackPattern.HijiWalk;
                     }
-                    
                 }
             }
         }
-        else if ((Input.GetKey("x") || Input.GetKey("joystick button 1")))
+        else if ((Input.GetKeyDown("x") || Input.GetKeyDown("joystick button 1")))
         {
             if (NAct.leftFlag)
             {
@@ -60,7 +59,14 @@ public class NekketsuStateChange
                 }
                 else
                 {
-                    NAct.NowAttack = AttackPattern.Hiji;
+                    if (NAct.vx == 0 && NAct.vz == 0)
+                    {
+                        NAct.NowAttack = AttackPattern.Hiji;
+                    }
+                    else
+                    {
+                        NAct.NowAttack = AttackPattern.HijiWalk;
+                    }
                 }
             }
             else
@@ -68,13 +74,13 @@ public class NekketsuStateChange
                 DosukoiVector();
             }
         }
-        else if ((Input.GetKey("s") || Input.GetKey("joystick button 3")))
+        else if ((Input.GetKeyDown("s") || Input.GetKeyDown("joystick button 3")))
         {
             //animator.Play("UmaThrow");
         }
         else
         {
-            NAct.NowAttack = AttackPattern.None;
+            //NAct.NowAttack = AttackPattern.None;
         }
         #endregion
     }

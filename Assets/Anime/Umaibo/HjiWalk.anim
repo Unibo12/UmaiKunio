@@ -57,7 +57,7 @@ AnimationClip:
     m_Level: 0
     m_CycleOffset: 0
     m_HasAdditiveReferencePose: 0
-    m_LoopTime: 1
+    m_LoopTime: 0
     m_LoopBlend: 0
     m_LoopBlendOrientation: 0
     m_LoopBlendPositionY: 0
@@ -75,24 +75,21 @@ AnimationClip:
   - time: 0
     functionName: Hiji
     data: 
-    objectReferenceParameter: {fileID: 11500000, guid: c2180855117551649aac4b5b60a839e5,
-      type: 3}
+    objectReferenceParameter: {fileID: 0}
     floatParameter: 1
     intParameter: 0
     messageOptions: 0
   - time: 0.11111111
     functionName: Hiji
     data: 
-    objectReferenceParameter: {fileID: 11500000, guid: c2180855117551649aac4b5b60a839e5,
-      type: 3}
+    objectReferenceParameter: {fileID: 0}
     floatParameter: 2
     intParameter: 0
     messageOptions: 0
   - time: 0.22222222
     functionName: Hiji
     data: 
-    objectReferenceParameter: {fileID: 11500000, guid: c2180855117551649aac4b5b60a839e5,
-      type: 3}
-    floatParameter: 2
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 3
     intParameter: 0
     messageOptions: 0
