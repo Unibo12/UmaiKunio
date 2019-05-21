@@ -7,22 +7,29 @@ public class NekketsuSound : MonoBehaviour
     GameObject playerObjct;
     NekketsuManager Nmng;
 
-
     public AudioClip Brake;
     public AudioClip Jump;
-    public AudioClip audioClip3;
+    public AudioClip punch;
     private AudioSource audioSource;
 
-    public void SoundMain()
+    private void Start()
     {
-        // アニメーション　ループに合わせて音出し
-        // が、うまく行かなかったので熱血サウンド作成したがこちらも微妙。
-
         playerObjct = GameObject.Find("NekketsuManager");
         Nmng = playerObjct.GetComponent<NekketsuManager>();
 
         audioSource = gameObject.GetComponent<AudioSource>();
+    }
 
+    public void SoundMain()
+    {
+        //★TODO★
+        //アニメーションのスクリプト呼び出しでやるか、
+        //熱血サウンドでやるか どちらかにまとめること。
+        //地上どすこい等はアニメでやっている。
+        //★TODO★
+
+
+        // ジャンプ
         if (!Nmng.Umaibou.jumpFlag &&
             !Nmng.Umaibou.squatFlag &&
             !Nmng.Umaibou.brakeFlag &&
@@ -32,19 +39,27 @@ public class NekketsuSound : MonoBehaviour
             audioSource.Play();
         }
 
-        //switch (soundName)
-        //{
-        //    case "Brake":
-        //        audioSource.clip = Brake;
-        //        audioSource.Play();
-        //        break;
+        // ブレーキ
+        if (!audioSource.isPlaying 
+            && Nmng.Umaibou.brakeFlag)
+        {
+            audioSource.clip = Brake;
+            audioSource.Play();
+        }
 
-        //    case "Jump":
-        //        audioSource.clip = Jump;
-        //        audioSource.Play();
-        //        break;
-        //}
 
+        //★★★★★★★
+        // ジャンプ中攻撃
+        // 本来ここでキー入力を参照しないつもりだが、一旦これで。
+        // ジャンプ攻撃中、再度攻撃ボタンで音がなってしまう。。。
+        //★★★★★★★
+        if ((Input.GetKeyDown("z") || Input.GetKeyDown("joystick button 0")
+                || Input.GetKeyDown("x") || Input.GetKeyDown("joystick button 1"))
+                    && (Nmng.Umaibou.NowAttack == AttackPattern.JumpKick
+                        || Nmng.Umaibou.NowAttack == AttackPattern.JumpDosukoiSide))
+        {
+            audioSource.clip = punch;
+            audioSource.Play();
+        }
     }
-
 }

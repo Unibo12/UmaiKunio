@@ -16,7 +16,7 @@ public class NekketsuAction : MonoBehaviour
     public NekketsuManager Nmng;
 
 
-    private NekketsuMove NDash; //NekketsuDashを呼び出す際に使用
+    private NekketsuMove NMove; //NekketsuMoveを呼び出す際に使用
     private NekketsuJump NJump; //NekketsuJumpを呼び出す際に使用
     private NekketsuInput NInput; //NekketsuInputを呼び出す際に使用
     private NekketsuHurtBox NHurtBox; //NekketsuHurtBoxを呼び出す際に使用
@@ -44,7 +44,7 @@ public class NekketsuAction : MonoBehaviour
     public bool dashFlag = false;   //走っているか否か
     public bool squatFlag = false;  //しゃがみ状態フラグ
     public bool brakeFlag = false;  //ブレーキフラグ
-    public bool AttackFlag = false;  //攻撃フラグ(空中攻撃を出しっぱなしにする)
+    //public bool AttackFlag = false;  //攻撃フラグ(空中攻撃を出しっぱなしにする)
 
     public JumpButtonPushState JumpButtonState; //ジャンプボタン押下ステータス
     public XInputState XInputState = 0; //疑似Xに対する入力ステータス
@@ -66,11 +66,11 @@ public class NekketsuAction : MonoBehaviour
         NSound = gameObjct.GetComponent<NekketsuSound>();
         NAttack = gameObjct.GetComponent<NekketsuAttack>();
 
-        gameObjct = GameObject.Find("sports_run_syoumen_man2");
+        gameObjct = GameObject.Find("NekketsuManager");
         Nmng = gameObjct.GetComponent<NekketsuManager>();
 
         // 生成（コンストラクタ）の引数にNekketsuActionを渡してやる
-        NDash = new NekketsuMove(this); 
+        NMove = new NekketsuMove(this); 
         NJump = new NekketsuJump(this);
         NInput = new NekketsuInput(this);
         NHurtBox = new NekketsuHurtBox(this);
@@ -91,13 +91,13 @@ public class NekketsuAction : MonoBehaviour
         NStateChange.StateChangeMain();
 
         // 効果音の処理
-        //NSound.SoundMain();
+        NSound.SoundMain();
 
         // 攻撃の処理
         NAttack.AttackMain();
 
         // 移動処理呼び出し
-        NDash.MoveMain();
+        NMove.MoveMain();
 
         // ジャンプ処理呼び出し
         NJump.JumpMain();
@@ -446,7 +446,6 @@ public class NekketsuAction : MonoBehaviour
     //            }
     //            break;
     //    }
-
     //}
 
 

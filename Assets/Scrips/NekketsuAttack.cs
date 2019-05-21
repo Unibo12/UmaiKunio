@@ -242,8 +242,8 @@ public class NekketsuAttack : MonoBehaviour
                              hitBoxY - 0.65f,
                              0.8f, 0.4f);
 
-                audioSource.clip = audioClip1;
-                audioSource.Play();
+                //audioSource.clip = audioClip1;
+                //audioSource.Play();
 
                 if (!Nmng.Umaibou.jumpFlag
                     || Nmng.Umaibou.Y <= 0

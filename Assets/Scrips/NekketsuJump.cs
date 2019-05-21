@@ -199,8 +199,6 @@ public class NekketsuJump
 
                     NAct.squatFlag = true; //しゃがみ状態
 
-                    NAct.AttackFlag = false; //空中攻撃出しっぱなし解除
-
                     // 地面めりこみ補正は着地したタイミングで行う
                     if (NAct.Y < 0)
                     {

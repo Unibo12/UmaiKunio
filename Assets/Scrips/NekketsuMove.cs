@@ -173,8 +173,6 @@ public class NekketsuMove
                         }
                     }
                 }
-
-
             }
 
             // ブレーキ処理

@@ -21,9 +21,6 @@ public class NekketsuStateChange
     {
         #region 攻撃処理
 
-        //★押した瞬間に攻撃発生するだけで良いので、
-        //★GetKeyDownDownにしたいが、変更すると当たり判定がうまくいかなくなる。
-
         if ((Input.GetKeyDown("z") || Input.GetKeyDown("joystick button 0")))
         {
             if (NAct.leftFlag)
