@@ -148,6 +148,49 @@ public class NekketsuAttack : MonoBehaviour
 
     }
 
+    void JumpDosukoi(float timing)
+    {
+        float hitBoxX = Nmng.Umaibou.X;
+        float hitBoxY = Nmng.Umaibou.Y;
+        // 左方向の場合はマイナス値とする。
+        float leftMinusVector = (Nmng.Umaibou.leftFlag) ? -1 : 1;
+
+        switch (timing)
+        {
+            case 1:
+                Nmng.Umaibou.NowAttack = AttackPattern.JumpDosukoiSide;
+                Nmng.Umaibou.hitBox
+                    = new Rect(hitBoxX + (0.6f * leftMinusVector),
+                               hitBoxY + 0.2f,
+                               0.6f, 0.5f);
+
+                audioSource.clip = audioClip1;
+                audioSource.Play();
+
+                break;
+
+            case 2:
+                Nmng.Umaibou.NowAttack = AttackPattern.JumpDosukoiSide;
+                Nmng.Umaibou.hitBox
+                    = new Rect(hitBoxX + (0.6f * leftMinusVector),
+                               hitBoxY + 0.2f,
+                               0.6f, 0.5f);
+
+                if (!Nmng.Umaibou.jumpFlag
+                    || Nmng.Umaibou.Y <= 0
+                    || Nmng.Umaibou.squatFlag)
+                {
+                    Nmng.Umaibou.NowAttack = AttackPattern.None;
+                }
+
+                break;
+
+            default:
+                break;
+        }
+
+    }
+
     void Hiji(float timing)
     {
         float hitBoxX = Nmng.Umaibou.X;

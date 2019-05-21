@@ -322,37 +322,20 @@ public class NekketsuAction : MonoBehaviour
         {
             if (!squatFlag && !brakeFlag)
             {
-                if (jumpFlag)
+                switch (NowAttack)
                 {
-                    if (NowAttack == AttackPattern.JumpKick
-                        && Y >= 0)
-                    {
-                        animator.Play("JumpKick");
-                    }
-                    else if (NowAttack == AttackPattern.DosukoiSide
-                             && Y >= 0)
-                    {
-                        animator.Play("UmaHariteJump");
-                    }
-                    else
-                    {
-                        animator.Play("Jump");
-                    }
-                }
-                else
-                {
-                    switch (NowAttack)
-                    {
-                        case AttackPattern.DosukoiBack:
-                            animator.Play("DosukoiBack");
-                            break;
+                    case AttackPattern.DosukoiBack:
+                        animator.Play("DosukoiBack");
+                        break;
 
-                        case AttackPattern.DosukoiFront:
-                            animator.Play("DosukoiFront");
-                            break;
+                    case AttackPattern.DosukoiFront:
+                        animator.Play("DosukoiFront");
+                        break;
 
-                        case AttackPattern.DosukoiSide:
+                    case AttackPattern.DosukoiSide:
 
+                        if (Y == 0)
+                        {
                             if (vx == 0 && vz == 0)
                             {
                                 animator.Play("Dosukoi");
@@ -361,46 +344,71 @@ public class NekketsuAction : MonoBehaviour
                             {
                                 animator.Play("DosukoiWalk");
                             }
-                            
-                            break;
+                        }
 
-                        case AttackPattern.Hiji:
+                        break;
 
-                            if (vx == 0 && vz == 0)
-                            {
-                                animator.Play("Hiji");
-                            }
-                            else
-                            {
-                                animator.Play("HjiWalk");
-                            }
+                    case AttackPattern.Hiji:
 
-                            break;
+                        if (vx == 0 && vz == 0)
+                        {
+                            animator.Play("Hiji");
+                        }
+                        else
+                        {
+                            animator.Play("HjiWalk");
+                        }
 
-                        case AttackPattern.JumpKick:
-                            if (jumpFlag)
-                            {
+                        break;
 
-                            }
+                    case AttackPattern.JumpKick:
+                        if (0 < Y)
+                        {
                             animator.Play("JumpKick");
-                            break;
+                        }
+                        else
+                        {
+                            NowAttack = AttackPattern.None;
+                        }
 
-                        case AttackPattern.None:
+                        break;
 
-                            if (vx == 0 && vz == 0)
-                            {
-                                //animator.Play("Stanging");
-                                animator.SetBool("Walk", false);
+                    case AttackPattern.JumpDosukoiSide:
+                        if (0 < Y)
+                        {
+                            animator.Play("UmaHariteJump");
+                        }
+                        else
+                        {
+                            NowAttack = AttackPattern.None;
+                        }
+                        break;
 
-                            }
-                            else
-                            {
-                                //animator.Play("Walk");
-                                animator.SetBool("Walk", true);
-                            }
 
-                            break;
-                    }
+                    case AttackPattern.None:
+
+                        if (vx == 0 && vz == 0)
+                        {
+                            //animator.Play("Stanging");
+                            animator.SetBool("Walk", false);
+
+                        }
+                        else
+                        {
+                            //animator.Play("Walk");
+                            animator.SetBool("Walk", true);
+                        }
+
+                        if (jumpFlag)
+                        {
+                            //animator.SetBool("Jump", true);
+                            animator.Play("Jump");
+                        }
+                        else
+                        {
+                            //animator.SetBool("Jump", false);
+                        }
+                        break;
                 }
             }
             else

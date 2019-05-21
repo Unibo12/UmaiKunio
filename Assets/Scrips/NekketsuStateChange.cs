@@ -34,13 +34,9 @@ public class NekketsuStateChange
             {
                 if (NAct.jumpFlag)
                 {
-                    if (NAct.leftFlag)
+                    if (!NAct.leftFlag)
                     {
-                        NAct.NowAttack = AttackPattern.JumpDosukoiSide;
-                    }
-                    else
-                    {
-                        NAct.NowAttack = AttackPattern.JumpKick;                      
+                        NAct.NowAttack = AttackPattern.JumpKick;
                     }
                 }
                 else
@@ -62,16 +58,9 @@ public class NekketsuStateChange
             {
                 if (NAct.jumpFlag)
                 {
-                    if (NAct.jumpFlag)
+                    if (NAct.leftFlag)
                     {
-                        if (NAct.leftFlag)
-                        {
-                            NAct.NowAttack = AttackPattern.JumpKick;
-                        }
-                        else
-                        {
-                            NAct.NowAttack = AttackPattern.JumpDosukoiSide;
-                        }
+                        NAct.NowAttack = AttackPattern.JumpKick;
                     }
                 }
                 else
@@ -104,7 +93,11 @@ public class NekketsuStateChange
 
     void DosukoiVector()
     {
-        if ((NAct.ZInputState == ZInputState.ZBackPushMoment
+        if (NAct.jumpFlag)
+        {
+            NAct.NowAttack = AttackPattern.JumpDosukoiSide;
+        }
+        else if ((NAct.ZInputState == ZInputState.ZBackPushMoment
             || NAct.ZInputState == ZInputState.ZBackPushButton)
             && !NAct.jumpFlag)
         {
