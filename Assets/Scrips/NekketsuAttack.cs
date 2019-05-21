@@ -217,6 +217,14 @@ public class NekketsuAttack : MonoBehaviour
                              hitBoxY + 0.2f,
                              0.4f, 0.4f);
 
+                break;
+
+            case 3:
+                Nmng.Umaibou.hitBox =
+                    new Rect(hitBoxX + (0.6f * RightMinusVector),
+                             hitBoxY + 0.2f,
+                             0.4f, 0.4f);
+
                 Nmng.Umaibou.NowAttack = AttackPattern.None;
 
                 break;

@@ -20,8 +20,8 @@ public class UmaiboSandbag : MonoBehaviour
     GameObject playerObjct;
     NekketsuManager Nmng;
 
-    public AudioClip audioClip1;
-    public AudioClip audioClip2;
+    public AudioClip hit;
+    public AudioClip dosukoiHit;
     public AudioClip audioClip3;
     private AudioSource audioSource;
 
@@ -44,6 +44,90 @@ public class UmaiboSandbag : MonoBehaviour
     {
         Vector3 scale = transform.localScale;
 
+        // どすこい奥手前は、Z -0.4で処理できない。今後のためにも改良すべし
+        if ((Z - 0.4f <= Nmng.Umaibou.Z && Nmng.Umaibou.Z <= Z + 0.4f)
+            && Nmng.Umaibou.hitBox.Overlaps(UmaiboSandbagHitBox))
+        {
+            animator.Play("UmaHitFrontWh");
+
+            // ノックバックもどき仮
+            if (UmaiboSandbagHitBox.x < Nmng.Umaibou.hitBox.x)
+            {
+
+                if (Nmng.Umaibou.NowAttack == AttackPattern.DosukoiBack)
+                {
+                    Z += 0.01f;
+                }
+                else if (Nmng.Umaibou.NowAttack == AttackPattern.DosukoiFront)
+                {
+                    Z -= 0.02f;
+                }
+                else
+                {
+                    X -= 0.02f;
+                    scale.x = 1; // そのまま（右向き）
+                }
+
+
+                if (!audioSource.isPlaying)
+                {
+                    if (Nmng.Umaibou.NowAttack == AttackPattern.DosukoiSide
+                        || Nmng.Umaibou.NowAttack == AttackPattern.DosukoiBack
+                        || Nmng.Umaibou.NowAttack == AttackPattern.DosukoiFront)
+                    {
+                        audioSource.clip = dosukoiHit;
+                        audioSource.Play();
+
+                    }
+                    else
+                    {
+                        audioSource.clip = hit;
+                        audioSource.Play();
+                    }
+                }
+            }
+            else
+            {
+                if (Nmng.Umaibou.NowAttack == AttackPattern.DosukoiBack)
+                {
+                    Z += 0.02f;
+                }
+                else if(Nmng.Umaibou.NowAttack == AttackPattern.DosukoiFront)
+                {
+                    Z -= 0.02f;
+                }
+                else
+                {
+                    X += 0.01f;
+                    scale.x = -1; // 反転する（左向き）
+                }
+
+
+                if (!audioSource.isPlaying)
+                {
+                    if (Nmng.Umaibou.NowAttack == AttackPattern.DosukoiSide
+                        || Nmng.Umaibou.NowAttack == AttackPattern.DosukoiBack
+                        || Nmng.Umaibou.NowAttack == AttackPattern.DosukoiFront)
+                    {
+                        audioSource.clip = dosukoiHit;
+                        audioSource.Play();
+                    }
+                    else
+                    {
+                        audioSource.clip = hit;
+                        audioSource.Play();
+                    }
+                }
+
+            }
+
+            transform.localScale = scale;
+        }
+        else
+        {
+            animator.Play("UmaStamdingWh");
+        }
+
 
         #region 画面への描画
         // 入力された内部XYZをtransformに設定する。
@@ -59,37 +143,6 @@ public class UmaiboSandbag : MonoBehaviour
 
         transform.position = pos;
         #endregion
-
-        // どすこい奥手前は、Z -0.4で処理できない。今後のためにも改良すべし
-        if ((Z - 0.4f <= Nmng.Umaibou.Z && Nmng.Umaibou.Z <= Z + 0.4f)
-            && Nmng.Umaibou.hitBox.Overlaps(UmaiboSandbagHitBox))
-        {
-            animator.Play("UmaHitFrontWh");
-
-            // ノックバックもどき仮
-            if (UmaiboSandbagHitBox.x < Nmng.Umaibou.hitBox.x)
-            {
-                X -= 0.01f;
-                scale.x = 1; // そのまま（右向き）
-
-                //うるさい！
-                //audioSource.clip = audioClip1;
-                //audioSource.Play();
-                //audioSource.Play();
-
-            }
-            else
-            {
-                X += 0.01f;
-                scale.x = -1; // 反転する（左向き）
-            }
-
-            transform.localScale = scale;
-        }
-        else
-        {
-            animator.Play("UmaStamdingWh");
-        }
     }
 
     void OnDrawGizmos()

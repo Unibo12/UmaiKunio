@@ -10,6 +10,7 @@ public class NekketsuSound : MonoBehaviour
     public AudioClip Brake;
     public AudioClip Jump;
     public AudioClip punch;
+    public AudioClip hit;
     private AudioSource audioSource;
 
     private void Start()
@@ -59,6 +60,15 @@ public class NekketsuSound : MonoBehaviour
                         || Nmng.Umaibou.NowAttack == AttackPattern.JumpDosukoiSide))
         {
             audioSource.clip = punch;
+            audioSource.Play();
+        }
+
+
+        // ブレーキ
+        if (!audioSource.isPlaying
+            && Nmng.Umaibou.NowDamage == DamagePattern.groggy)
+        {
+            audioSource.clip = hit;
             audioSource.Play();
         }
     }
