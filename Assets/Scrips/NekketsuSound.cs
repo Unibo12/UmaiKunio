@@ -2,19 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 効果音(SE)を管理するクラス
+/// </summary>
 public class NekketsuSound : MonoBehaviour
 {
     GameObject playerObjct;
     NekketsuManager Nmng;
 
+    //private NekketsuMove NMove; //NekketsuMoveを呼び出す際に使用
+
     public AudioClip Brake;
     public AudioClip Jump;
-    public AudioClip punch;
+    public AudioClip attack;
     public AudioClip hit;
     private AudioSource audioSource;
 
     private void Start()
     {
+        //NMove = new NekketsuMove(this);
+
         playerObjct = GameObject.Find("NekketsuManager");
         Nmng = playerObjct.GetComponent<NekketsuManager>();
 
@@ -41,7 +48,7 @@ public class NekketsuSound : MonoBehaviour
         }
 
         // ブレーキ
-        if (!audioSource.isPlaying 
+        if (!audioSource.isPlaying
             && Nmng.Umaibou.brakeFlag)
         {
             audioSource.clip = Brake;
@@ -59,12 +66,11 @@ public class NekketsuSound : MonoBehaviour
                     && (Nmng.Umaibou.NowAttack == AttackPattern.JumpKick
                         || Nmng.Umaibou.NowAttack == AttackPattern.JumpDosukoiSide))
         {
-            audioSource.clip = punch;
+            audioSource.clip = attack;
             audioSource.Play();
         }
 
-
-        // ブレーキ
+        // テスト（うにうにくん被弾時ダメージ）
         if (!audioSource.isPlaying
             && Nmng.Umaibou.NowDamage == DamagePattern.groggy)
         {
@@ -72,4 +78,30 @@ public class NekketsuSound : MonoBehaviour
             audioSource.Play();
         }
     }
+
+    /// <summary>
+    /// 効果音を再生させる。
+    /// </summary>
+    /// <param name="se"></param>
+    public void SEPlay(SEPattern se)
+    {
+        if (se == SEPattern.brake)
+        {
+            audioSource.clip = Brake;
+        }
+        else if (se == SEPattern.attack)
+        {
+            audioSource.clip = attack;
+        }
+        else
+        {
+
+        }
+
+        audioSource.Play();
+    }
+
+
 }
+
+

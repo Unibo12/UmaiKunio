@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 攻撃喰らい判定を管理するクラス
+/// </summary>
 public class NekketsuHurtBox
 {
     NekketsuAction NAct; //NekketsuActionが入る変数

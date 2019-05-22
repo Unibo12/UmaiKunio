@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// ジャンプを管理するクラス
+/// </summary>
 public class NekketsuJump
 {
     // GameObject GObj; //ゲームオブジェクトそのものが入る変数
@@ -19,6 +22,9 @@ public class NekketsuJump
         NAct = nekketsuAction;
     }
 
+    /// <summary>
+    /// ジャンプ・空中制御・しゃがみ状態を管理
+    /// </summary>
     public void JumpMain()
     {
         #region 空中制御

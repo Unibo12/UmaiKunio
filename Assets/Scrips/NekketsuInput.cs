@@ -2,8 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// コントローラ(キーボード)の入力を管理するクラス
+/// </summary>
 public class NekketsuInput
 {
+    // GameObject GObj; //ゲームオブジェクトそのものが入る変数s
     NekketsuAction NAct; //NekketsuActionが入る変数
 
     public NekketsuInput(NekketsuAction nekketsuAction)
@@ -11,12 +15,14 @@ public class NekketsuInput
         NAct = nekketsuAction;
     }
 
+    /// <summary>
+    /// キー入力の状態を常に監視し、入力状態を切り替える。
+    /// </summary>
     public void InputMain()
     {
-        //ボタン入力
-        //Input.GetKeyDown   ：押した瞬間
-        //Input.GetKey       ：押している状態
-        //Input.GetKeyUp     ：押している状態から離した瞬間
+        //NStateChange = new NekketsuStateChange(this);
+
+        //ボタン入力はInput.GetButton Input.GetButtonDown InputGetButtonUp から判断する。
 
         #region ジャンプステータス判定
 
@@ -194,5 +200,77 @@ public class NekketsuInput
         #endregion
 
         #endregion
+
+        #region 攻撃処理
+
+
+        if ((Input.GetKey("z") || Input.GetKey("joystick button 0")))
+        {
+            if (NAct.leftFlag)
+            {
+                DosukoiVector();
+            }
+            else
+            {
+                if (NAct.jumpFlag)
+                {
+                    NAct.NowAttack = AttackPattern.JumpKick;
+                }
+                else
+                {
+                    NAct.NowAttack = AttackPattern.Hiji;
+                }
+            }
+        }
+        else if ((Input.GetKey("x") || Input.GetKey("joystick button 1")))
+        {
+
+
+            if (NAct.leftFlag)
+            {
+                if (NAct.jumpFlag)
+                {
+                    NAct.NowAttack = AttackPattern.JumpKick;
+                }
+                else
+                {
+                    NAct.NowAttack = AttackPattern.Hiji;
+                }
+            }
+            else
+            {
+                DosukoiVector();
+            }
+        }
+        else if ((Input.GetKey("s") || Input.GetKey("joystick button 3")))
+        {
+            //animator.Play("UmaThrow");
+        }
+        else
+        {
+            NAct.NowAttack = AttackPattern.None;
+        }
+        #endregion
+    }
+
+    /// <summary>
+    ///　キー入力より、どすこい張り手の奥・手前・横の状態を判断する。
+    /// </summary>
+    void DosukoiVector()
+    {
+        if (NAct.ZInputState == ZInputState.ZBackPushMoment
+            || NAct.ZInputState == ZInputState.ZBackPushButton)
+        {
+            NAct.NowAttack = AttackPattern.DosukoiBack;
+        }
+        else if (NAct.ZInputState == ZInputState.ZFrontPushMoment
+                 || NAct.ZInputState == ZInputState.ZFrontPushButton)
+        {
+            NAct.NowAttack = AttackPattern.DosukoiFront;
+        }
+        else
+        {
+            NAct.NowAttack = AttackPattern.DosukoiSide;
+        }
     }
 }

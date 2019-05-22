@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 各オブジェクト(プレイヤー・アイテム)等が
+/// それぞれを参照できるよう一元管理するクラス
+/// </summary>
 public class NekketsuManager : MonoBehaviour
 {
     private GameObject playerObjct;

@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// 熱血風アクション
+/// <summary>
+/// 熱血風アクション
+/// </summary>
 public class NekketsuAction : MonoBehaviour
 {
     #region 変数定義
@@ -14,7 +16,6 @@ public class NekketsuAction : MonoBehaviour
     private NekketsuSound NSound;
     private NekketsuAttack NAttack;
     public NekketsuManager Nmng;
-
 
     private NekketsuMove NMove; //NekketsuMoveを呼び出す際に使用
     private NekketsuJump NJump; //NekketsuJumpを呼び出す際に使用
@@ -55,7 +56,7 @@ public class NekketsuAction : MonoBehaviour
     // *****共通変数*****
 
     #endregion
-
+    
     void Start()
     {   
         // 最初に行う
@@ -427,27 +428,6 @@ public class NekketsuAction : MonoBehaviour
 
         #endregion
     }
-
-
-    //void Sound(string soundName)
-    //{
-    //    switch (soundName)
-    //    {
-    //        case "Brake":
-    //            audioSource.clip = Brake;
-    //            audioSource.Play();
-    //            break;
-
-    //        case "Jump":
-    //            if (Y < 10f)
-    //            {
-    //                audioSource.clip = Jump;
-    //                audioSource.Play();
-    //            }
-    //            break;
-    //    }
-    //}
-
 
     void OnDrawGizmos()
     {

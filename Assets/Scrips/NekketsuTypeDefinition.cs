@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// キー入力状態や、ステータスを定義するクラス
+/// </summary>
+
 #region 列挙体 Enum
 
 #region Enum ジャンプボタン押下ステータス
@@ -56,7 +60,6 @@ public enum VectorZ
 }
 #endregion
 
-
 #region Enum 攻撃パターン(とりあえずクロカン障害のみ)
 public enum AttackPattern
 {
@@ -76,6 +79,19 @@ public enum DamagePattern
 {
     None,
     groggy
+}
+#endregion
+
+#region Enum 効果音パターン
+public enum SEPattern
+{
+    None,
+    brake,
+    dosukoiHit,
+    hijiHit,
+    hit,
+    jump,
+    attack
 }
 #endregion
 

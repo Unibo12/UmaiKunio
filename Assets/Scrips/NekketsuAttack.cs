@@ -2,26 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 攻撃の状態・攻撃当たり判定を管理するクラス
+/// 各攻撃メソッドはアニメーションから、モーションの毎に呼び出される
+/// </summary>
 public class NekketsuAttack : MonoBehaviour
 {
-    GameObject playerObjct;
+    GameObject gameObjct;
     NekketsuManager Nmng;
+    NekketsuSound NSound;
 
-    public AudioClip audioClip1;
-    public AudioClip audioClip2;
-    public AudioClip audioClip3;
-    private AudioSource audioSource;
-
-    // Start is called before the first frame update
     void Start()
     {
-        playerObjct = GameObject.Find("NekketsuManager");
-        Nmng = playerObjct.GetComponent<NekketsuManager>();
+        gameObjct = GameObject.Find("NekketsuManager");
+        Nmng = gameObjct.GetComponent<NekketsuManager>();
 
-        audioSource = gameObject.GetComponent<AudioSource>();
+        NSound = this.gameObject.GetComponent<NekketsuSound>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         //Nmng.Umaibou.hitBox = new Rect(hitBoxX, hitBoxY, 0, 0);
@@ -56,8 +54,7 @@ public class NekketsuAttack : MonoBehaviour
                                hitBoxY + 0.2f,
                                0.6f, 0.5f);
 
-                audioSource.clip = audioClip1;
-                audioSource.Play();
+                NSound.SEPlay(SEPattern.attack);
 
                 break;
 
@@ -93,8 +90,7 @@ public class NekketsuAttack : MonoBehaviour
                                hitBoxY + 0.2f,
                                0.4f, 0.5f);
 
-                audioSource.clip = audioClip1;
-                audioSource.Play();
+                NSound.SEPlay(SEPattern.attack);
                 break;
 
             case 2:
@@ -128,8 +124,7 @@ public class NekketsuAttack : MonoBehaviour
                                hitBoxY + 0.2f,
                                0.6f, 0.5f);
 
-                audioSource.clip = audioClip1;
-                audioSource.Play();
+                NSound.SEPlay(SEPattern.attack);
                 break;
 
             case 2:
@@ -164,9 +159,7 @@ public class NekketsuAttack : MonoBehaviour
                                hitBoxY + 0.2f,
                                0.6f, 0.5f);
 
-                audioSource.clip = audioClip1;
-                audioSource.Play();
-
+                NSound.SEPlay(SEPattern.attack);
                 break;
 
             case 2:
@@ -206,9 +199,7 @@ public class NekketsuAttack : MonoBehaviour
                              hitBoxY + 0.2f,
                              0.4f, 0.4f);
 
-                audioSource.clip = audioClip1;
-                audioSource.Play();
-
+                NSound.SEPlay(SEPattern.attack);
                 break;
 
             case 2:
@@ -250,8 +241,7 @@ public class NekketsuAttack : MonoBehaviour
                              hitBoxY - 0.65f,
                              0.8f, 0.4f);
 
-                //audioSource.clip = audioClip1;
-                //audioSource.Play();
+                //NSound.SEPlay(SEPattern.Attack);
 
                 if (!Nmng.Umaibou.jumpFlag
                     || Nmng.Umaibou.Y <= 0
