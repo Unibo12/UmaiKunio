@@ -1026,9 +1026,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2180855117551649aac4b5b60a839e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioClip1: {fileID: 8300000, guid: 5553a6465bdb39d4789390f6d864d7ef, type: 3}
-  audioClip2: {fileID: 0}
-  audioClip3: {fileID: 0}
 --- !u!82 &820763017
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1139,7 +1136,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Brake: {fileID: 8300000, guid: 069364118ec7903418bcbd7ebe0013c0, type: 3}
   Jump: {fileID: 8300000, guid: e3058e10d591e00489fd2de06892be1b, type: 3}
-  punch: {fileID: 8300000, guid: 5553a6465bdb39d4789390f6d864d7ef, type: 3}
+  attack: {fileID: 8300000, guid: 5553a6465bdb39d4789390f6d864d7ef, type: 3}
   hit: {fileID: 8300000, guid: 291f5a2bed9a42744bae5c90afd4043a, type: 3}
 --- !u!1 &945995172
 GameObject:
@@ -2187,7 +2184,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 4416e1c2dab2dc14e80b98eb717d067e, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.1
+  m_Volume: 0
   m_Pitch: 1
   Loop: 1
   Mute: 0
