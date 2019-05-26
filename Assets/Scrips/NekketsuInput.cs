@@ -203,8 +203,7 @@ public class NekketsuInput
 
         #region 攻撃処理
 
-
-        if ((Input.GetKey("z") || Input.GetKey("joystick button 0")))
+        if ((Input.GetKeyDown("z") || Input.GetKeyDown("joystick button 0")))
         {
             if (NAct.leftFlag)
             {
@@ -214,27 +213,45 @@ public class NekketsuInput
             {
                 if (NAct.jumpFlag)
                 {
-                    NAct.NowAttack = AttackPattern.JumpKick;
+                    if (!NAct.leftFlag)
+                    {
+                        NAct.NowAttack = AttackPattern.JumpKick;
+                    }
                 }
                 else
                 {
-                    NAct.NowAttack = AttackPattern.Hiji;
+                    if (NAct.vx == 0 && NAct.vz == 0)
+                    {
+                        NAct.NowAttack = AttackPattern.Hiji;
+                    }
+                    else
+                    {
+                        NAct.NowAttack = AttackPattern.HijiWalk;
+                    }
                 }
             }
         }
-        else if ((Input.GetKey("x") || Input.GetKey("joystick button 1")))
+        else if ((Input.GetKeyDown("x") || Input.GetKeyDown("joystick button 1")))
         {
-
-
             if (NAct.leftFlag)
             {
                 if (NAct.jumpFlag)
                 {
-                    NAct.NowAttack = AttackPattern.JumpKick;
+                    if (NAct.leftFlag)
+                    {
+                        NAct.NowAttack = AttackPattern.JumpKick;
+                    }
                 }
                 else
                 {
-                    NAct.NowAttack = AttackPattern.Hiji;
+                    if (NAct.vx == 0 && NAct.vz == 0)
+                    {
+                        NAct.NowAttack = AttackPattern.Hiji;
+                    }
+                    else
+                    {
+                        NAct.NowAttack = AttackPattern.HijiWalk;
+                    }
                 }
             }
             else
@@ -242,13 +259,13 @@ public class NekketsuInput
                 DosukoiVector();
             }
         }
-        else if ((Input.GetKey("s") || Input.GetKey("joystick button 3")))
+        else if ((Input.GetKeyDown("s") || Input.GetKeyDown("joystick button 3")))
         {
             //animator.Play("UmaThrow");
         }
         else
         {
-            NAct.NowAttack = AttackPattern.None;
+            //NAct.NowAttack = AttackPattern.None;
         }
         #endregion
     }
@@ -258,13 +275,19 @@ public class NekketsuInput
     /// </summary>
     void DosukoiVector()
     {
-        if (NAct.ZInputState == ZInputState.ZBackPushMoment
+        if (NAct.jumpFlag)
+        {
+            NAct.NowAttack = AttackPattern.JumpDosukoiSide;
+        }
+        else if ((NAct.ZInputState == ZInputState.ZBackPushMoment
             || NAct.ZInputState == ZInputState.ZBackPushButton)
+            && !NAct.jumpFlag)
         {
             NAct.NowAttack = AttackPattern.DosukoiBack;
         }
-        else if (NAct.ZInputState == ZInputState.ZFrontPushMoment
+        else if ((NAct.ZInputState == ZInputState.ZFrontPushMoment
                  || NAct.ZInputState == ZInputState.ZFrontPushButton)
+                 && !NAct.jumpFlag)
         {
             NAct.NowAttack = AttackPattern.DosukoiFront;
         }
