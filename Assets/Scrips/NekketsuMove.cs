@@ -8,7 +8,7 @@ using UnityEngine;
 public class NekketsuMove
 {
     NekketsuAction NAct; //NekketsuActionが入る変数
-    //NekketsuSound NSound;
+    NekketsuSound NSound;
 
     bool pushMove = false;   //ダッシュする事前準備として、左右移動ボタンが既に押されているか否か
     bool leftDash = false;   //ダッシュする方向(左を正とする)
@@ -20,17 +20,12 @@ public class NekketsuMove
     {
         NAct = nekketsuAction;
     }
-    //public NekketsuMove(NekketsuSound nekketsuSound)
-    //{
-    //    NSound = nekketsuSound;
-    //}
-
 
     /// <summary>
     /// 熱血インプットで入力された値を元に、
     /// 移動・ダッシュ・ブレーキの状態を管理
     /// </summary>
-    public void MoveMain()
+    public void MoveMain(NekketsuSound NSound)
     {
         if (!NAct.squatFlag)
         {
@@ -168,7 +163,7 @@ public class NekketsuMove
                         if (!NAct.jumpFlag)
                         {
                             NAct.brakeFlag = true;
-                            //NSound.SEPlay(SEPattern.brake);
+                            NSound.SEPlay(SEPattern.brake);
                         }
                     }
                     else

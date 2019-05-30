@@ -25,7 +25,7 @@ public class NekketsuJump
     /// <summary>
     /// ジャンプ・空中制御・しゃがみ状態を管理
     /// </summary>
-    public void JumpMain()
+    public void JumpMain(NekketsuSound NSound)
     {
         #region 空中制御
 
@@ -171,6 +171,8 @@ public class NekketsuJump
                         JumpZ = VectorZ.None;
                     }
                 }
+                NSound.SEPlay(SEPattern.jump);
+
             }
 
             // ジャンプ状態

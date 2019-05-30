@@ -15,7 +15,7 @@ public class NekketsuHurtBox
         NAct = nekketsuAction;
     }
 
-    public void HurtBoxMain()
+    public void HurtBoxMain(NekketsuSound NSound)
     {
         //DamageTest.csで指定された座標に移動すると、喰らい判定が発生するテスト
 
@@ -23,6 +23,10 @@ public class NekketsuHurtBox
             && NAct.hurtBox.Overlaps(NAct.Nmng.uni.hitBoxTEST))
         {
             NAct.NowDamage = DamagePattern.groggy;
+            if (!NSound.audioSource.isPlaying)
+            {
+                NSound.SEPlay(SEPattern.hit);
+            }
         }
         else
         {

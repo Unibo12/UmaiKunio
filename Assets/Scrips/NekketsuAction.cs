@@ -37,7 +37,7 @@ public class NekketsuAction : MonoBehaviour
     public float vy = 0;   //内部Y値用変数
     public float vz = 0;   //内部Z値用変数
 
-    public Rect hurtBox = new Rect (0,0,0.7f,1.6f);
+    public Rect hurtBox = new Rect(0, 0, 0.7f, 1.6f);
     public Rect hitBox = new Rect(0, 0, 0, 0);
 
     public bool leftFlag = false; // 左向きかどうか
@@ -56,9 +56,9 @@ public class NekketsuAction : MonoBehaviour
     // *****共通変数*****
 
     #endregion
-    
+
     void Start()
-    {   
+    {
         // 最初に行う
         pos = transform.position;
         animator = this.GetComponent<Animator>();
@@ -71,12 +71,11 @@ public class NekketsuAction : MonoBehaviour
         Nmng = gameObjct.GetComponent<NekketsuManager>();
 
         // 生成（コンストラクタ）の引数にNekketsuActionを渡してやる
-        NMove = new NekketsuMove(this); 
+        NMove = new NekketsuMove(this);
         NJump = new NekketsuJump(this);
         NInput = new NekketsuInput(this);
         NHurtBox = new NekketsuHurtBox(this);
         NStateChange = new NekketsuStateChange(this);
-        //NSound= new NekketsuSound(this);
     }
 
     void Update()
@@ -92,19 +91,19 @@ public class NekketsuAction : MonoBehaviour
         NStateChange.StateChangeMain();
 
         // 効果音の処理
-        NSound.SoundMain();
+        //NSound.SoundMain();
 
         // 攻撃の処理
         NAttack.AttackMain();
 
         // 移動処理呼び出し
-        NMove.MoveMain();
+        NMove.MoveMain(NSound);
 
         // ジャンプ処理呼び出し
-        NJump.JumpMain();
+        NJump.JumpMain(NSound);
 
         // 攻撃喰らい判定
-        NHurtBox.HurtBoxMain();
+        NHurtBox.HurtBoxMain(NSound);
 
         #region 画面への描画
         // 入力された内部XYZをtransformに設定する。
