@@ -45,7 +45,7 @@ public class NekketsuAction : MonoBehaviour
     public bool dashFlag = false;   //走っているか否か
     public bool squatFlag = false;  //しゃがみ状態フラグ
     public bool brakeFlag = false;  //ブレーキフラグ
-    //public bool AttackFlag = false;  //攻撃フラグ(空中攻撃を出しっぱなしにする)
+    public bool AttackMomentFlag = false;  //攻撃し始めフラグ(空中攻撃出し始め判定)
 
     public JumpButtonPushState JumpButtonState; //ジャンプボタン押下ステータス
     public XInputState XInputState = 0; //疑似Xに対する入力ステータス
@@ -89,9 +89,6 @@ public class NekketsuAction : MonoBehaviour
 
         // 入力されたインプット内容でステータスを変更
         NStateChange.StateChangeMain();
-
-        // 効果音の処理
-        //NSound.SoundMain();
 
         // 攻撃の処理
         NAttack.AttackMain();

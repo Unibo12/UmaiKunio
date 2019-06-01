@@ -159,7 +159,10 @@ public class NekketsuAttack : MonoBehaviour
                                hitBoxY + 0.2f,
                                0.6f, 0.5f);
 
-                NSound.SEPlay(SEPattern.attack);
+                if (Nmng.Umaibou.AttackMomentFlag)
+                {
+                    NSound.SEPlay(SEPattern.attack);
+                }
                 break;
 
             case 2:
@@ -241,7 +244,10 @@ public class NekketsuAttack : MonoBehaviour
                              hitBoxY - 0.65f,
                              0.8f, 0.4f);
 
-                //NSound.SEPlay(SEPattern.Attack);
+                if (Nmng.Umaibou.AttackMomentFlag)
+                {
+                    NSound.SEPlay(SEPattern.attack);
+                }
 
                 if (!Nmng.Umaibou.jumpFlag
                     || Nmng.Umaibou.Y <= 0

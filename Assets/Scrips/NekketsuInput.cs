@@ -203,6 +203,7 @@ public class NekketsuInput
         #endregion
 
         #region 攻撃処理
+        NAct.AttackMomentFlag = false;
 
         if ((Input.GetKeyDown("z") || Input.GetKeyDown("joystick button 0")))
         {
@@ -217,6 +218,7 @@ public class NekketsuInput
                     if (!NAct.leftFlag)
                     {
                         NAct.NowAttack = AttackPattern.JumpKick;
+                        NAct.AttackMomentFlag = true;
                     }
                 }
                 else
@@ -241,6 +243,7 @@ public class NekketsuInput
                     if (NAct.leftFlag)
                     {
                         NAct.NowAttack = AttackPattern.JumpKick;
+                        NAct.AttackMomentFlag = true;
                     }
                 }
                 else
@@ -279,6 +282,7 @@ public class NekketsuInput
         if (NAct.jumpFlag)
         {
             NAct.NowAttack = AttackPattern.JumpDosukoiSide;
+            NAct.AttackMomentFlag = true;
         }
         else if ((NAct.ZInputState == ZInputState.ZBackPushMoment
             || NAct.ZInputState == ZInputState.ZBackPushButton)
