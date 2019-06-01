@@ -159,93 +159,25 @@ public class NekketsuAction : MonoBehaviour
         {
             if (!squatFlag && !brakeFlag)
             {
-                switch (NowAttack)
+                // 現在の攻撃状態をアニメーションさせる。
+                animator.Play(NowAttack.ToString());
+
+                // アニメーション 攻撃以外
+                if (NowAttack == AttackPattern.None)
                 {
-                    case AttackPattern.DosukoiBack:
-                        animator.Play("DosukoiBack");
-                        break;
+                    if (vx == 0 && vz == 0)
+                    {
+                        animator.SetBool("Walk", false);
+                    }
+                    else
+                    {
+                        animator.SetBool("Walk", true);
+                    }
 
-                    case AttackPattern.DosukoiFront:
-                        animator.Play("DosukoiFront");
-                        break;
-
-                    case AttackPattern.DosukoiSide:
-
-                        if (Y == 0)
-                        {
-                            if (vx == 0 && vz == 0)
-                            {
-                                animator.Play("Dosukoi");
-                            }
-                            else
-                            {
-                                animator.Play("DosukoiWalk");
-                            }
-                        }
-
-                        break;
-
-                    case AttackPattern.Hiji:
-
-                        if (vx == 0 && vz == 0)
-                        {
-                            animator.Play("Hiji");
-                        }
-                        else
-                        {
-                            animator.Play("HjiWalk");
-                        }
-
-                        break;
-
-                    case AttackPattern.JumpKick:
-                        if (0 < Y)
-                        {
-                            animator.Play("JumpKick");
-                        }
-                        else
-                        {
-                            NowAttack = AttackPattern.None;
-                        }
-
-                        break;
-
-                    case AttackPattern.JumpDosukoiSide:
-                        if (0 < Y)
-                        {
-                            animator.Play("UmaHariteJump");
-                        }
-                        else
-                        {
-                            NowAttack = AttackPattern.None;
-                        }
-                        break;
-
-
-                    case AttackPattern.None:
-
-                        if (vx == 0 && vz == 0)
-                        {
-                            //animator.Play("Stanging");
-                            animator.SetBool("Walk", false);
-
-                        }
-                        else
-                        {
-                            //animator.Play("Walk");
-                            animator.SetBool("Walk", true);
-                        }
-
-                        if (jumpFlag)
-                        {
-                            //animator.SetBool("Jump", true);
-                            animator.Play("Jump");
-                        }
-                        else
-                        {
-                            //animator.SetBool("Jump", false);
-                        }
-                        break;
+                    if (jumpFlag)
+                    {
+                        animator.Play("Jump");
+                    }
                 }
             }
             else

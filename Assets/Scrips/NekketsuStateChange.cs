@@ -22,7 +22,12 @@ public class NekketsuStateChange
 
     void AttackStateChange()
     {
-
+        if((NAct.NowAttack == AttackPattern.JumpKick
+           || NAct.NowAttack == AttackPattern.UmaHariteJump)
+            && NAct.Y <= 0)
+        {
+            NAct.NowAttack = AttackPattern.None;
+        }
     }
 }
 

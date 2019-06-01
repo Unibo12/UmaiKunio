@@ -64,13 +64,14 @@ public enum VectorZ
 public enum AttackPattern
 {
     None,
-    DosukoiSide,
+    Dosukoi,
     DosukoiBack,
     DosukoiFront,
+    DosukoiWalk,
     Hiji,
     HijiWalk,
     JumpKick,
-    JumpDosukoiSide,
+    UmaHariteJump,
 }
 #endregion
 

@@ -213,7 +213,7 @@ public class NekketsuInput
             }
             else
             {
-                if (NAct.jumpFlag)
+                if (NAct.jumpFlag && NAct.Y >= 0)
                 {
                     if (!NAct.leftFlag)
                     {
@@ -223,7 +223,8 @@ public class NekketsuInput
                 }
                 else
                 {
-                    if (NAct.vx == 0 && NAct.vz == 0)
+                    if (NAct.XInputState == XInputState.XNone
+                        && NAct.ZInputState == ZInputState.ZNone)
                     {
                         NAct.NowAttack = AttackPattern.Hiji;
                     }
@@ -238,7 +239,7 @@ public class NekketsuInput
         {
             if (NAct.leftFlag)
             {
-                if (NAct.jumpFlag)
+                if (NAct.jumpFlag && NAct.Y >= 0)
                 {
                     if (NAct.leftFlag)
                     {
@@ -248,7 +249,8 @@ public class NekketsuInput
                 }
                 else
                 {
-                    if (NAct.vx == 0 && NAct.vz == 0)
+                    if (NAct.XInputState == XInputState.XNone
+                        && NAct.ZInputState == ZInputState.ZNone)
                     {
                         NAct.NowAttack = AttackPattern.Hiji;
                     }
@@ -281,7 +283,7 @@ public class NekketsuInput
     {
         if (NAct.jumpFlag)
         {
-            NAct.NowAttack = AttackPattern.JumpDosukoiSide;
+            NAct.NowAttack = AttackPattern.UmaHariteJump;
             NAct.AttackMomentFlag = true;
         }
         else if ((NAct.ZInputState == ZInputState.ZBackPushMoment
@@ -298,7 +300,17 @@ public class NekketsuInput
         }
         else
         {
-            NAct.NowAttack = AttackPattern.DosukoiSide;
+            if (NAct.XInputState == XInputState.XLeftPushButton
+                || NAct.XInputState == XInputState.XLeftPushMoment
+                || NAct.XInputState == XInputState.XRightPushButton
+                || NAct.XInputState == XInputState.XRightPushMoment)
+            {
+                NAct.NowAttack = AttackPattern.DosukoiWalk;
+            }
+            else
+            {
+                NAct.NowAttack = AttackPattern.Dosukoi;
+            }
         }
     }
 }

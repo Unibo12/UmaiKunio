@@ -71,7 +71,7 @@ public class UmaiboSandbag : MonoBehaviour
 
                 if (!audioSource.isPlaying)
                 {
-                    if (Nmng.Umaibou.NowAttack == AttackPattern.DosukoiSide
+                    if (Nmng.Umaibou.NowAttack == AttackPattern.Dosukoi
                         || Nmng.Umaibou.NowAttack == AttackPattern.DosukoiBack
                         || Nmng.Umaibou.NowAttack == AttackPattern.DosukoiFront)
                     {
@@ -105,7 +105,7 @@ public class UmaiboSandbag : MonoBehaviour
 
                 if (!audioSource.isPlaying)
                 {
-                    if (Nmng.Umaibou.NowAttack == AttackPattern.DosukoiSide
+                    if (Nmng.Umaibou.NowAttack == AttackPattern.Dosukoi
                         || Nmng.Umaibou.NowAttack == AttackPattern.DosukoiBack
                         || Nmng.Umaibou.NowAttack == AttackPattern.DosukoiFront)
                     {

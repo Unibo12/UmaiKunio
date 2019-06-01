@@ -48,7 +48,7 @@ public class NekketsuAttack : MonoBehaviour
         switch (timing)
         {
             case 1:
-                Nmng.Umaibou.NowAttack = AttackPattern.DosukoiSide;
+                Nmng.Umaibou.NowAttack = AttackPattern.Dosukoi;
                 Nmng.Umaibou.hitBox
                     = new Rect(hitBoxX + (0.6f * leftMinusVector),
                                hitBoxY + 0.2f,
@@ -59,7 +59,7 @@ public class NekketsuAttack : MonoBehaviour
                 break;
 
             case 2:
-                Nmng.Umaibou.NowAttack = AttackPattern.DosukoiSide;
+                Nmng.Umaibou.NowAttack = AttackPattern.Dosukoi;
                 Nmng.Umaibou.hitBox
                     = new Rect(hitBoxX + (0.6f * leftMinusVector),
                                hitBoxY + 0.2f,
@@ -153,7 +153,7 @@ public class NekketsuAttack : MonoBehaviour
         switch (timing)
         {
             case 1:
-                Nmng.Umaibou.NowAttack = AttackPattern.JumpDosukoiSide;
+                Nmng.Umaibou.NowAttack = AttackPattern.UmaHariteJump;
                 Nmng.Umaibou.hitBox
                     = new Rect(hitBoxX + (0.6f * leftMinusVector),
                                hitBoxY + 0.2f,
@@ -166,7 +166,7 @@ public class NekketsuAttack : MonoBehaviour
                 break;
 
             case 2:
-                Nmng.Umaibou.NowAttack = AttackPattern.JumpDosukoiSide;
+                Nmng.Umaibou.NowAttack = AttackPattern.UmaHariteJump;
                 Nmng.Umaibou.hitBox
                     = new Rect(hitBoxX + (0.6f * leftMinusVector),
                                hitBoxY + 0.2f,
