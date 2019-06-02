@@ -32,7 +32,8 @@ public class NekketsuAttack : MonoBehaviour
 
     public void AttackMain()
     {
-        if (NAct.NowAttack == AttackPattern.None)
+        if (NAct.NowAttack == AttackPattern.None
+            || NAct.NowDamage != DamagePattern.None)
         {
             None();
         }
@@ -181,7 +182,8 @@ public class NekketsuAttack : MonoBehaviour
 
                 if (!NAct.jumpFlag
                     || NAct.Y <= 0
-                    || NAct.squatFlag)
+                    || NAct.squatFlag
+                    || NAct.NowDamage != DamagePattern.None)
                 {
                     NAct.NowAttack = AttackPattern.None;
                 }
@@ -258,7 +260,8 @@ public class NekketsuAttack : MonoBehaviour
 
                 if (!NAct.jumpFlag
                     || NAct.Y <= 0
-                    || NAct.squatFlag)
+                    || NAct.squatFlag
+                    || NAct.NowDamage != DamagePattern.None)
                 {
                     NAct.NowAttack = AttackPattern.None;
                 }
