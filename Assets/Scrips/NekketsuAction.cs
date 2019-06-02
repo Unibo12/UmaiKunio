@@ -63,9 +63,8 @@ public class NekketsuAction : MonoBehaviour
         pos = transform.position;
         animator = this.GetComponent<Animator>();
 
-        gameObjct = GameObject.Find("Umaibou");
+        gameObjct = this.gameObject;
         NSound = gameObjct.GetComponent<NekketsuSound>();
-        NAttack = gameObjct.GetComponent<NekketsuAttack>();
 
         gameObjct = GameObject.Find("NekketsuManager");
         Nmng = gameObjct.GetComponent<NekketsuManager>();
@@ -76,6 +75,7 @@ public class NekketsuAction : MonoBehaviour
         NInput = new NekketsuInput(this);
         NHurtBox = new NekketsuHurtBox(this);
         NStateChange = new NekketsuStateChange(this);
+        //NAttack = new NekketsuAttack(this);
     }
 
     void Update()
@@ -91,7 +91,7 @@ public class NekketsuAction : MonoBehaviour
         NStateChange.StateChangeMain();
 
         // 攻撃の処理
-        NAttack.AttackMain();
+        //NAttack.AttackMain();
 
         // 移動処理呼び出し
         NMove.MoveMain(NSound);
@@ -132,7 +132,7 @@ public class NekketsuAction : MonoBehaviour
         #endregion
 
         #region キャラクターの影の位置描画処理
-        var shadeTransform = GameObject.Find("shade").transform;
+        var shadeTransform = GameObject.Find(this.gameObject.name + "_Shade").transform;
         pos.y = Z - 0.8f;
 
         if (!squatFlag)
@@ -159,12 +159,14 @@ public class NekketsuAction : MonoBehaviour
         {
             if (!squatFlag && !brakeFlag)
             {
-                // 現在の攻撃状態をアニメーションさせる。
-                animator.Play(NowAttack.ToString());
-
-                // アニメーション 攻撃以外
-                if (NowAttack == AttackPattern.None)
+                if (NowAttack != AttackPattern.None)
                 {
+                    // 現在の攻撃状態をアニメーションさせる。
+                    animator.Play(NowAttack.ToString());
+                }
+                else
+                {
+                    //  攻撃以外のアニメーション
                     if (vx == 0 && vz == 0)
                     {
                         animator.SetBool("Walk", false);

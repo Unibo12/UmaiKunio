@@ -9,15 +9,20 @@ using UnityEngine;
 public class NekketsuAttack : MonoBehaviour
 {
     GameObject gameObjct;
-    NekketsuManager Nmng;
+    NekketsuAction NAct;
     NekketsuSound NSound;
+
+    public NekketsuAttack(NekketsuAction nekketsuAction)
+    {
+        NAct = nekketsuAction;
+    }
 
     void Start()
     {
         gameObjct = GameObject.Find("NekketsuManager");
-        Nmng = gameObjct.GetComponent<NekketsuManager>();
-
         NSound = this.gameObject.GetComponent<NekketsuSound>();
+
+        NAct = this.gameObject.GetComponent<NekketsuAction>();
     }
 
     void Update()
@@ -27,7 +32,7 @@ public class NekketsuAttack : MonoBehaviour
 
     public void AttackMain()
     {
-        if (Nmng.Umaibou.NowAttack == AttackPattern.None)
+        if (NAct.NowAttack == AttackPattern.None)
         {
             None();
         }
@@ -35,21 +40,21 @@ public class NekketsuAttack : MonoBehaviour
 
     void None()
     {
-        Nmng.Umaibou.hitBox = new Rect(0, 0, 0, 0);
+        NAct.hitBox = new Rect(0, 0, 0, 0);
     }
 
     void DosukoiSide(float timing)
     {
-        float hitBoxX = Nmng.Umaibou.X;
-        float hitBoxY = Nmng.Umaibou.Y;
+        float hitBoxX = NAct.X;
+        float hitBoxY = NAct.Y;
         // 左方向の場合はマイナス値とする。
-        float leftMinusVector = (Nmng.Umaibou.leftFlag) ? -1 : 1;
+        float leftMinusVector = (NAct.leftFlag) ? -1 : 1;
 
         switch (timing)
         {
             case 1:
-                Nmng.Umaibou.NowAttack = AttackPattern.Dosukoi;
-                Nmng.Umaibou.hitBox
+                NAct.NowAttack = AttackPattern.Dosukoi;
+                NAct.hitBox
                     = new Rect(hitBoxX + (0.6f * leftMinusVector),
                                hitBoxY + 0.2f,
                                0.6f, 0.5f);
@@ -59,13 +64,13 @@ public class NekketsuAttack : MonoBehaviour
                 break;
 
             case 2:
-                Nmng.Umaibou.NowAttack = AttackPattern.Dosukoi;
-                Nmng.Umaibou.hitBox
+                NAct.NowAttack = AttackPattern.Dosukoi;
+                NAct.hitBox
                     = new Rect(hitBoxX + (0.6f * leftMinusVector),
                                hitBoxY + 0.2f,
                                0.6f, 0.5f);
 
-                Nmng.Umaibou.NowAttack = AttackPattern.None;
+                NAct.NowAttack = AttackPattern.None;
 
                 break;
 
@@ -77,15 +82,15 @@ public class NekketsuAttack : MonoBehaviour
 
     void DosukoiBack(float timing)
     {
-        float hitBoxX = Nmng.Umaibou.X;
-        float hitBoxY = Nmng.Umaibou.Y;
+        float hitBoxX = NAct.X;
+        float hitBoxY = NAct.Y;
         // 左方向の場合はマイナス値とする。
-        float leftMinusVector = (Nmng.Umaibou.leftFlag) ? -1 : 1;
+        float leftMinusVector = (NAct.leftFlag) ? -1 : 1;
 
         switch (timing)
         {
             case 1:
-                Nmng.Umaibou.hitBox
+                NAct.hitBox
                     = new Rect(hitBoxX + (0.3f * leftMinusVector),
                                hitBoxY + 0.2f,
                                0.4f, 0.5f);
@@ -94,12 +99,12 @@ public class NekketsuAttack : MonoBehaviour
                 break;
 
             case 2:
-                Nmng.Umaibou.hitBox
+                NAct.hitBox
                     = new Rect(hitBoxX + (0.3f * leftMinusVector),
                                hitBoxY + 0.2f,
                                0.4f, 0.5f);
 
-                Nmng.Umaibou.NowAttack = AttackPattern.None;
+                NAct.NowAttack = AttackPattern.None;
 
                 break;
 
@@ -111,15 +116,15 @@ public class NekketsuAttack : MonoBehaviour
 
     void DosukoiFront(float timing)
     {
-        float hitBoxX = Nmng.Umaibou.X;
-        float hitBoxY = Nmng.Umaibou.Y;
+        float hitBoxX = NAct.X;
+        float hitBoxY = NAct.Y;
         // 左方向の場合はマイナス値とする。
-        float leftMinusVector = (Nmng.Umaibou.leftFlag) ? -1 : 1;
+        float leftMinusVector = (NAct.leftFlag) ? -1 : 1;
 
         switch (timing)
         {
             case 1:
-                Nmng.Umaibou.hitBox
+                NAct.hitBox
                     = new Rect(hitBoxX + (0.1f * leftMinusVector),
                                hitBoxY + 0.2f,
                                0.6f, 0.5f);
@@ -128,12 +133,12 @@ public class NekketsuAttack : MonoBehaviour
                 break;
 
             case 2:
-                Nmng.Umaibou.hitBox
+                NAct.hitBox
                     = new Rect(hitBoxX + (0.1f * leftMinusVector),
                                hitBoxY + 0.2f,
                                0.6f, 0.5f);
 
-                Nmng.Umaibou.NowAttack = AttackPattern.None;
+                NAct.NowAttack = AttackPattern.None;
 
                 break;
 
@@ -145,38 +150,38 @@ public class NekketsuAttack : MonoBehaviour
 
     void JumpDosukoi(float timing)
     {
-        float hitBoxX = Nmng.Umaibou.X;
-        float hitBoxY = Nmng.Umaibou.Y;
+        float hitBoxX = NAct.X;
+        float hitBoxY = NAct.Y;
         // 左方向の場合はマイナス値とする。
-        float leftMinusVector = (Nmng.Umaibou.leftFlag) ? -1 : 1;
+        float leftMinusVector = (NAct.leftFlag) ? -1 : 1;
 
         switch (timing)
         {
             case 1:
-                Nmng.Umaibou.NowAttack = AttackPattern.UmaHariteJump;
-                Nmng.Umaibou.hitBox
+                NAct.NowAttack = AttackPattern.UmaHariteJump;
+                NAct.hitBox
                     = new Rect(hitBoxX + (0.6f * leftMinusVector),
                                hitBoxY + 0.2f,
                                0.6f, 0.5f);
 
-                if (Nmng.Umaibou.AttackMomentFlag)
+                if (NAct.AttackMomentFlag)
                 {
                     NSound.SEPlay(SEPattern.attack);
                 }
                 break;
 
             case 2:
-                Nmng.Umaibou.NowAttack = AttackPattern.UmaHariteJump;
-                Nmng.Umaibou.hitBox
+                NAct.NowAttack = AttackPattern.UmaHariteJump;
+                NAct.hitBox
                     = new Rect(hitBoxX + (0.6f * leftMinusVector),
                                hitBoxY + 0.2f,
                                0.6f, 0.5f);
 
-                if (!Nmng.Umaibou.jumpFlag
-                    || Nmng.Umaibou.Y <= 0
-                    || Nmng.Umaibou.squatFlag)
+                if (!NAct.jumpFlag
+                    || NAct.Y <= 0
+                    || NAct.squatFlag)
                 {
-                    Nmng.Umaibou.NowAttack = AttackPattern.None;
+                    NAct.NowAttack = AttackPattern.None;
                 }
 
                 break;
@@ -189,15 +194,15 @@ public class NekketsuAttack : MonoBehaviour
 
     void Hiji(float timing)
     {
-        float hitBoxX = Nmng.Umaibou.X;
-        float hitBoxY = Nmng.Umaibou.Y;
+        float hitBoxX = NAct.X;
+        float hitBoxY = NAct.Y;
         // 右方向の場合はマイナス値とする。
-        float RightMinusVector = (Nmng.Umaibou.leftFlag) ? 1 : -1;
+        float RightMinusVector = (NAct.leftFlag) ? 1 : -1;
 
         switch (timing)
         {
             case 1:
-                Nmng.Umaibou.hitBox =
+                NAct.hitBox =
                     new Rect(hitBoxX + (0.6f * RightMinusVector),
                              hitBoxY + 0.2f,
                              0.4f, 0.4f);
@@ -206,7 +211,7 @@ public class NekketsuAttack : MonoBehaviour
                 break;
 
             case 2:
-                Nmng.Umaibou.hitBox =
+                NAct.hitBox =
                     new Rect(hitBoxX + (0.6f * RightMinusVector),
                              hitBoxY + 0.2f,
                              0.4f, 0.4f);
@@ -214,12 +219,12 @@ public class NekketsuAttack : MonoBehaviour
                 break;
 
             case 3:
-                Nmng.Umaibou.hitBox =
+                NAct.hitBox =
                     new Rect(hitBoxX + (0.6f * RightMinusVector),
                              hitBoxY + 0.2f,
                              0.4f, 0.4f);
 
-                Nmng.Umaibou.NowAttack = AttackPattern.None;
+                NAct.NowAttack = AttackPattern.None;
 
                 break;
 
@@ -230,36 +235,36 @@ public class NekketsuAttack : MonoBehaviour
 
     void JumpKick(float timing)
     {
-        float hitBoxX = Nmng.Umaibou.X;
-        float hitBoxY = Nmng.Umaibou.Y;
+        float hitBoxX = NAct.X;
+        float hitBoxY = NAct.Y;
         // 左方向の場合はマイナス値とする。
-        float leftMinusVector = (Nmng.Umaibou.leftFlag) ? -1 : 1;
+        float leftMinusVector = (NAct.leftFlag) ? -1 : 1;
 
 
         switch (timing)
         {
             case 1:
-                Nmng.Umaibou.hitBox =
+                NAct.hitBox =
                     new Rect(hitBoxX + ( 0.2f * leftMinusVector),
                              hitBoxY - 0.65f,
                              0.8f, 0.4f);
 
-                if (Nmng.Umaibou.AttackMomentFlag)
+                if (NAct.AttackMomentFlag)
                 {
                     NSound.SEPlay(SEPattern.attack);
                 }
 
-                if (!Nmng.Umaibou.jumpFlag
-                    || Nmng.Umaibou.Y <= 0
-                    || Nmng.Umaibou.squatFlag)
+                if (!NAct.jumpFlag
+                    || NAct.Y <= 0
+                    || NAct.squatFlag)
                 {
-                    Nmng.Umaibou.NowAttack = AttackPattern.None;
+                    NAct.NowAttack = AttackPattern.None;
                 }
 
                 break;
 
             default:
-                Nmng.Umaibou.hitBox =
+                NAct.hitBox =
                     new Rect(hitBoxX + (0.2f * leftMinusVector),
                              hitBoxY - 0.65f,
                              0.8f, 0.4f);

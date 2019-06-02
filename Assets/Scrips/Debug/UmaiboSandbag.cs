@@ -45,20 +45,20 @@ public class UmaiboSandbag : MonoBehaviour
         Vector3 scale = transform.localScale;
 
         // どすこい奥手前は、Z -0.4で処理できない。今後のためにも改良すべし
-        if ((Z - 0.4f <= Nmng.Umaibou.Z && Nmng.Umaibou.Z <= Z + 0.4f)
-            && Nmng.Umaibou.hitBox.Overlaps(UmaiboSandbagHitBox))
+        if ((Z - 0.4f <= Nmng.Player1.Z && Nmng.Player1.Z <= Z + 0.4f)
+            && Nmng.Player1.hitBox.Overlaps(UmaiboSandbagHitBox))
         {
             animator.Play("UmaHitFrontWh");
 
             // ノックバックもどき仮
-            if (UmaiboSandbagHitBox.x < Nmng.Umaibou.hitBox.x)
+            if (UmaiboSandbagHitBox.x < Nmng.Player1.hitBox.x)
             {
 
-                if (Nmng.Umaibou.NowAttack == AttackPattern.DosukoiBack)
+                if (Nmng.Player1.NowAttack == AttackPattern.DosukoiBack)
                 {
                     Z += 0.01f;
                 }
-                else if (Nmng.Umaibou.NowAttack == AttackPattern.DosukoiFront)
+                else if (Nmng.Player1.NowAttack == AttackPattern.DosukoiFront)
                 {
                     Z -= 0.02f;
                 }
@@ -71,9 +71,9 @@ public class UmaiboSandbag : MonoBehaviour
 
                 if (!audioSource.isPlaying)
                 {
-                    if (Nmng.Umaibou.NowAttack == AttackPattern.Dosukoi
-                        || Nmng.Umaibou.NowAttack == AttackPattern.DosukoiBack
-                        || Nmng.Umaibou.NowAttack == AttackPattern.DosukoiFront)
+                    if (Nmng.Player1.NowAttack == AttackPattern.Dosukoi
+                        || Nmng.Player1.NowAttack == AttackPattern.DosukoiBack
+                        || Nmng.Player1.NowAttack == AttackPattern.DosukoiFront)
                     {
                         audioSource.clip = dosukoiHit;
                         audioSource.Play();
@@ -88,11 +88,11 @@ public class UmaiboSandbag : MonoBehaviour
             }
             else
             {
-                if (Nmng.Umaibou.NowAttack == AttackPattern.DosukoiBack)
+                if (Nmng.Player1.NowAttack == AttackPattern.DosukoiBack)
                 {
                     Z += 0.02f;
                 }
-                else if(Nmng.Umaibou.NowAttack == AttackPattern.DosukoiFront)
+                else if(Nmng.Player1.NowAttack == AttackPattern.DosukoiFront)
                 {
                     Z -= 0.02f;
                 }
@@ -105,9 +105,9 @@ public class UmaiboSandbag : MonoBehaviour
 
                 if (!audioSource.isPlaying)
                 {
-                    if (Nmng.Umaibou.NowAttack == AttackPattern.Dosukoi
-                        || Nmng.Umaibou.NowAttack == AttackPattern.DosukoiBack
-                        || Nmng.Umaibou.NowAttack == AttackPattern.DosukoiFront)
+                    if (Nmng.Player1.NowAttack == AttackPattern.Dosukoi
+                        || Nmng.Player1.NowAttack == AttackPattern.DosukoiBack
+                        || Nmng.Player1.NowAttack == AttackPattern.DosukoiFront)
                     {
                         audioSource.clip = dosukoiHit;
                         audioSource.Play();

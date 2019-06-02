@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
 /// 各オブジェクト(プレイヤー・アイテム)等が
@@ -9,7 +7,10 @@ using UnityEngine;
 public class NekketsuManager : MonoBehaviour
 {
     private GameObject playerObjct;
-    public NekketsuAction Umaibou;
+    public NekketsuAction Player1;
+    public NekketsuAction Player2;
+    public NekketsuAction Player3;
+    public NekketsuAction Player4;
     public UmaiboSandbag sandbag;
     public DamageTest uni;
     public DamageTest uni2;
@@ -17,11 +18,19 @@ public class NekketsuManager : MonoBehaviour
     public NekketsuAction NAct; //NekketsuActionが入る変数
     public UmaiboSandbag UmaSnd; //NekketsuActionが入る変数
 
-    // Start is called before the first frame update
     void Start()
     {
-        playerObjct = GameObject.Find("Umaibou");
-        Umaibou = playerObjct.GetComponent<NekketsuAction>();
+        playerObjct = GameObject.Find("Player1");
+        Player1 = playerObjct.GetComponent<NekketsuAction>();
+
+        playerObjct = GameObject.Find("Player2");
+        Player2 = playerObjct.GetComponent<NekketsuAction>();
+
+        //playerObjct = GameObject.Find("Player3");
+        //Player3 = playerObjct.GetComponent<NekketsuAction>();
+
+        //playerObjct = GameObject.Find("Player4");
+        //Player4 = playerObjct.GetComponent<NekketsuAction>();
 
         playerObjct = GameObject.Find("UmaiboSandbag");
         sandbag = playerObjct.GetComponent<UmaiboSandbag>();
@@ -30,7 +39,6 @@ public class NekketsuManager : MonoBehaviour
         uni = playerObjct.GetComponent<DamageTest>();
     }
 
-    // Update is called once per frame
     void Update()
     {
 
