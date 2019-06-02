@@ -46,12 +46,22 @@ public class NekketsuAction : MonoBehaviour
     public bool squatFlag = false;  //しゃがみ状態フラグ
     public bool brakeFlag = false;  //ブレーキフラグ
     public bool AttackMomentFlag = false;  //攻撃し始めフラグ(空中攻撃出し始め判定)
+    public bool BlowUpFlag = false; //吹っ飛び状態か否か
 
     public JumpButtonPushState JumpButtonState; //ジャンプボタン押下ステータス
     public XInputState XInputState = 0; //疑似Xに対する入力ステータス
     public ZInputState ZInputState = 0; //疑似Zに対する入力ステータス
     public AttackPattern NowAttack = 0; // 現在の攻撃パターン格納変数
     public DamagePattern NowDamage = 0; // 現在の攻撃喰らいパターン格納変数
+
+    public float life = 0; //たいりょく
+    public float downDamage = 0; //ダウンまでの蓄積ダメージ
+
+    public float punchPow = 0; //ぱんち
+    public float kickPow = 0; //きっく
+
+    public float BlowUpNowTime = 0; // 吹っ飛んでいる時間計測
+    public float BlowUpInitalVelocityTime = 0.3f; //きめ攻撃等で吹っ飛んだ際の吹っ飛び時間
 
     // *****共通変数*****
 
@@ -143,17 +153,10 @@ public class NekketsuAction : MonoBehaviour
 
         #region アニメ処理
 
-        if (NowDamage == DamagePattern.groggy)
+        if (NowDamage != DamagePattern.None)
         {
-            if (vx == 0 && vz == 0)
-            {
-                //左右キー押していないor左右キー離した瞬間ではない
-                animator.Play("UmaHoge");
-            }
-            else
-            {
-                animator.Play("UmaHogeWalk");
-            }
+            // ダメージアニメ処理
+            animator.Play(NowDamage.ToString());
         }
         else
         {
@@ -176,7 +179,8 @@ public class NekketsuAction : MonoBehaviour
                         animator.SetBool("Walk", true);
                     }
 
-                    if (jumpFlag)
+                    if (jumpFlag
+                        && NowDamage == DamagePattern.None)
                     {
                         animator.Play("Jump");
                     }

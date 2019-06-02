@@ -79,7 +79,15 @@ public enum AttackPattern
 public enum DamagePattern
 {
     None,
-    groggy
+    groggy,
+    UmaBARF,
+    UmaHitBack,
+    UmaHitFront,
+    UmaHoge,
+    UmaHogeWalk,
+    UmaOttotto,
+    UmaTaore,
+    UmaTaoreUp
 }
 #endregion
 
