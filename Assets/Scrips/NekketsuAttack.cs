@@ -45,39 +45,41 @@ public class NekketsuAttack : MonoBehaviour
 
     void DosukoiSide(float timing)
     {
-        float hitBoxX = NAct.X;
-        float hitBoxY = NAct.Y;
-        // 左方向の場合はマイナス値とする。
-        float leftMinusVector = (NAct.leftFlag) ? -1 : 1;
-
-        switch (timing)
+        if (NAct.NowDamage == DamagePattern.None)
         {
-            case 1:
-                NAct.NowAttack = AttackPattern.Dosukoi;
-                NAct.hitBox
-                    = new Rect(hitBoxX + (0.6f * leftMinusVector),
-                               hitBoxY + 0.2f,
-                               0.6f, 0.5f);
+            float hitBoxX = NAct.X;
+            float hitBoxY = NAct.Y;
+            // 左方向の場合はマイナス値とする。
+            float leftMinusVector = (NAct.leftFlag) ? -1 : 1;
 
-                NSound.SEPlay(SEPattern.attack);
+            switch (timing)
+            {
+                case 1:
+                    NAct.NowAttack = AttackPattern.Dosukoi;
+                    NAct.hitBox
+                        = new Rect(hitBoxX + (0.6f * leftMinusVector),
+                                   hitBoxY + 0.2f,
+                                   0.6f, 0.5f);
 
-                break;
+                    NSound.SEPlay(SEPattern.attack);
 
-            case 2:
-                NAct.NowAttack = AttackPattern.Dosukoi;
-                NAct.hitBox
-                    = new Rect(hitBoxX + (0.6f * leftMinusVector),
-                               hitBoxY + 0.2f,
-                               0.6f, 0.5f);
+                    break;
 
-                NAct.NowAttack = AttackPattern.None;
+                case 2:
+                    NAct.NowAttack = AttackPattern.Dosukoi;
+                    NAct.hitBox
+                        = new Rect(hitBoxX + (0.6f * leftMinusVector),
+                                   hitBoxY + 0.2f,
+                                   0.6f, 0.5f);
 
-                break;
+                    NAct.NowAttack = AttackPattern.None;
 
-            default:
-                break;
+                    break;
+
+                default:
+                    break;
+            }
         }
-
     }
 
     void DosukoiBack(float timing)

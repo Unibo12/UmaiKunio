@@ -17,12 +17,27 @@ public class NekketsuHurtBox
 
     public void HurtBoxMain(NekketsuSound NSound)
     {
-        //DamageTest.csで指定された座標に移動すると、喰らい判定が発生するテスト
+        float otherPlayerZ = 0;
+        Rect otherHitBox = new Rect(0, 0, 0, 0);
+        switch (NAct.gameObject.name)
+        {
+            case "Player1":
+                otherPlayerZ = NAct.Nmng.Player2.Z;
+                otherHitBox = NAct.Nmng.Player2.hitBox;
+                break;
 
-        if ((NAct.Nmng.uni.Z - 0.4f <= NAct.Z && NAct.Z <= NAct.Nmng.uni.Z + 0.4f)
-            && NAct.hurtBox.Overlaps(NAct.Nmng.uni.hitBoxTEST))
+            case "Player2":
+                otherPlayerZ = NAct.Nmng.Player1.Z;
+                otherHitBox = NAct.Nmng.Player1.hitBox;
+                break;
+        }
+
+        // プレイヤー1～4の喰らい判定
+        if ((otherPlayerZ - 0.4f <= NAct.Z && NAct.Z <= otherPlayerZ + 0.4f)
+            && NAct.hurtBox.Overlaps(otherHitBox))
         {
             NAct.NowDamage = DamagePattern.groggy;
+            NAct.NowAttack = AttackPattern.None;
             if (!NSound.audioSource.isPlaying)
             {
                 NSound.SEPlay(SEPattern.hit);
@@ -33,5 +48,16 @@ public class NekketsuHurtBox
             NAct.NowDamage = DamagePattern.None;
         }
 
+
+        // テスト用 うにうにくんダメージ
+        if ((NAct.Nmng.uni.Z - 0.4f <= NAct.Z && NAct.Z <= NAct.Nmng.uni.Z + 0.4f)
+            && NAct.hurtBox.Overlaps(NAct.Nmng.uni.hitBoxTEST))
+        {
+            NAct.NowDamage = DamagePattern.groggy;
+            if (!NSound.audioSource.isPlaying)
+            {
+                NSound.SEPlay(SEPattern.hit);
+            }
+        }
     }
 }
