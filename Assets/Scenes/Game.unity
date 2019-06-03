@@ -991,10 +991,10 @@ MonoBehaviour:
   NowDamage: 0
   life: 0
   downDamage: 0
-  punchPow: 7
-  kickPow: 7
+  punchPow: 10
+  kickPow: 10
   BlowUpNowTime: 0
-  BlowUpInitalVelocityTime: 0.3
+  BlowUpInitalVelocityTime: 0.2
 --- !u!114 &820763014
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1149,6 +1149,7 @@ MonoBehaviour:
   Jump: {fileID: 8300000, guid: e3058e10d591e00489fd2de06892be1b, type: 3}
   attack: {fileID: 8300000, guid: 5553a6465bdb39d4789390f6d864d7ef, type: 3}
   hit: {fileID: 8300000, guid: 291f5a2bed9a42744bae5c90afd4043a, type: 3}
+  hijiHit: {fileID: 8300000, guid: 19320b66d88502941a7fba22b5802d49, type: 3}
   audioSource: {fileID: 0}
 --- !u!1 &945995172
 GameObject:
@@ -2301,7 +2302,8 @@ MonoBehaviour:
   Jump: {fileID: 8300000, guid: e3058e10d591e00489fd2de06892be1b, type: 3}
   attack: {fileID: 8300000, guid: 5553a6465bdb39d4789390f6d864d7ef, type: 3}
   hit: {fileID: 8300000, guid: 291f5a2bed9a42744bae5c90afd4043a, type: 3}
-  audioSource: {fileID: 0}
+  hijiHit: {fileID: 8300000, guid: 19320b66d88502941a7fba22b5802d49, type: 3}
+  audioSource: {fileID: 2032333309}
 --- !u!82 &2032333309
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2460,10 +2462,10 @@ MonoBehaviour:
   NowDamage: 0
   life: 0
   downDamage: 0
-  punchPow: 3
-  kickPow: 3
+  punchPow: 6.95
+  kickPow: 7.13
   BlowUpNowTime: 0
-  BlowUpInitalVelocityTime: 0.3
+  BlowUpInitalVelocityTime: 0.2
 --- !u!114 &2032333312
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2649,7 +2651,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2033548012}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.5, y: 1, z: 0}
+  m_LocalPosition: {x: 0.5, y: 1, z: 0.96}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

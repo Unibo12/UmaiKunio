@@ -17,6 +17,7 @@ public class NekketsuSound : MonoBehaviour
     public AudioClip Jump;
     public AudioClip attack;
     public AudioClip hit;
+    public AudioClip hijiHit;
     public AudioSource audioSource;
 
     private void Start()
@@ -49,12 +50,20 @@ public class NekketsuSound : MonoBehaviour
         {
             audioSource.clip = hit;
         }
+        else if (se == SEPattern.hijiHit)
+        {
+            audioSource.clip = hijiHit;
+        }
         else
         {
 
         }
 
-        audioSource.Play();
+        if (!audioSource.isPlaying)
+        {
+            audioSource.Play();
+        }
+       
     }
 
 

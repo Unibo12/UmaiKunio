@@ -61,7 +61,7 @@ public class NekketsuAction : MonoBehaviour
     public float kickPow = 0; //きっく
 
     public float BlowUpNowTime = 0; // 吹っ飛んでいる時間計測
-    public float BlowUpInitalVelocityTime = 0.3f; //きめ攻撃等で吹っ飛んだ際の吹っ飛び時間
+    public float BlowUpInitalVelocityTime = 0.2f; //きめ攻撃等で吹っ飛んだ際の吹っ飛び時間
 
     // *****共通変数*****
 

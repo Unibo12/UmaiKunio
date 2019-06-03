@@ -27,7 +27,8 @@ public class NekketsuMove
     /// </summary>
     public void MoveMain(NekketsuSound NSound)
     {
-        if (!NAct.squatFlag)
+        if (!NAct.squatFlag
+            && NAct.NowDamage == DamagePattern.None)
         {
             #region 歩き
 

@@ -26,68 +26,66 @@ public class NekketsuHurtBox
         AttackPattern otherPlayerAttack = AttackPattern.None;
         Rect otherHitBox = new Rect(0, 0, 0, 0);
 
+        // 自分から見て、他プレイヤーの情報を取得
+        switch (NAct.gameObject.name)
+        {
+            case "Player1":
+                otherPlayerX = NAct.Nmng.Player2.X;
+                otherPlayerZ = NAct.Nmng.Player2.Z;
+                otherPlayerPunch = NAct.Nmng.Player2.punchPow;
+                otherPlayerKick = NAct.Nmng.Player2.kickPow;
+                otherPlayerAttack = NAct.Nmng.Player2.NowAttack;
+                otherHitBox = NAct.Nmng.Player2.hitBox;
+                break;
+
+            case "Player2":
+                otherPlayerX = NAct.Nmng.Player1.X;
+                otherPlayerZ = NAct.Nmng.Player1.Z;
+                otherPlayerPunch = NAct.Nmng.Player1.punchPow;
+                otherPlayerKick = NAct.Nmng.Player1.kickPow;
+                otherPlayerAttack = NAct.Nmng.Player1.NowAttack;
+                otherHitBox = NAct.Nmng.Player1.hitBox;
+                break;
+        }
+
         if (NAct.BlowUpFlag)
         {
-            // ★★★仮　吹っ飛び処理★★★
-            if (NAct.BlowUpNowTime >= NAct.BlowUpInitalVelocityTime)
+            // 吹っ飛び処理
+            if (NAct.BlowUpNowTime <= NAct.BlowUpInitalVelocityTime)
             {
-                NAct.Y += 0;
+                NAct.Y += 0.1f;
+
+                // 他プレイヤーの攻撃が前か後ろか(おおよそ)で、前後に吹っ飛ぶか分ける
+                if (otherPlayerX <= NAct.X)
+                {
+                    NAct.X += 0.01f;
+                }
+                else
+                {
+                    NAct.X -= 0.01f;
+                }
             }
             else
             {
-                NAct.Y += 0.9f;
-            }
+                //固定吹っ飛び時間終了なので、落下させる
+                NAct.Y -= 0.08f;
 
-            if (otherPlayerX <= NAct.X)
-            {
-                NAct.X += 0.001f;
-            }
-            else
-            {
-                NAct.X -= 0.001f;
-            }
-
-            if (NAct.Y <= 0)
-            {
-                NAct.BlowUpFlag = false;
-            }
-            else
-            {
-                NAct.Y += -0.9f;
-
-                if (0 < NAct.Y)
+                //地面についたら～
+                if (NAct.Y <= 0)
                 {
                     NAct.Y = 0;
+                    NAct.BlowUpFlag = false;
+                    NAct.NowDamage = DamagePattern.None;
+                    NAct.downDamage = 0;
+
+                    NAct.BlowUpNowTime = 0;
                 }
             }
 
             NAct.BlowUpNowTime += Time.deltaTime;
-
-            // ★★★仮　吹っ飛び処理★★★
         }
         else
         {
-            switch (NAct.gameObject.name)
-            {
-                case "Player1":
-                    otherPlayerX = NAct.Nmng.Player2.X;
-                    otherPlayerZ = NAct.Nmng.Player2.Z;
-                    otherPlayerPunch = NAct.Nmng.Player2.punchPow;
-                    otherPlayerKick = NAct.Nmng.Player2.kickPow;
-                    otherPlayerAttack = NAct.Nmng.Player2.NowAttack;
-                    otherHitBox = NAct.Nmng.Player2.hitBox;
-                    break;
-
-                case "Player2":
-                    otherPlayerX = NAct.Nmng.Player1.X;
-                    otherPlayerZ = NAct.Nmng.Player1.Z;
-                    otherPlayerPunch = NAct.Nmng.Player1.punchPow;
-                    otherPlayerKick = NAct.Nmng.Player1.kickPow;
-                    otherPlayerAttack = NAct.Nmng.Player1.NowAttack;
-                    otherHitBox = NAct.Nmng.Player1.hitBox;
-                    break;
-            }
-
             // プレイヤー1～4の喰らい判定
             if ((otherPlayerZ - 0.4f <= NAct.Z && NAct.Z <= otherPlayerZ + 0.4f)
                 && NAct.hurtBox.Overlaps(otherHitBox))
@@ -131,13 +129,38 @@ public class NekketsuHurtBox
                 }
                 else if (NAct.downDamage <= 300)
                 {
-                    NAct.NowDamage = DamagePattern.UmaBARF;
+                    // 他プレイヤーの攻撃が前か後ろか(おおよそ)と、
+                    // 自キャラの向きから吹っ飛びアニメを切り替え
+                    if (otherPlayerX <= NAct.X)
+                    {
+                        if (NAct.leftFlag)
+                        {
+                            NAct.NowDamage = DamagePattern.UmaBARF;
+                        }
+                        else
+                        {
+                            NAct.NowDamage = DamagePattern.UmaOttotto;
+                        }
+                    }
+                    else
+                    {
+                        if (NAct.leftFlag)
+                        {
+                            NAct.NowDamage = DamagePattern.UmaOttotto;
+                        }
+                        else
+                        {
+                            NAct.NowDamage = DamagePattern.UmaBARF;
+                        }
+                    }
 
                     NAct.BlowUpFlag = true;
+
+                    NAct.downDamage = 0;
                 }
                 else
                 {
-                    NAct.downDamage = 0;
+
                 }
 
                 // ノックバック処理
@@ -174,10 +197,17 @@ public class NekketsuHurtBox
                     }
                 }
 
-                if (!NSound.audioSource.isPlaying)
+                // 攻撃効果音
+                if (otherPlayerAttack == AttackPattern.Dosukoi
+                    || otherPlayerAttack == AttackPattern.DosukoiBack
+                    || otherPlayerAttack == AttackPattern.DosukoiFront)
                 {
                     NSound.SEPlay(SEPattern.hit);
                 }
+                else
+                {
+                    NSound.SEPlay(SEPattern.hijiHit);
+                }              
             }
             else
             {
@@ -191,12 +221,11 @@ public class NekketsuHurtBox
                 NAct.NowDamage = DamagePattern.groggy;
                 if (!NSound.audioSource.isPlaying)
                 {
+                    NAct.BlowUpFlag = true;
+                    NAct.NowDamage = DamagePattern.UmaBARF;
                     NSound.SEPlay(SEPattern.hit);
                 }
             }
         }
-
-
-
     }
 }
