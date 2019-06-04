@@ -995,6 +995,8 @@ MonoBehaviour:
   kickPow: 10
   BlowUpNowTime: 0
   BlowUpInitalVelocityTime: 0.2
+  downTime: 1
+  nowDownTime: 0
 --- !u!114 &820763014
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2466,6 +2468,8 @@ MonoBehaviour:
   kickPow: 7.13
   BlowUpNowTime: 0
   BlowUpInitalVelocityTime: 0.2
+  downTime: 1
+  nowDownTime: 0
 --- !u!114 &2032333312
 MonoBehaviour:
   m_ObjectHideFlags: 0

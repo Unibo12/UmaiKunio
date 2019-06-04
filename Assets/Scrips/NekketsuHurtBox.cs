@@ -48,184 +48,259 @@ public class NekketsuHurtBox
                 break;
         }
 
-        if (NAct.BlowUpFlag)
+        // ダウン状態の時()
+        if (NAct.NowDamage == DamagePattern.UmaTaore
+            || NAct.NowDamage == DamagePattern.UmaTaoreUp)
         {
-            // 吹っ飛び処理
-            if (NAct.BlowUpNowTime <= NAct.BlowUpInitalVelocityTime)
+            if (NAct.downTime < NAct.nowDownTime)
             {
-                NAct.Y += 0.1f;
+                NAct.NowDamage = DamagePattern.SquatDown;
+                NAct.squatFlag = true;
 
-                // 他プレイヤーの攻撃が前か後ろか(おおよそ)で、前後に吹っ飛ぶか分ける
-                if (otherPlayerX <= NAct.X)
-                {
-                    NAct.X += 0.01f;
-                }
-                else
-                {
-                    NAct.X -= 0.01f;
-                }
+                NAct.nowDownTime = 0;
             }
-            else
-            {
-                //固定吹っ飛び時間終了なので、落下させる
-                NAct.Y -= 0.08f;
-
-                //地面についたら～
-                if (NAct.Y <= 0)
-                {
-                    NAct.Y = 0;
-                    NAct.BlowUpFlag = false;
-                    NAct.NowDamage = DamagePattern.None;
-                    NAct.downDamage = 0;
-
-                    NAct.BlowUpNowTime = 0;
-                }
-            }
-
-            NAct.BlowUpNowTime += Time.deltaTime;
+                NAct.nowDownTime += Time.deltaTime;
         }
         else
         {
-            // プレイヤー1～4の喰らい判定
-            if ((otherPlayerZ - 0.4f <= NAct.Z && NAct.Z <= otherPlayerZ + 0.4f)
-                && NAct.hurtBox.Overlaps(otherHitBox))
+            if (NAct.BlowUpFlag)
             {
-                NAct.NowAttack = AttackPattern.None;
+                // 吹っ飛び処理
+                if (NAct.BlowUpNowTime <= NAct.BlowUpInitalVelocityTime)
+                {
+                    NAct.Y += 0.1f;
 
-                // 喰らったダメージを計算
-                switch (otherPlayerAttack)
-                {
-                    case AttackPattern.JumpKick:
-                        NAct.downDamage += otherPlayerKick;
-                        break;
-
-                    default:
-                        NAct.downDamage += otherPlayerPunch;
-                        break;
-                }
-
-                // ダメージ喰らい状態に変更
-                if (NAct.downDamage <= 100)
-                {
-                    if (NAct.vx == 0 && NAct.vz == 0)
-                    {
-                        if (otherPlayerX <= NAct.X)
-                        {
-                            NAct.NowDamage = DamagePattern.UmaHitFront;
-                        }
-                        else
-                        {
-                            NAct.NowDamage = DamagePattern.UmaHitBack;
-                        }
-                    }
-                    else
-                    {
-                        NAct.NowDamage = DamagePattern.UmaHogeWalk;
-                    }
-                }
-                else if (NAct.downDamage <= 200)
-                {
-                    NAct.NowDamage = DamagePattern.groggy;
-                }
-                else if (NAct.downDamage <= 300)
-                {
-                    // 他プレイヤーの攻撃が前か後ろか(おおよそ)と、
-                    // 自キャラの向きから吹っ飛びアニメを切り替え
+                    // 他プレイヤーの攻撃が前か後ろか(おおよそ)で、前後に吹っ飛ぶか分ける
                     if (otherPlayerX <= NAct.X)
                     {
-                        if (NAct.leftFlag)
-                        {
-                            NAct.NowDamage = DamagePattern.UmaBARF;
-                        }
-                        else
-                        {
-                            NAct.NowDamage = DamagePattern.UmaOttotto;
-                        }
+                        NAct.X += 0.01f;
                     }
                     else
                     {
-                        if (NAct.leftFlag)
-                        {
-                            NAct.NowDamage = DamagePattern.UmaOttotto;
-                        }
-                        else
-                        {
-                            NAct.NowDamage = DamagePattern.UmaBARF;
-                        }
-                    }
-
-                    NAct.BlowUpFlag = true;
-
-                    NAct.downDamage = 0;
-                }
-                else
-                {
-
-                }
-
-                // ノックバック処理
-                if (otherPlayerX <= NAct.X)
-                {
-                    if (otherPlayerAttack == AttackPattern.DosukoiBack)
-                    {
-                        NAct.Z += 0.02f;
-                    }
-                    else if (otherPlayerAttack == AttackPattern.DosukoiFront)
-                    {
-                        NAct.Z -= 0.02f;
-                    }
-                    else
-                    {
-                        NAct.X += 0.02f;
-                        //scale.x = 1; // そのまま（右向き）
+                        NAct.X -= 0.01f;
                     }
                 }
                 else
                 {
-                    if (otherPlayerAttack == AttackPattern.DosukoiBack)
+                    //固定吹っ飛び時間終了なので、落下させる
+                    NAct.Y -= 0.08f;
+
+                    //地面についたら～
+                    if (NAct.Y <= 0)
                     {
-                        NAct.Z += 0.02f;
-                    }
-                    else if (otherPlayerAttack == AttackPattern.DosukoiFront)
-                    {
-                        NAct.Z -= 0.02f;
-                    }
-                    else
-                    {
-                        NAct.X -= 0.02f;
-                        //scale.x = 1; // そのまま（右向き）
+                        NAct.Y = 0;
+                        NAct.BlowUpFlag = false; ;
+                        NAct.downDamage = 0;
+
+                        if (NAct.NowDamage == DamagePattern.UmaBARF)
+                        {
+                            NAct.NowDamage = DamagePattern.UmaTaoreUp;
+                        }
+                        else if (NAct.NowDamage == DamagePattern.UmaOttotto)
+                        {
+                            NAct.NowDamage = DamagePattern.UmaTaore;
+                        }
+
+                        NAct.BlowUpNowTime = 0;
                     }
                 }
 
-                // 攻撃効果音
-                if (otherPlayerAttack == AttackPattern.Dosukoi
-                    || otherPlayerAttack == AttackPattern.DosukoiBack
-                    || otherPlayerAttack == AttackPattern.DosukoiFront)
-                {
-                    NSound.SEPlay(SEPattern.hit);
-                }
-                else
-                {
-                    NSound.SEPlay(SEPattern.hijiHit);
-                }              
+                NAct.BlowUpNowTime += Time.deltaTime;
             }
             else
             {
-                NAct.NowDamage = DamagePattern.None;
-            }
-
-            // テスト用 うにうにくんダメージ
-            if ((NAct.Nmng.uni.Z - 0.4f <= NAct.Z && NAct.Z <= NAct.Nmng.uni.Z + 0.4f)
-                && NAct.hurtBox.Overlaps(NAct.Nmng.uni.hitBoxTEST))
-            {
-                NAct.NowDamage = DamagePattern.groggy;
-                if (!NSound.audioSource.isPlaying)
+                // プレイヤー1～4の喰らい判定
+                if ((otherPlayerZ - 0.4f <= NAct.Z && NAct.Z <= otherPlayerZ + 0.4f)
+                    && NAct.hurtBox.Overlaps(otherHitBox))
                 {
-                    NAct.BlowUpFlag = true;
-                    NAct.NowDamage = DamagePattern.UmaBARF;
-                    NSound.SEPlay(SEPattern.hit);
+                    NAct.NowAttack = AttackPattern.None;
+
+                    // 喰らったダメージを計算
+                    switch (otherPlayerAttack)
+                    {
+                        case AttackPattern.JumpKick:
+                            NAct.downDamage += otherPlayerKick;
+                            break;
+
+                        default:
+                            NAct.downDamage += otherPlayerPunch;
+                            break;
+                    }
+
+                    // 自キャラが空中にいるか？
+                    if (!NAct.jumpFlag)
+                    {
+                        //自キャラが地上にいるので通常のダメージ計算
+
+                        // ダメージ喰らい状態に変更
+                        if (NAct.downDamage <= 100)
+                        {
+                            if (NAct.vx == 0 && NAct.vz == 0)
+                            {
+                                if (otherPlayerX <= NAct.X)
+                                {
+                                    NAct.NowDamage = DamagePattern.UmaHitFront;
+                                }
+                                else
+                                {
+                                    NAct.NowDamage = DamagePattern.UmaHitBack;
+                                }
+                            }
+                            else
+                            {
+                                NAct.NowDamage = DamagePattern.UmaHogeWalk;
+                            }
+                        }
+                        else if (NAct.downDamage <= 200)
+                        {
+                            NAct.NowDamage = DamagePattern.groggy;
+                        }
+                        else if (NAct.downDamage <= 300)
+                        {
+                            // 他プレイヤーの攻撃が前か後ろか(おおよそ)と、
+                            // 自キャラの向きから吹っ飛びアニメを切り替え
+                            if (otherPlayerX <= NAct.X)
+                            {
+                                if (NAct.leftFlag)
+                                {
+                                    NAct.NowDamage = DamagePattern.UmaBARF;
+                                }
+                                else
+                                {
+                                    NAct.NowDamage = DamagePattern.UmaOttotto;
+                                }
+                            }
+                            else
+                            {
+                                if (NAct.leftFlag)
+                                {
+                                    NAct.NowDamage = DamagePattern.UmaOttotto;
+                                }
+                                else
+                                {
+                                    NAct.NowDamage = DamagePattern.UmaBARF;
+                                }
+                            }
+
+                            NAct.BlowUpFlag = true;
+
+                            NAct.downDamage = 0;
+                        }
+                        else
+                        {
+
+                        }
+                    }
+                    else
+                    {
+                        //自分がジャンプ状態のときに、
+                        //攻撃を受けた際は蓄積ダメージを考慮せず、固定でダウン状態へ
+
+                        // 他プレイヤーの攻撃が前か後ろか(おおよそ)と、
+                        // 自キャラの向きから吹っ飛びアニメを切り替え
+                        if (otherPlayerX <= NAct.X)
+                        {
+                            if (NAct.leftFlag)
+                            {
+                                NAct.NowDamage = DamagePattern.UmaBARF;
+                            }
+                            else
+                            {
+                                NAct.NowDamage = DamagePattern.UmaOttotto;
+                            }
+                        }
+                        else
+                        {
+                            if (NAct.leftFlag)
+                            {
+                                NAct.NowDamage = DamagePattern.UmaOttotto;
+                            }
+                            else
+                            {
+                                NAct.NowDamage = DamagePattern.UmaBARF;
+                            }
+                        }
+
+                        NAct.BlowUpFlag = true;
+
+                        NAct.downDamage = 0;
+
+                        //ジャンプ中にダウンしたので、ジャンプ周りをリセット
+                        NAct.vy = 0; 
+                        NAct.jumpFlag = false;
+                    }
+
+
+                    // ノックバック処理
+                    if (otherPlayerX <= NAct.X)
+                    {
+                        if (otherPlayerAttack == AttackPattern.DosukoiBack)
+                        {
+                            NAct.Z += 0.02f;
+                        }
+                        else if (otherPlayerAttack == AttackPattern.DosukoiFront)
+                        {
+                            NAct.Z -= 0.02f;
+                        }
+                        else
+                        {
+                            NAct.X += 0.02f;
+                            //scale.x = 1; // そのまま（右向き）
+                        }
+                    }
+                    else
+                    {
+                        if (otherPlayerAttack == AttackPattern.DosukoiBack)
+                        {
+                            NAct.Z += 0.02f;
+                        }
+                        else if (otherPlayerAttack == AttackPattern.DosukoiFront)
+                        {
+                            NAct.Z -= 0.02f;
+                        }
+                        else
+                        {
+                            NAct.X -= 0.02f;
+                            //scale.x = 1; // そのまま（右向き）
+                        }
+                    }
+
+                    // 攻撃効果音
+                    if (otherPlayerAttack == AttackPattern.Dosukoi
+                        || otherPlayerAttack == AttackPattern.DosukoiBack
+                        || otherPlayerAttack == AttackPattern.DosukoiFront)
+                    {
+                        NSound.SEPlay(SEPattern.hit);
+                    }
+                    else
+                    {
+                        NSound.SEPlay(SEPattern.hijiHit);
+                    }
+                }
+                else
+                {
+                    NAct.NowDamage = DamagePattern.None;
+                }
+
+                // ★デバッグ用 うにうにくんダメージ★
+                if ((NAct.Nmng.uni.Z - 0.4f <= NAct.Z && NAct.Z <= NAct.Nmng.uni.Z + 0.4f)
+                    && NAct.hurtBox.Overlaps(NAct.Nmng.uni.hitBoxTEST))
+                {
+                    NAct.NowDamage = DamagePattern.groggy;
+                    if (!NSound.audioSource.isPlaying)
+                    {
+                        NAct.BlowUpFlag = true;
+                        NAct.NowDamage = DamagePattern.UmaBARF;
+                        NSound.SEPlay(SEPattern.hit);
+                    }
+
+                    //ジャンプ中にダウンを考慮して、ジャンプ周りをリセット
+                    NAct.vy = 0;
+                    NAct.jumpFlag = false;
                 }
             }
         }
+
+
     }
 }

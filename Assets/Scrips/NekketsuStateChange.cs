@@ -28,6 +28,18 @@ public class NekketsuStateChange
         {
             NAct.NowAttack = AttackPattern.None;
         }
+
+        // ダウン時に攻撃状態(攻撃ボタンを押している)なら、クイックスタンディングとする。
+        if ((NAct.NowDamage == DamagePattern.UmaTaore
+            || NAct.NowDamage == DamagePattern.UmaTaoreUp)
+            && NAct.Y == 0)
+        {
+            if (NAct.NowAttack != AttackPattern.None)
+            {
+                NAct.nowDownTime += NAct.downTime / 100;
+            }
+        }
+
     }
 }
 

@@ -29,7 +29,9 @@ public class NekketsuJump
     {
         #region 空中制御
 
-        if (!NAct.squatFlag && NAct.jumpFlag)
+        if (!NAct.squatFlag 
+            && NAct.jumpFlag
+            && NAct.NowDamage == DamagePattern.None)
         {
             if (!NAct.dashFlag)
             {
@@ -123,7 +125,9 @@ public class NekketsuJump
 
         #region ジャンプ処理
 
-        if (!NAct.squatFlag && !NAct.brakeFlag)
+        if (!NAct.squatFlag 
+            && !NAct.brakeFlag
+            && NAct.NowDamage == DamagePattern.None)
         {
             // ジャンプした瞬間
             if (!NAct.jumpFlag

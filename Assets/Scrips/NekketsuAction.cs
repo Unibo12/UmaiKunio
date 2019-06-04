@@ -63,6 +63,9 @@ public class NekketsuAction : MonoBehaviour
     public float BlowUpNowTime = 0; // 吹っ飛んでいる時間計測
     public float BlowUpInitalVelocityTime = 0.2f; //きめ攻撃等で吹っ飛んだ際の吹っ飛び時間
 
+    public float downTime = 1; //プレイヤーのダウン時間(すてーたす)
+    public float nowDownTime = 0; //ダウン時間計測
+
     // *****共通変数*****
 
     #endregion
