@@ -126,7 +126,18 @@ public class NekketsuAction : MonoBehaviour
         transform.position = pos;
 
         // 喰らい判定の移動
-        hurtBox = new Rect(X, Y, 0.7f, 1.6f);
+        if (NowDamage == DamagePattern.UmaTaore
+            || NowDamage == DamagePattern.UmaTaoreUp)
+        {
+            //倒れ状態の当たり判定(アイテム化)
+            hurtBox = new Rect(X, Y, 1.6f, 0.7f);
+        }
+        else
+        {
+            //通常当たり判定
+            hurtBox = new Rect(X, Y, 0.7f, 1.6f);
+        }
+
 
         #endregion
 

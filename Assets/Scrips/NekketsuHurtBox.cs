@@ -114,6 +114,7 @@ public class NekketsuHurtBox
                     && NAct.hurtBox.Overlaps(otherHitBox))
                 {
                     NAct.NowAttack = AttackPattern.None;
+                    NAct.dashFlag = false;  //被弾したらダッシュ解除
 
                     // 喰らったダメージを計算
                     switch (otherPlayerAttack)
@@ -153,7 +154,7 @@ public class NekketsuHurtBox
                         }
                         else if (NAct.downDamage <= 200)
                         {
-                            NAct.NowDamage = DamagePattern.groggy;
+                            NAct.NowDamage = DamagePattern.UmaHoge;
                         }
                         else if (NAct.downDamage <= 300)
                         {
@@ -286,7 +287,7 @@ public class NekketsuHurtBox
                 if ((NAct.Nmng.uni.Z - 0.4f <= NAct.Z && NAct.Z <= NAct.Nmng.uni.Z + 0.4f)
                     && NAct.hurtBox.Overlaps(NAct.Nmng.uni.hitBoxTEST))
                 {
-                    NAct.NowDamage = DamagePattern.groggy;
+                    NAct.NowDamage = DamagePattern.UmaHoge;
                     if (!NSound.audioSource.isPlaying)
                     {
                         NAct.BlowUpFlag = true;

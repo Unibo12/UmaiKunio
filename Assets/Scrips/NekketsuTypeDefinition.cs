@@ -79,7 +79,6 @@ public enum AttackPattern
 public enum DamagePattern
 {
     None,
-    groggy,
     UmaBARF,
     UmaHitBack,
     UmaHitFront,
