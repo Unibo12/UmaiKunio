@@ -36,7 +36,6 @@ public class NekketsuMove
             if (NAct.XInputState == XInputState.XRightPushMoment
                 || NAct.XInputState == XInputState.XRightPushButton)
             {
-                NAct.vx = NAct.speed; // 右に進む移動量を入れる
                 if (!NAct.brakeFlag)
                 {
                     NAct.leftFlag = false;
@@ -44,15 +43,13 @@ public class NekketsuMove
 
                 if (!NAct.dashFlag && !NAct.jumpFlag && !NAct.brakeFlag)
                 {
-                    NAct.X += NAct.vx;
+                    NAct.vx = NAct.speed; // 右に歩く移動量を入れる
                 }
             }
             // もし、左キーが押されたら ★else if でもキーボード同時押し対策NG★
             else if (NAct.XInputState == XInputState.XLeftPushMoment
                     || NAct.XInputState == XInputState.XLeftPushButton)
             {
-                NAct.vx = -NAct.speed; // 左に進む移動量を入れる
-
                 if (!NAct.brakeFlag)
                 {
                     NAct.leftFlag = true;
@@ -60,7 +57,7 @@ public class NekketsuMove
 
                 if (!NAct.dashFlag && !NAct.jumpFlag && !NAct.brakeFlag)
                 {
-                    NAct.X += NAct.vx;
+                    NAct.vx = -NAct.speed; // 左に歩く移動量を入れる
                 }
             }
 
@@ -147,13 +144,13 @@ public class NekketsuMove
                     {
                         if (leftDash)
                         {
-                            NAct.vx = -NAct.speed; // 左に進む移動量を入れる
-                            NAct.X += NAct.vx * Settings.Instance.Move.DashSpeed;
+                            // 左ダッシュの移動量を入れる
+                            NAct.vx = -NAct.speed * Settings.Instance.Move.DashSpeed; 
                         }
                         else
                         {
-                            NAct.vx = NAct.speed; // 右に進む移動量を入れる
-                            NAct.X += NAct.vx * Settings.Instance.Move.DashSpeed;
+                            // 右ダッシュの移動量を入れる
+                            NAct.vx = NAct.speed * Settings.Instance.Move.DashSpeed; ;
                         }
 
                         NAct.dashFlag = false;
@@ -173,13 +170,13 @@ public class NekketsuMove
                         // ダッシュ中は方向キー入力なしで自動で進む。(クロカン・障害ふう)
                         if (NAct.leftFlag)
                         {
-                            NAct.vx = -NAct.speed; // 左に進む移動量を入れる
-                            NAct.X += NAct.vx * Settings.Instance.Move.DashSpeed;
+                            // 左ダッシュの移動量を入れる
+                            NAct.vx = -NAct.speed * Settings.Instance.Move.DashSpeed;
                         }
                         else
                         {
-                            NAct.vx = NAct.speed; // 右に進む移動量を入れる
-                            NAct.X += NAct.vx * Settings.Instance.Move.DashSpeed;
+                            // 右ダッシュの移動量を入れる
+                            NAct.vx = NAct.speed * Settings.Instance.Move.DashSpeed; ;
                         }
                     }
                 }
@@ -190,13 +187,11 @@ public class NekketsuMove
             {
                 if (NAct.leftFlag)
                 {
-                    NAct.vx = NAct.speed; // 右に進む移動量を入れる
-                    NAct.X += NAct.vx * NAct.st_brake;
+                    NAct.vx = NAct.speed * NAct.st_brake; // 右に進む移動量を入れる
                 }
                 else
                 {
-                    NAct.vx = -NAct.speed; // 左に進む移動量を入れる
-                    NAct.X += NAct.vx * NAct.st_brake;
+                    NAct.vx = -NAct.speed * NAct.st_brake; // 左に進む移動量を入れる
                 }
                 // ブレーキ状態の時間計測
                 nowTimebrake += Time.deltaTime;
@@ -221,6 +216,9 @@ public class NekketsuMove
                     canDash = false;
                 }
             }
+
+            //座標への速度反映
+            NAct.X += NAct.vx;
 
             #endregion
         }
