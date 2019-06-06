@@ -54,17 +54,19 @@ public class NekketsuAction : MonoBehaviour
     public AttackPattern NowAttack = 0; // 現在の攻撃パターン格納変数
     public DamagePattern NowDamage = 0; // 現在の攻撃喰らいパターン格納変数
 
-    public float life = 0; //たいりょく
-    public float downDamage = 0; //ダウンまでの蓄積ダメージ
-
-    public float punchPow = 0; //ぱんち
-    public float kickPow = 0; //きっく
-
     public float BlowUpNowTime = 0; // 吹っ飛んでいる時間計測
     public float BlowUpInitalVelocityTime = 0.2f; //きめ攻撃等で吹っ飛んだ際の吹っ飛び時間
 
-    public float downTime = 1; //プレイヤーのダウン時間(すてーたす)
+    public float downDamage = 0; //ダウンまでの蓄積ダメージ
     public float nowDownTime = 0; //ダウン時間計測
+
+    //♡♡♡♡♡すてーたす♡♡♡♡♡
+    public float st_life = 0;       //たいりょく
+    public float st_punch = 0;      //ぱんち
+    public float st_kick = 0;       //きっく
+    public float st_downTime = 1;   //おきあがりじかん
+    public float st_brake = 0.5f;   //ぶれーき
+    //♡♡♡♡♡♡♡♡♡♡♡♡♡♡♡♡♡♡♡♡
 
     // *****共通変数*****
 

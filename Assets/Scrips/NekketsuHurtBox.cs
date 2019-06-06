@@ -32,8 +32,8 @@ public class NekketsuHurtBox
             case "Player1":
                 otherPlayerX = NAct.Nmng.Player2.X;
                 otherPlayerZ = NAct.Nmng.Player2.Z;
-                otherPlayerPunch = NAct.Nmng.Player2.punchPow;
-                otherPlayerKick = NAct.Nmng.Player2.kickPow;
+                otherPlayerPunch = NAct.Nmng.Player2.st_punch;
+                otherPlayerKick = NAct.Nmng.Player2.st_kick;
                 otherPlayerAttack = NAct.Nmng.Player2.NowAttack;
                 otherHitBox = NAct.Nmng.Player2.hitBox;
                 break;
@@ -41,8 +41,8 @@ public class NekketsuHurtBox
             case "Player2":
                 otherPlayerX = NAct.Nmng.Player1.X;
                 otherPlayerZ = NAct.Nmng.Player1.Z;
-                otherPlayerPunch = NAct.Nmng.Player1.punchPow;
-                otherPlayerKick = NAct.Nmng.Player1.kickPow;
+                otherPlayerPunch = NAct.Nmng.Player1.st_punch;
+                otherPlayerKick = NAct.Nmng.Player1.st_kick;
                 otherPlayerAttack = NAct.Nmng.Player1.NowAttack;
                 otherHitBox = NAct.Nmng.Player1.hitBox;
                 break;
@@ -52,7 +52,7 @@ public class NekketsuHurtBox
         if (NAct.NowDamage == DamagePattern.UmaTaore
             || NAct.NowDamage == DamagePattern.UmaTaoreUp)
         {
-            if (NAct.downTime < NAct.nowDownTime)
+            if (NAct.st_downTime < NAct.nowDownTime)
             {
                 NAct.NowDamage = DamagePattern.SquatDown;
                 NAct.squatFlag = true;

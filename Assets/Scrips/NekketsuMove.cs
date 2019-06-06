@@ -191,12 +191,12 @@ public class NekketsuMove
                 if (NAct.leftFlag)
                 {
                     NAct.vx = NAct.speed; // 右に進む移動量を入れる
-                    NAct.X += NAct.vx * 1.25f;
+                    NAct.X += NAct.vx * NAct.st_brake;
                 }
                 else
                 {
                     NAct.vx = -NAct.speed; // 左に進む移動量を入れる
-                    NAct.X += NAct.vx * 1.25f;
+                    NAct.X += NAct.vx * NAct.st_brake;
                 }
                 // ブレーキ状態の時間計測
                 nowTimebrake += Time.deltaTime;

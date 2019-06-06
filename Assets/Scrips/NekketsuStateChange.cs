@@ -36,7 +36,7 @@ public class NekketsuStateChange
         {
             if (NAct.NowAttack != AttackPattern.None)
             {
-                NAct.nowDownTime += NAct.downTime / 100;
+                NAct.nowDownTime += NAct.st_downTime / 100;
                 NAct.NowAttack = AttackPattern.None;
             }
         }
