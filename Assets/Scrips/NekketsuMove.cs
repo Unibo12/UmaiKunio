@@ -68,7 +68,7 @@ public class NekketsuMove
             if (NAct.ZInputState == ZInputState.ZBackPushMoment
                 || NAct.ZInputState == ZInputState.ZBackPushButton)
             {
-                NAct.vz = NAct.speed * 0.5f; // 上に進む移動量を入れる(熱血っぽく奥行きは移動量小)
+                NAct.vz = NAct.speed * Settings.Instance.Move.ZWalkSpeed; // 上に進む移動量を入れる(熱血っぽく奥行きは移動量小)
 
                 if (!NAct.jumpFlag)
                 {
@@ -78,7 +78,7 @@ public class NekketsuMove
             else if (NAct.ZInputState == ZInputState.ZFrontPushMoment
                     || NAct.ZInputState == ZInputState.ZFrontPushButton)
             { // もし、下キーが押されたら
-                NAct.vz = -NAct.speed * 0.5f; // 下に進む移動量を入れる(熱血っぽく奥行きは移動量小)
+                NAct.vz = -NAct.speed * Settings.Instance.Move.ZWalkSpeed; // 下に進む移動量を入れる(熱血っぽく奥行きは移動量小)
 
                 if (!NAct.jumpFlag)
                 {
@@ -148,12 +148,12 @@ public class NekketsuMove
                         if (leftDash)
                         {
                             NAct.vx = -NAct.speed; // 左に進む移動量を入れる
-                            NAct.X += NAct.vx * 1.35f;
+                            NAct.X += NAct.vx * Settings.Instance.Move.DashSpeed;
                         }
                         else
                         {
                             NAct.vx = NAct.speed; // 右に進む移動量を入れる
-                            NAct.X += NAct.vx * 1.35f;
+                            NAct.X += NAct.vx * Settings.Instance.Move.DashSpeed;
                         }
 
                         NAct.dashFlag = false;
@@ -174,12 +174,12 @@ public class NekketsuMove
                         if (NAct.leftFlag)
                         {
                             NAct.vx = -NAct.speed; // 左に進む移動量を入れる
-                            NAct.X += NAct.vx * 1.35f;
+                            NAct.X += NAct.vx * Settings.Instance.Move.DashSpeed;
                         }
                         else
                         {
                             NAct.vx = NAct.speed; // 右に進む移動量を入れる
-                            NAct.X += NAct.vx * 1.35f;
+                            NAct.X += NAct.vx * Settings.Instance.Move.DashSpeed;
                         }
                     }
                 }
