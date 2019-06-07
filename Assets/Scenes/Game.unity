@@ -1005,14 +1005,15 @@ MonoBehaviour:
   ZInputState: 0
   NowAttack: 0
   NowDamage: 0
-  life: 0
-  downDamage: 0
-  punchPow: 10
-  kickPow: 10
   BlowUpNowTime: 0
   BlowUpInitalVelocityTime: 0.2
-  downTime: 1
+  downDamage: 0
   nowDownTime: 0
+  st_life: 220
+  st_punch: 10
+  st_kick: 10
+  st_downTime: 1
+  st_brake: 0.5
 --- !u!114 &820763014
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2636,14 +2637,15 @@ MonoBehaviour:
   ZInputState: 0
   NowAttack: 0
   NowDamage: 0
-  life: 0
-  downDamage: 0
-  punchPow: 6.95
-  kickPow: 7.13
   BlowUpNowTime: 0
   BlowUpInitalVelocityTime: 0.2
-  downTime: 1
+  downDamage: 0
   nowDownTime: 0
+  st_life: 140
+  st_punch: 3
+  st_kick: 3
+  st_downTime: 1.5
+  st_brake: 0.5
 --- !u!114 &2032333312
 MonoBehaviour:
   m_ObjectHideFlags: 0
