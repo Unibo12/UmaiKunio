@@ -70,6 +70,16 @@ public class NekketsuHurtBox
                 {
                     NAct.Y += 0.1f;
 
+                    if (otherPlayerAttack == AttackPattern.DosukoiBack)
+                    {
+                        NAct.Z += 0.1f;
+                    }
+
+                    if (otherPlayerAttack == AttackPattern.DosukoiFront)
+                    {
+                        NAct.Z -= 0.1f;
+                    }
+
                     // 他プレイヤーの攻撃が前か後ろか(おおよそ)で、前後に吹っ飛ぶか分ける
                     if (otherPlayerX <= NAct.X)
                     {

@@ -64,22 +64,19 @@ public class NekketsuMove
             // もし、上キーが押されたら
             if (NAct.ZInputState == ZInputState.ZBackPushMoment
                 || NAct.ZInputState == ZInputState.ZBackPushButton)
-            {
-                NAct.vz = NAct.speed * Settings.Instance.Move.ZWalkSpeed; // 上に進む移動量を入れる(熱血っぽく奥行きは移動量小)
-
+            {             
                 if (!NAct.jumpFlag)
                 {
-                    NAct.Z += NAct.vz;
+                    NAct.vz = NAct.speed * Settings.Instance.Move.ZWalkSpeed; // 上に進む移動量を入れる(熱血っぽく奥行きは移動量小)
                 }
             }
+            // もし、下キーが押されたら
             else if (NAct.ZInputState == ZInputState.ZFrontPushMoment
                     || NAct.ZInputState == ZInputState.ZFrontPushButton)
-            { // もし、下キーが押されたら
-                NAct.vz = -NAct.speed * Settings.Instance.Move.ZWalkSpeed; // 下に進む移動量を入れる(熱血っぽく奥行きは移動量小)
-
+            {
                 if (!NAct.jumpFlag)
                 {
-                    NAct.Z += NAct.vz;
+                    NAct.vz = -NAct.speed * Settings.Instance.Move.ZWalkSpeed; // 下に進む移動量を入れる(熱血っぽく奥行きは移動量小)
                 }
             }
 
@@ -218,8 +215,8 @@ public class NekketsuMove
             }
 
             //座標への速度反映
-            NAct.X += NAct.vx;
-
+            //NAct.X += NAct.vx;
+            //NAct.Z += NAct.vz;
             #endregion
         }
     }

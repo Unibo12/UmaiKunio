@@ -48,10 +48,8 @@ public class NekketsuJump
                                 if (NAct.XInputState == XInputState.XRightPushMoment
                                     || NAct.XInputState == XInputState.XRightPushButton)
                                 {
-                                    NAct.vx = +NAct.speed * 0.8f; // 右に進む移動量を入れる
+                                    NAct.vx += NAct.speed * 0.8f; // 右に進む移動量を入れる
                                     NAct.leftFlag = false;
-
-                                    NAct.X += NAct.vx;
                                 }
                             }
                             else
@@ -60,44 +58,39 @@ public class NekketsuJump
                                 if (NAct.XInputState == XInputState.XLeftPushMoment
                                     || NAct.XInputState == XInputState.XLeftPushButton)
                                 {
-                                    NAct.vx = +-NAct.speed * 0.8f; // 左に進む移動量を入れる
+                                    NAct.vx += -NAct.speed * 0.8f; // 左に進む移動量を入れる
                                     NAct.leftFlag = true;
-
-                                    NAct.X += NAct.vx;
                                 }
                             }
                         }
                         break;
 
                     case VectorX.Right:
-                        NAct.vx = NAct.speed; // 右に進む移動量を入れる
-                        NAct.X += NAct.vx;
-
                         // もし、右空中移動中に、左キーが押されたら  ★else if でもキーボード同時押し対策NG★
                         if (NAct.XInputState == XInputState.XLeftPushMoment
                             || NAct.XInputState == XInputState.XLeftPushButton)
                         {
-                            NAct.vx = -NAct.speed; // 左に進む移動量を入れる
+                            //シャンプスピードを弱めていく
+                            NAct.jumpSpeed *= 0.9f;
                             NAct.leftFlag = true;
-
-                            NAct.X += NAct.vx * 0.2f;
                         }
+
+                        NAct.vx += NAct.jumpSpeed; // 右に進む移動量を入れる
 
                         break;
 
                     case VectorX.Left:
-                        NAct.vx = -NAct.speed; // 左に進む移動量を入れる
-                        NAct.X += NAct.vx;
-
                         // もし、左空中移動中に、右キーが押されたら
                         if (NAct.XInputState == XInputState.XRightPushMoment
                             || NAct.XInputState == XInputState.XRightPushButton)
                         {
-                            NAct.vx = NAct.speed; // 右に進む移動量を入れる
+                            //シャンプスピードを弱めていく
+                            NAct.jumpSpeed *= 0.9f;
                             NAct.leftFlag = false;
-
-                            NAct.X += NAct.vx * 0.2f;
                         }
+
+                        NAct.vx += -NAct.jumpSpeed; // 左に進む移動量を入れる
+
                         break;
                 }
             }
@@ -110,13 +103,29 @@ public class NekketsuJump
                     break;
 
                 case VectorZ.Up:
-                    NAct.vz = NAct.speed * 0.4f; // 上に進む移動量を入れる(熱血っぽく奥行きは移動量小)
-                    NAct.Z += NAct.vz;
+                    // もし、奥へ空中移動中に、下キー(手前)が押されたら  ★else if でもキーボード同時押し対策NG★
+                    if (NAct.ZInputState == ZInputState.ZFrontPushMoment
+                        || NAct.ZInputState == ZInputState.ZFrontPushButton)
+                    {
+                        //シャンプスピードを弱めていく
+                        NAct.jumpSpeed *= 0.9f;
+                    }
+
+                    NAct.vz += NAct.jumpSpeed * 0.4f; // 上に進む移動量を入れる(熱血っぽく奥行きは移動量小)
+
                     break;
 
                 case VectorZ.Down:
-                    NAct.vz = -NAct.speed * 0.4f; // 下に進む移動量を入れる(熱血っぽく奥行きは移動量小)
-                    NAct.Z += NAct.vz;
+                    // もし、手前へ空中移動中に、奥キー(上)が押されたら  ★else if でもキーボード同時押し対策NG★
+                    if (NAct.ZInputState == ZInputState.ZBackPushMoment
+                        || NAct.ZInputState == ZInputState.ZBackPushButton)
+                    {
+                        //シャンプスピードを弱めていく
+                        NAct.jumpSpeed *= 0.9f;
+                    }
+
+                    NAct.vz += -NAct.jumpSpeed * 0.4f; // 下に進む移動量を入れる(熱血っぽく奥行きは移動量小)
+
                     break;
             }
         }
@@ -175,8 +184,8 @@ public class NekketsuJump
                         JumpZ = VectorZ.None;
                     }
                 }
+                NAct.jumpSpeed = NAct.speed;
                 NSound.SEPlay(SEPattern.jump);
-
             }
 
             // ジャンプ状態
@@ -198,7 +207,8 @@ public class NekketsuJump
                 // ジャンプ中の重力加算(重力は変化せず常に同じ値が掛かる)
                 NAct.vy += NAct.Gravity;
 
-                NAct.Y += NAct.vy; // ジャンプ力を加算
+                //座標へのジャンプ力反映
+                NAct.Y += NAct.vy;
 
                 // 着地判定
                 if (NAct.Y <= 0)
@@ -237,11 +247,11 @@ public class NekketsuJump
                 {
                     if (NAct.leftFlag)
                     {
-                        NAct.X += -(NAct.InitalVelocity * NAct.speed);
+                        NAct.vx += -(NAct.InitalVelocity * NAct.speed);
                     }
                     else
                     {
-                        NAct.X += NAct.InitalVelocity * NAct.speed;
+                        NAct.vx += NAct.InitalVelocity * NAct.speed;
                     }
                 }
                 else

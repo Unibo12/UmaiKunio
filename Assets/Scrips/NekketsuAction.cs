@@ -26,6 +26,7 @@ public class NekketsuAction : MonoBehaviour
 
     // *****共通変数*****
     public float speed = 0.08f;                 // スピード
+    public float jumpSpeed = 0.08f;             // ジャンプスピード
     public float Gravity = -0.006f;             // 内部での重力
     public float InitalVelocity = 0.188f;        // 内部での初速
     public float nextButtonDownTimeDash = 1f;   // ダッシュを受け付ける時間
@@ -122,6 +123,13 @@ public class NekketsuAction : MonoBehaviour
 
         // 基本的に、描画位置はジャンプなどのキャラ状態かかわらず、同じように内部座標を描画座標に適用する
         // （適用できるように、必要ならば内部座標の段階で調整をしておく）
+
+
+        //座標への速度反映
+        X += vx;
+        //Y += vy;
+        Z += vz;
+
         pos.x = X;
         pos.y = Z + Y;
 
