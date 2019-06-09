@@ -48,7 +48,9 @@ public class NekketsuJump
                                 if (NAct.XInputState == XInputState.XRightPushMoment
                                     || NAct.XInputState == XInputState.XRightPushButton)
                                 {
-                                    NAct.jumpSpeed += NAct.speed * 0.025f;
+                                    //垂直ジャンプ時の加速を設定
+                                    NAct.jumpSpeed += 
+                                        NAct.speed * Settings.Instance.Move.VerticalJumpSpeed;
                                     NAct.vx += NAct.jumpSpeed; // 右に進む移動量を入れる
                                     NAct.leftFlag = false;
                                 }
@@ -59,7 +61,9 @@ public class NekketsuJump
                                 if (NAct.XInputState == XInputState.XLeftPushMoment
                                     || NAct.XInputState == XInputState.XLeftPushButton)
                                 {
-                                    NAct.jumpSpeed += NAct.speed * 0.025f;
+                                    //垂直ジャンプ時の加速を設定
+                                    NAct.jumpSpeed +=
+                                        NAct.speed * Settings.Instance.Move.VerticalJumpSpeed;
                                     NAct.vx += -NAct.jumpSpeed; // 左に進む移動量を入れる
                                     NAct.leftFlag = true;
                                 }
@@ -73,7 +77,7 @@ public class NekketsuJump
                             || NAct.XInputState == XInputState.XLeftPushButton)
                         {
                             //シャンプスピードを弱めていく
-                            NAct.jumpSpeed *= 0.95f;
+                            NAct.jumpSpeed *= Settings.Instance.Move.OppositeJumpSpeed;
                             NAct.leftFlag = true;
                         }
 
@@ -87,7 +91,7 @@ public class NekketsuJump
                             || NAct.XInputState == XInputState.XRightPushButton)
                         {
                             //シャンプスピードを弱めていく
-                            NAct.jumpSpeed *= 0.95f;
+                            NAct.jumpSpeed *= Settings.Instance.Move.OppositeJumpSpeed;
                             NAct.leftFlag = false;
                         }
 
@@ -110,7 +114,7 @@ public class NekketsuJump
                         || NAct.ZInputState == ZInputState.ZFrontPushButton)
                     {
                         //シャンプスピードを弱めていく
-                        NAct.jumpSpeed *= 0.95f;
+                        NAct.jumpSpeed *= Settings.Instance.Move.OppositeJumpSpeed;
                     }
 
                     NAct.vz += NAct.jumpSpeed * 0.4f; // 上に進む移動量を入れる(熱血っぽく奥行きは移動量小)
@@ -123,7 +127,7 @@ public class NekketsuJump
                         || NAct.ZInputState == ZInputState.ZBackPushButton)
                     {
                         //シャンプスピードを弱めていく
-                        NAct.jumpSpeed *= 0.95f;
+                        NAct.jumpSpeed *= Settings.Instance.Move.OppositeJumpSpeed;
                     }
 
                     NAct.vz += -NAct.jumpSpeed * 0.4f; // 下に進む移動量を入れる(熱血っぽく奥行きは移動量小)
@@ -257,7 +261,7 @@ public class NekketsuJump
             nowTimesquat += Time.deltaTime;
 
             // しゃがみ状態解除
-            if (nowTimesquat > 0.12f)
+            if (nowTimesquat > Settings.Instance.Move.SquatTime)
             {
                 NAct.squatFlag = false;
                 nowTimesquat = 0;

@@ -194,7 +194,7 @@ public class NekketsuMove
                 nowTimebrake += Time.deltaTime;
 
                 // ブレーキ状態解除
-                if (nowTimebrake > 0.2f)
+                if (nowTimebrake > Settings.Instance.Move.BrakeTime)
                 {
                     NAct.brakeFlag = false;
                     nowTimebrake = 0;

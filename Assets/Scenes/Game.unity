@@ -972,6 +972,7 @@ MonoBehaviour:
   animator: {fileID: 0}
   Nmng: {fileID: 0}
   speed: 0.08
+  jumpSpeed: 0
   Gravity: -0.006
   InitalVelocity: 0.188
   nextButtonDownTimeDash: 1
@@ -2604,6 +2605,7 @@ MonoBehaviour:
   animator: {fileID: 0}
   Nmng: {fileID: 0}
   speed: 0
+  jumpSpeed: 0.08
   Gravity: -0.006
   InitalVelocity: 0.088
   nextButtonDownTimeDash: 1

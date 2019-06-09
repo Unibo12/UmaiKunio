@@ -14,3 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ZWalkSpeed: 0.5
   DashSpeed: 1.35
+  BrakeTime: 0.2
+  OppositeJumpSpeed: 0.95
+  VerticalJumpSpeed: 0.025
+  SquatTime: 0.12
