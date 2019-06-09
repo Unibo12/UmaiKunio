@@ -239,6 +239,7 @@ public class NekketsuHurtBox
                         //ジャンプ中にダウンしたので、ジャンプ周りをリセット
                         NAct.vy = 0; 
                         NAct.jumpFlag = false;
+                        NAct.jumpSpeed = 0;
                     }
 
 

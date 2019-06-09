@@ -26,7 +26,7 @@ public class NekketsuAction : MonoBehaviour
 
     // *****共通変数*****
     public float speed = 0.08f;                 // スピード
-    public float jumpSpeed = 0.08f;             // ジャンプスピード
+    public float jumpSpeed = 0f;                // ジャンプスピード管理変数
     public float Gravity = -0.006f;             // 内部での重力
     public float InitalVelocity = 0.188f;        // 内部での初速
     public float nextButtonDownTimeDash = 1f;   // ダッシュを受け付ける時間
