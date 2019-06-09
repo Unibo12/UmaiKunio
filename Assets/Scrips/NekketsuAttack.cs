@@ -28,16 +28,22 @@ public class NekketsuAttack : MonoBehaviour
     void Update()
     {
         //Nmng.Umaibou.hitBox = new Rect(hitBoxX, hitBoxY, 0, 0);
-    }
 
-    public void AttackMain()
-    {
         if (NAct.NowAttack == AttackPattern.None
             || NAct.NowDamage != DamagePattern.None)
         {
             None();
         }
     }
+
+    //public void AttackMain()
+    //{
+    //    if (NAct.NowAttack == AttackPattern.None
+    //        || NAct.NowDamage != DamagePattern.None)
+    //    {
+    //        None();
+    //    }
+    //}
 
     void None()
     {

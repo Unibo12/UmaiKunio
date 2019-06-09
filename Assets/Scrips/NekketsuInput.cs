@@ -26,7 +26,8 @@ public class NekketsuInput
 
         #region ジャンプステータス判定
 
-        //★TODO:AB同時押しジャンプがあまりよろしくないぞ。★
+        //★TODO:AB同時押しジャンプは別で処理いれること
+        //★例：既にA押した状態でB→ジャンプなど...
         if (Input.GetKeyDown("a") || Input.GetKeyDown("joystick button 2")
                 || (Input.GetKeyDown("z") || Input.GetKeyDown("joystick button 0"))
                 && (Input.GetKeyDown("x") || Input.GetKeyDown("joystick button 1")))
