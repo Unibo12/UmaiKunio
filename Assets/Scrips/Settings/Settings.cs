@@ -10,11 +10,13 @@ using UnityEngine.Tilemaps;
 public class Settings : SingletonMonoBehaviour<Settings>
 	{
 		public MoveSettings Move;
+    	public ItemSettings Item;
 
 		public void LoadObject()
 		{
 			Move = Resources.FindObjectsOfTypeAll<MoveSettings>().First()as MoveSettings;
-		}
+            Item = Resources.FindObjectsOfTypeAll<ItemSettings>().First() as ItemSettings;
+        }
 	}
 
 [CustomEditor(typeof(Settings))]

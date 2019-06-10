@@ -91,6 +91,14 @@ public enum DamagePattern
 }
 #endregion
 
+#region Enum あいてむ種類
+public enum ItemPattern
+{
+    None,
+    bokutou
+}
+#endregion
+
 #region Enum 効果音パターン
 public enum SEPattern
 {
