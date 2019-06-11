@@ -15,6 +15,7 @@ public class NekketsuMove
     bool canDash = false;    //ダッシュが出来る状態か
     float nowTimeDash = 0f;  //最初に移動ボタンが押されてからの経過時間
     float nowTimebrake = 0f; //ブレーキ時間を計測
+    XInputState XInputDashVector = XInputState.XNone; //ダッシュ入力受付方向保持変数
 
     public NekketsuMove(NekketsuAction nekketsuAction)
     {
@@ -86,18 +87,23 @@ public class NekketsuMove
 
             if (!NAct.dashFlag)
             {
-                // 非ダッシュ状態で、横移動中か？
-                if ((NAct.XInputState == XInputState.XRightPushMoment
-                    || NAct.XInputState == XInputState.XRightPushButton)
-                    || (NAct.XInputState == XInputState.XLeftPushMoment
-                        || NAct.XInputState == XInputState.XLeftPushButton))
+                // 非ダッシュ状態で、横移動し始めた瞬間か？
+                if (NAct.XInputState == XInputState.XRightPushMoment
+                    || NAct.XInputState == XInputState.XLeftPushMoment)
                 {
                     if (!pushMove)
                     {
-                        //ダッシュの準備をする
-                        pushMove = true;
-                        leftDash = NAct.leftFlag;
-                        nowTimeDash = 0;
+                        //ダッシュしたい方向と同じ方向キーが押されている
+                        if (XInputDashVector == NAct.XInputState)
+                        {
+                            //ダッシュの準備をする
+                            pushMove = true;
+                            leftDash = NAct.leftFlag;
+                            nowTimeDash = 0;
+                        }
+
+                        //ダッシュしようとしている方向を覚えておく
+                        XInputDashVector = NAct.XInputState;
                     }
                     else
                     {
@@ -114,7 +120,8 @@ public class NekketsuMove
                 {
                     // 非ダッシュ状態で、ダッシュ準備済か？
                     // 1度左右キーが押された状態で、ダッシュ受付時間内にもう一度左右キーが押された時
-                    if (pushMove && !NAct.brakeFlag)
+                    if (pushMove
+                        && !NAct.brakeFlag)
                     {
                         //　時間計測
                         nowTimeDash += Time.deltaTime;
@@ -123,6 +130,7 @@ public class NekketsuMove
                         {
                             pushMove = false;
                             canDash = false;
+                            XInputDashVector = XInputState.XNone;
                         }
                         else
                         {
@@ -211,6 +219,7 @@ public class NekketsuMove
                 {
                     pushMove = false;
                     canDash = false;
+                    XInputDashVector = XInputState.XNone;
                 }
             }
 
