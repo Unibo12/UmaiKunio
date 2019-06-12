@@ -21,14 +21,11 @@ public class NekketsuAttack : MonoBehaviour
     {
         gameObjct = GameObject.Find("NekketsuManager");
         NSound = this.gameObject.GetComponent<NekketsuSound>();
-
         NAct = this.gameObject.GetComponent<NekketsuAction>();
     }
 
     void Update()
     {
-        //Nmng.Umaibou.hitBox = new Rect(hitBoxX, hitBoxY, 0, 0);
-
         if (NAct.NowAttack == AttackPattern.None
             || NAct.NowDamage != DamagePattern.None)
         {
@@ -36,17 +33,9 @@ public class NekketsuAttack : MonoBehaviour
         }
     }
 
-    //public void AttackMain()
-    //{
-    //    if (NAct.NowAttack == AttackPattern.None
-    //        || NAct.NowDamage != DamagePattern.None)
-    //    {
-    //        None();
-    //    }
-    //}
-
     void None()
     {
+        //攻撃判定初期化
         NAct.hitBox = new Rect(0, 0, 0, 0);
     }
 

@@ -11,15 +11,19 @@ public class NekketsuManager : MonoBehaviour
     public NekketsuAction Player2;
     public NekketsuAction Player3;
     public NekketsuAction Player4;
+
+    //　★デバッグ用★
     public UmaiboSandbag sandbag;
     public DamageTest uni;
     public DamageTest uni2;
+    //　★デバッグ用★
 
     public NekketsuAction NAct; //NekketsuActionが入る変数
     public UmaiboSandbag UmaSnd; //NekketsuActionが入る変数
 
     void Start()
     {
+        // 各オブジェクトの変数を参照できるようにする。
         playerObjct = GameObject.Find("Player1");
         Player1 = playerObjct.GetComponent<NekketsuAction>();
 

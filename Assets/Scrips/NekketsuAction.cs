@@ -9,7 +9,7 @@ public class NekketsuAction : MonoBehaviour
 {
     #region 変数定義
 
-    Vector3 pos;        // 最終的な描画で使用
+    Vector3 pos;               // 最終的な描画で使用
     public Animator animator;  // アニメ変更用
 
     GameObject gameObjct;
@@ -21,8 +21,7 @@ public class NekketsuAction : MonoBehaviour
     private NekketsuJump NJump; //NekketsuJumpを呼び出す際に使用
     private NekketsuInput NInput; //NekketsuInputを呼び出す際に使用
     private NekketsuHurtBox NHurtBox; //NekketsuHurtBoxを呼び出す際に使用
-    private NekketsuStateChange NStateChange;
-    //private NekketsuSound NSound;
+    private NekketsuStateChange NStateChange; //NekketsuStateChangeを呼び出す際に使用
 
     // *****共通変数*****
     public float speed = 0.08f;                 // スピード
@@ -41,8 +40,8 @@ public class NekketsuAction : MonoBehaviour
     public Rect hurtBox = new Rect(0, 0, 0.7f, 1.6f);
     public Rect hitBox = new Rect(0, 0, 0, 0);
 
-    public bool leftFlag = false; // 左向きかどうか
-    public bool jumpFlag = false; // ジャンプして空中にいるか
+    public bool leftFlag = false;   //左向きかどうか
+    public bool jumpFlag = false;   //ジャンプして空中にいるか
     public bool dashFlag = false;   //走っているか否か
     public bool squatFlag = false;  //しゃがみ状態フラグ
     public bool brakeFlag = false;  //ブレーキフラグ
@@ -52,13 +51,13 @@ public class NekketsuAction : MonoBehaviour
     public JumpButtonPushState JumpButtonState; //ジャンプボタン押下ステータス
     public XInputState XInputState = 0; //疑似Xに対する入力ステータス
     public ZInputState ZInputState = 0; //疑似Zに対する入力ステータス
-    public AttackPattern NowAttack = 0; // 現在の攻撃パターン格納変数
-    public DamagePattern NowDamage = 0; // 現在の攻撃喰らいパターン格納変数
+    public AttackPattern NowAttack = 0; //現在の攻撃パターン格納変数
+    public DamagePattern NowDamage = 0; //現在の攻撃喰らいパターン格納変数
 
-    public float BlowUpNowTime = 0; // 吹っ飛んでいる時間計測
+    public float BlowUpNowTime = 0;               //吹っ飛んでいる時間計測
     public float BlowUpInitalVelocityTime = 0.2f; //きめ攻撃等で吹っ飛んだ際の吹っ飛び時間
 
-    public float downDamage = 0; //ダウンまでの蓄積ダメージ
+    public float downDamage = 0;  //ダウンまでの蓄積ダメージ
     public float nowDownTime = 0; //ダウン時間計測
 
     //♡♡♡♡♡すてーたす♡♡♡♡♡
@@ -91,7 +90,6 @@ public class NekketsuAction : MonoBehaviour
         NInput = new NekketsuInput(this);
         NHurtBox = new NekketsuHurtBox(this);
         NStateChange = new NekketsuStateChange(this);
-        //NAttack = new NekketsuAttack(this);
     }
 
     void Update()
@@ -123,7 +121,6 @@ public class NekketsuAction : MonoBehaviour
 
         // 基本的に、描画位置はジャンプなどのキャラ状態かかわらず、同じように内部座標を描画座標に適用する
         // （適用できるように、必要ならば内部座標の段階で調整をしておく）
-
 
         //座標への速度反映
         X += vx;
@@ -236,6 +233,5 @@ public class NekketsuAction : MonoBehaviour
         // 攻撃判定のギズモを表示
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube(new Vector3(hitBox.x, Z + hitBox.y), new Vector3(hitBox.width, hitBox.height, 0.1f));
-
     }
 }

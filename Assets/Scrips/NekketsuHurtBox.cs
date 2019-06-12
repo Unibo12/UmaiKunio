@@ -52,9 +52,10 @@ public class NekketsuHurtBox
         if (NAct.NowDamage == DamagePattern.UmaTaore
             || NAct.NowDamage == DamagePattern.UmaTaoreUp)
         {
+            //現在計測中のダウン時間が、ダウン時間(各キャラのステータス値)を超えた場合
             if (NAct.st_downTime < NAct.nowDownTime)
             {
-                NAct.NowDamage = DamagePattern.SquatDown;
+                NAct.NowDamage = DamagePattern.SquatDown; //起き上がり(しゃがみ)
                 NAct.squatFlag = true;
 
                 NAct.nowDownTime = 0;
@@ -63,9 +64,10 @@ public class NekketsuHurtBox
         }
         else
         {
+            //ふっとばされ中
             if (NAct.BlowUpFlag)
             {
-                // 吹っ飛び処理
+                // ふっとび処理
                 if (NAct.BlowUpNowTime <= NAct.BlowUpInitalVelocityTime)
                 {
                     NAct.Y += 0.1f;
@@ -95,13 +97,14 @@ public class NekketsuHurtBox
                     //固定吹っ飛び時間終了なので、落下させる
                     NAct.Y -= 0.08f;
 
-                    //地面についたら～
+                    //ふっとび状態から地面についたら
                     if (NAct.Y <= 0)
                     {
                         NAct.Y = 0;
                         NAct.BlowUpFlag = false; ;
                         NAct.downDamage = 0;
 
+                        //ふっとびパターンによってダウン状態(ドット絵)を変更
                         if (NAct.NowDamage == DamagePattern.UmaBARF)
                         {
                             NAct.NowDamage = DamagePattern.UmaTaoreUp;
@@ -242,7 +245,6 @@ public class NekketsuHurtBox
                         NAct.jumpSpeed = 0;
                     }
 
-
                     // ノックバック処理
                     if (otherPlayerX <= NAct.X)
                     {
@@ -257,7 +259,6 @@ public class NekketsuHurtBox
                         else
                         {
                             NAct.X += 0.02f;
-                            //scale.x = 1; // そのまま（右向き）
                         }
                     }
                     else
@@ -273,7 +274,6 @@ public class NekketsuHurtBox
                         else
                         {
                             NAct.X -= 0.02f;
-                            //scale.x = 1; // そのまま（右向き）
                         }
                     }
 

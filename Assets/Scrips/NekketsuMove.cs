@@ -141,7 +141,6 @@ public class NekketsuMove
             }
             else
             {   //ダッシュ済の場合
-
                 if (!NAct.brakeFlag)
                 {
                     // ダッシュ中に逆方向を押した場合
@@ -222,10 +221,6 @@ public class NekketsuMove
                     XInputDashVector = XInputState.XNone;
                 }
             }
-
-            //座標への速度反映
-            //NAct.X += NAct.vx;
-            //NAct.Z += NAct.vz;
             #endregion
         }
     }
