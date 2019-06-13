@@ -21,7 +21,7 @@ public class NekketsuManager : MonoBehaviour
     public NekketsuAction NAct; //NekketsuActionが入る変数
     public UmaiboSandbag UmaSnd; //NekketsuActionが入る変数
 
-    void Start()
+    void Start()    
     {
         // 各オブジェクトの変数を参照できるようにする。
         playerObjct = GameObject.Find("Player1");

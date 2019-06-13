@@ -6,15 +6,35 @@ using UnityEngine;
 public class Forever_ChaseCameraH : MonoBehaviour {
 
 	Vector3 base_pos;
+    Vector3 pos;
 
-	void Start() { // 最初に行う
+    GameObject playerObjct;
+    NekketsuManager Nmng;
+    float TopPlayerX;
+
+    void Start() { // 最初に行う
 		// カメラの元の位置を覚えておく
 		base_pos = Camera.main.gameObject.transform.position;
-	}
 
-	void LateUpdate() { // ずっと行う（いろいろな処理の最後に）
-		Vector3 pos = this.transform.position; // 自分の位置
-		pos.z = -10; // カメラなので手前に移動させる
+        playerObjct = GameObject.Find("NekketsuManager");
+        Nmng = playerObjct.GetComponent<NekketsuManager>();
+    }
+
+    void LateUpdate() { // ずっと行う（いろいろな処理の最後に）
+
+        // カメラは先頭を走るプレイヤーを追いかける
+        if (Nmng.Player2.X < Nmng.Player1.X)
+        {
+            TopPlayerX = Nmng.Player1.X;
+            pos.x = Nmng.Player1.X + Settings.Instance.Game.TopPlayerCameraX;
+        }
+        else
+        {
+            TopPlayerX = Nmng.Player2.X;
+            pos.x = Nmng.Player2.X + Settings.Instance.Game.TopPlayerCameraX;
+        }
+
+        pos.z = -10; // カメラなので手前に移動させる
 		pos.y = base_pos.y; // カメラの元の高さを使う
 		Camera.main.gameObject.transform.position = pos;
 	}

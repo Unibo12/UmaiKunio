@@ -188,6 +188,7 @@ MonoBehaviour:
   Move: {fileID: 11400000, guid: 55d95817791b7ae41a595cd5f80bd656, type: 2}
   Item: {fileID: 11400000, guid: 52d6b127a944b0c45ac685631749f2a2, type: 2}
   Attack: {fileID: 11400000, guid: 916d57332fd8eb24591b9d2842b30997, type: 2}
+  Game: {fileID: 11400000, guid: c38f11872b84d3748aa076ccfd3a20e1, type: 2}
 --- !u!1 &242522152
 GameObject:
   m_ObjectHideFlags: 0
