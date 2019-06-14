@@ -48,10 +48,20 @@ public class NekketsuAttack : MonoBehaviour
             // 左方向の場合はマイナス値とする。
             float leftMinusVector = (NAct.leftFlag) ? -1 : 1;
 
+            if (NAct.vx != 0
+                || NAct.dashFlag)
+            {
+                NAct.NowAttack = AttackPattern.DosukoiWalk;
+            }
+            else
+            {
+                NAct.NowAttack = AttackPattern.Dosukoi;
+            }
+
             switch (timing)
             {
                 case 1:
-                    NAct.NowAttack = AttackPattern.Dosukoi;
+                   
                     NAct.hitBox
                         = new Rect(hitBoxX + (0.6f * leftMinusVector),
                                    hitBoxY + 0.2f,
@@ -62,7 +72,6 @@ public class NekketsuAttack : MonoBehaviour
                     break;
 
                 case 2:
-                    NAct.NowAttack = AttackPattern.Dosukoi;
                     NAct.hitBox
                         = new Rect(hitBoxX + (0.6f * leftMinusVector),
                                    hitBoxY + 0.2f,
