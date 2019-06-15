@@ -154,6 +154,7 @@ MonoBehaviour:
   Player2: {fileID: 0}
   Player3: {fileID: 0}
   Player4: {fileID: 0}
+  Item1: {fileID: 0}
   sandbag: {fileID: 0}
   uni: {fileID: 0}
   uni2: {fileID: 0}
@@ -329,8 +330,8 @@ MonoBehaviour:
   itemType: 1
   itemBox:
     serializedVersion: 2
-    x: 0
-    y: 0
+    x: 1
+    y: -1
     width: 0
     height: 0
   hitBox:

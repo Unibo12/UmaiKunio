@@ -15,13 +15,21 @@ public class item : MonoBehaviour
     public Rect itemBox = new Rect(0, 0, 0, 0);
     public Rect hitBox = new Rect(0, 0, 0, 0);
 
+    GameObject playerObjct;
+    NekketsuManager Nmng;
+
     // Start is called before the first frame update
     void Start()
     {
+        playerObjct = GameObject.Find("NekketsuManager");
+        Nmng = playerObjct.GetComponent<NekketsuManager>();
+
         switch (itemType)
         {
             case ItemPattern.bokutou:
                 itemBox = new Rect(Settings.Instance.Item.bokutouRect);
+                itemBox.x = X;
+                itemBox.y = Y+Z;
                 break;
 
             default:
@@ -33,14 +41,19 @@ public class item : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Nmng.Player1.hurtBox.Overlaps(Nmng.Item1.itemBox)
+            && Nmng.Player1.NowAttack != AttackPattern.None)
+        {
+            // お試しで アイテム上で攻撃ボタン押下で消えるテスト
+            Destroy(this.gameObject);
+        }
     }
 
     void OnDrawGizmos()
     {
         // アイテム拾い判定のギズモを表示
         Gizmos.color = Color.green;
-        Gizmos.DrawWireCube(transform.position, new Vector3(itemBox.width, itemBox.height, 0));
+        Gizmos.DrawWireCube(itemBox.position, new Vector3(itemBox.width, itemBox.height, 0));
     }
 
 }

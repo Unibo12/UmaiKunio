@@ -12,6 +12,9 @@ public class NekketsuManager : MonoBehaviour
     public NekketsuAction Player3;
     public NekketsuAction Player4;
 
+    private GameObject ItemObjct;
+    public item Item1;
+
     //　★デバッグ用★
     public UmaiboSandbag sandbag;
     public DamageTest uni;
@@ -36,11 +39,18 @@ public class NekketsuManager : MonoBehaviour
         //playerObjct = GameObject.Find("Player4");
         //Player4 = playerObjct.GetComponent<NekketsuAction>();
 
+
+        ItemObjct = GameObject.Find("bokutou");
+        Item1 = ItemObjct.GetComponent<item>();
+
+
+        //　★デバッグ用★
         playerObjct = GameObject.Find("UmaiboSandbag");
         sandbag = playerObjct.GetComponent<UmaiboSandbag>();
 
         playerObjct = GameObject.Find("uni");
         uni = playerObjct.GetComponent<DamageTest>();
+        //　★デバッグ用★
     }
 
     void Update()
