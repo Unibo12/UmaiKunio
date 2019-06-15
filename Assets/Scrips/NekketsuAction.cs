@@ -137,12 +137,12 @@ public class NekketsuAction : MonoBehaviour
             || NowDamage == DamagePattern.UmaTaoreUp)
         {
             //倒れ状態の当たり判定(アイテム化)
-            hurtBox = new Rect(X, Y, 1.6f, 0.7f);
+            hurtBox = new Rect(X, Y+Z, 1.6f, 0.7f);
         }
         else
         {
             //通常当たり判定
-            hurtBox = new Rect(X, Y, 0.7f, 1.6f);
+            hurtBox = new Rect(X, Y+Z, 0.7f, 1.6f);
         }
 
 
