@@ -124,7 +124,8 @@ public class NekketsuHurtBox
             {
                 // プレイヤー1～4の喰らい判定
                 if ((otherPlayerZ - 0.4f <= NAct.Z && NAct.Z <= otherPlayerZ + 0.4f)
-                    && NAct.hurtBox.Overlaps(otherHitBox))
+                    && NAct.hurtBox.Overlaps(otherHitBox)
+                    && otherHitBox != Settings.Instance.Attack.AttackNone)
                 {
                     NAct.NowAttack = AttackPattern.None;
                     NAct.dashFlag = false;  //被弾したらダッシュ解除
