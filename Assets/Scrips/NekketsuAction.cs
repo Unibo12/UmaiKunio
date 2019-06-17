@@ -60,6 +60,8 @@ public class NekketsuAction : MonoBehaviour
     public float downDamage = 0;  //ダウンまでの蓄積ダメージ
     public float nowDownTime = 0; //ダウン時間計測
 
+    public ItemPattern haveItem = ItemPattern.None; //所持アイテム
+
     //♡♡♡♡♡すてーたす♡♡♡♡♡
     public float st_life = 0;       //たいりょく
     public float st_punch = 0;      //ぱんち
@@ -132,6 +134,31 @@ public class NekketsuAction : MonoBehaviour
 
         transform.position = pos;
 
+        #region 所持アイテムの位置調整
+        if (haveItem != ItemPattern.None)
+        {
+            Transform ItemTransform = GameObject.Find(haveItem.ToString()).transform;
+            Vector3 ItemScale = ItemTransform.localScale;
+            Vector3 ItemPos = pos;
+            if (leftFlag)
+            {
+                ItemPos.x = pos.x - 0.4f;
+                ItemScale.x = -1;
+            }
+            else
+            {
+                ItemPos.x = pos.x + 0.4f;
+                ItemScale.x = 1;
+            }
+            ItemPos.y = pos.y + 0.25f;
+            ItemTransform.localScale = ItemScale;
+
+            ItemTransform.position = ItemPos;
+        }
+
+        #endregion
+
+
         // 喰らい判定の移動
         if (NowDamage == DamagePattern.UmaTaore
             || NowDamage == DamagePattern.UmaTaoreUp)
@@ -163,7 +190,8 @@ public class NekketsuAction : MonoBehaviour
         #endregion
 
         #region キャラクターの影の位置描画処理
-        var shadeTransform = GameObject.Find(this.gameObject.name + "_Shade").transform;
+        Transform shadeTransform = GameObject.Find(this.gameObject.name + "_Shade").transform;
+         
         pos.y = Z - 0.8f;
 
         if (!squatFlag)
@@ -185,8 +213,16 @@ public class NekketsuAction : MonoBehaviour
             {
                 if (NowAttack != AttackPattern.None)
                 {
-                    // 現在の攻撃状態をアニメーションさせる。
-                    animator.Play(NowAttack.ToString());
+                    if (haveItem == ItemPattern.None)
+                    {
+                        // 現在の攻撃状態をアニメーションさせる。
+                        animator.Play(NowAttack.ToString());
+                    }
+                    else
+                    {
+                        
+                    }
+
                 }
                 else
                 {

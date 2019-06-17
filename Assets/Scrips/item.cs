@@ -41,11 +41,17 @@ public class item : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Nmng.Player1.hurtBox.Overlaps(Nmng.Item1.itemBox)
-            && Nmng.Player1.NowAttack != AttackPattern.None)
+        // アイテムと重なっていている状態で攻撃ボタンが押された
+        if (Nmng.Player1.haveItem == ItemPattern.None
+            && Nmng.Player1.NowAttack != AttackPattern.None
+            && Nmng.Player1.hurtBox.Overlaps(Nmng.Item1.itemBox))
         {
             // お試しで アイテム上で攻撃ボタン押下で消えるテスト
-            Destroy(this.gameObject);
+            //Destroy(this.gameObject);
+            
+            Nmng.Player1.haveItem = ItemPattern.bokutou;
+            this.transform.Rotate(new Vector3(0, 0, 90));
+
         }
     }
 
