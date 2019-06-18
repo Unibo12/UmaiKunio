@@ -41,6 +41,23 @@ public class NekketsuStateChange
             }
         }
 
+
+
+        // TODO：凹み時間正しく計測できていない。
+        if (NAct.NowDamage == DamagePattern.UmaHoge)
+        {
+            if (2 < NAct.nowHogeTime)
+            {
+                NAct.nowHogeTime = 0;
+                NAct.NowDamage = DamagePattern.None;
+            }
+            else
+            {
+                NAct.nowHogeTime += Time.deltaTime;
+                NAct.NowDamage = DamagePattern.UmaHoge;
+            }
+        }
+
     }
 }
 

@@ -87,7 +87,8 @@ public enum DamagePattern
     UmaOttotto,
     UmaTaore,
     UmaTaoreUp,
-    SquatDown
+    SquatGetUp,
+    Death
 }
 #endregion
 

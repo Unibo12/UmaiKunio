@@ -17,6 +17,8 @@ public class NekketsuHurtBox
 
     public void HurtBoxMain(NekketsuSound NSound)
     {
+        DamagePattern otherPlayerDmgPtn = DamagePattern.None;
+
         float otherPlayerX = 0;
         float otherPlayerZ = 0;
 
@@ -30,6 +32,7 @@ public class NekketsuHurtBox
         switch (NAct.gameObject.name)
         {
             case "Player1":
+                otherPlayerDmgPtn = NAct.Nmng.Player2.NowDamage;
                 otherPlayerX = NAct.Nmng.Player2.X;
                 otherPlayerZ = NAct.Nmng.Player2.Z;
                 otherPlayerPunch = NAct.Nmng.Player2.st_punch;
@@ -39,6 +42,7 @@ public class NekketsuHurtBox
                 break;
 
             case "Player2":
+                otherPlayerDmgPtn = NAct.Nmng.Player1.NowDamage;
                 otherPlayerX = NAct.Nmng.Player1.X;
                 otherPlayerZ = NAct.Nmng.Player1.Z;
                 otherPlayerPunch = NAct.Nmng.Player1.st_punch;
@@ -48,6 +52,15 @@ public class NekketsuHurtBox
                 break;
         }
 
+
+
+        // 体力0なら失格
+        if (0 < NAct.st_life)
+        {
+            //NAct.NowDamage = DamagePattern.Death;
+        }
+
+
         // ダウン状態の時()
         if (NAct.NowDamage == DamagePattern.UmaTaore
             || NAct.NowDamage == DamagePattern.UmaTaoreUp)
@@ -55,7 +68,7 @@ public class NekketsuHurtBox
             //現在計測中のダウン時間が、ダウン時間(各キャラのステータス値)を超えた場合
             if (NAct.st_downTime < NAct.nowDownTime)
             {
-                NAct.NowDamage = DamagePattern.SquatDown; //起き上がり(しゃがみ)
+                NAct.NowDamage = DamagePattern.SquatGetUp; //起き上がり(しゃがみ)
                 NAct.squatFlag = true;
 
                 NAct.nowDownTime = 0;
@@ -130,16 +143,31 @@ public class NekketsuHurtBox
                     NAct.NowAttack = AttackPattern.None;
                     NAct.dashFlag = false;  //被弾したらダッシュ解除
 
-                    // 喰らったダメージを計算
-                    switch (otherPlayerAttack)
+                    if (NAct.NowDamage == DamagePattern.None)
                     {
-                        case AttackPattern.JumpKick:
-                            NAct.downDamage += otherPlayerKick;
-                            break;
+                        // 喰らったダメージを計算
+                        switch (otherPlayerAttack)
+                        {
+                            case AttackPattern.JumpKick:
+                                NAct.downDamage += otherPlayerKick;
+                                NAct.st_life -= otherPlayerKick;
 
-                        default:
-                            NAct.downDamage += otherPlayerPunch;
-                            break;
+                                if (NAct.st_life <= 0)
+                                {
+                                    NAct.st_life = 0;
+                                }
+                                break;
+
+                            default:
+                                NAct.downDamage += otherPlayerPunch;
+                                NAct.st_life -= otherPlayerPunch;
+
+                                if (NAct.st_life <= 0)
+                                {
+                                    NAct.st_life = 0;
+                                }
+                                break;
+                        }
                     }
 
                     // 自キャラが空中にいるか？
@@ -148,7 +176,7 @@ public class NekketsuHurtBox
                         //自キャラが地上にいるので通常のダメージ計算
 
                         // ダメージ喰らい状態に変更
-                        if (NAct.downDamage <= 100)
+                        if (NAct.downDamage < 20)
                         {
                             if (NAct.vx == 0 && NAct.vz == 0)
                             {
@@ -166,11 +194,13 @@ public class NekketsuHurtBox
                                 NAct.NowDamage = DamagePattern.UmaHogeWalk;
                             }
                         }
-                        else if (NAct.downDamage <= 200)
+                        else if (NAct.NowDamage != DamagePattern.UmaHoge
+                                 && 20 <= NAct.downDamage)
                         {
                             NAct.NowDamage = DamagePattern.UmaHoge;
                         }
-                        else if (NAct.downDamage <= 300)
+                        else if (NAct.NowDamage == DamagePattern.UmaHoge
+                                 && 30 <= NAct.downDamage)
                         {
                             // 他プレイヤーの攻撃が前か後ろか(おおよそ)と、
                             // 自キャラの向きから吹っ飛びアニメを切り替え
@@ -246,35 +276,38 @@ public class NekketsuHurtBox
                         NAct.jumpSpeed = 0;
                     }
 
-                    // ノックバック処理
-                    if (otherPlayerX <= NAct.X)
+                    if (NAct.NowDamage == DamagePattern.None)
                     {
-                        if (otherPlayerAttack == AttackPattern.DosukoiBack)
+                        // ノックバック処理
+                        if (otherPlayerX <= NAct.X)
                         {
-                            NAct.Z += 0.02f;
-                        }
-                        else if (otherPlayerAttack == AttackPattern.DosukoiFront)
-                        {
-                            NAct.Z -= 0.02f;
+                            if (otherPlayerAttack == AttackPattern.DosukoiBack)
+                            {
+                                NAct.Z += 0.02f;
+                            }
+                            else if (otherPlayerAttack == AttackPattern.DosukoiFront)
+                            {
+                                NAct.Z -= 0.02f;
+                            }
+                            else
+                            {
+                                NAct.X += 0.02f;
+                            }
                         }
                         else
                         {
-                            NAct.X += 0.02f;
-                        }
-                    }
-                    else
-                    {
-                        if (otherPlayerAttack == AttackPattern.DosukoiBack)
-                        {
-                            NAct.Z += 0.02f;
-                        }
-                        else if (otherPlayerAttack == AttackPattern.DosukoiFront)
-                        {
-                            NAct.Z -= 0.02f;
-                        }
-                        else
-                        {
-                            NAct.X -= 0.02f;
+                            if (otherPlayerAttack == AttackPattern.DosukoiBack)
+                            {
+                                NAct.Z += 0.02f;
+                            }
+                            else if (otherPlayerAttack == AttackPattern.DosukoiFront)
+                            {
+                                NAct.Z -= 0.02f;
+                            }
+                            else
+                            {
+                                NAct.X -= 0.02f;
+                            }
                         }
                     }
 
@@ -313,7 +346,5 @@ public class NekketsuHurtBox
                 }
             }
         }
-
-
     }
 }
