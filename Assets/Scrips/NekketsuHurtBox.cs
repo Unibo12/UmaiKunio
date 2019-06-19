@@ -276,7 +276,8 @@ public class NekketsuHurtBox
                         NAct.jumpSpeed = 0;
                     }
 
-                    if (NAct.NowDamage == DamagePattern.None)
+                    if (NAct.NowDamage == DamagePattern.UmaHitBack
+                        || NAct.NowDamage == DamagePattern.UmaHitFront)
                     {
                         // ノックバック処理
                         if (otherPlayerX <= NAct.X)
