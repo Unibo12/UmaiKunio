@@ -193,11 +193,17 @@ public class NekketsuHurtBox
                             {
                                 NAct.NowDamage = DamagePattern.UmaHogeWalk;
                             }
+
+                            //ダメージ受けた瞬間から、蓄積ダメージリセットまでの時間を計測
+                            NAct.nowHogeTime = 0;
                         }
                         else if (NAct.NowDamage != DamagePattern.UmaHoge
                                  && 20 <= NAct.downDamage)
                         {
                             NAct.NowDamage = DamagePattern.UmaHoge;
+
+                            //ダメージ受けた瞬間から、蓄積ダメージリセットまでの時間を計測
+                            NAct.nowHogeTime = 0;
                         }
                         else if (NAct.NowDamage == DamagePattern.UmaHoge
                                  && 30 <= NAct.downDamage)
