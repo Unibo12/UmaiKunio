@@ -1280,6 +1280,7 @@ MonoBehaviour:
   brakeFlag: 0
   AttackMomentFlag: 0
   BlowUpFlag: 0
+  DeathFlag: 0
   JumpButtonState: 0
   XInputState: 0
   ZInputState: 0
@@ -1451,6 +1452,7 @@ MonoBehaviour:
   attack: {fileID: 8300000, guid: 5553a6465bdb39d4789390f6d864d7ef, type: 3}
   hit: {fileID: 8300000, guid: 291f5a2bed9a42744bae5c90afd4043a, type: 3}
   hijiHit: {fileID: 8300000, guid: 19320b66d88502941a7fba22b5802d49, type: 3}
+  death: {fileID: 8300000, guid: 60cf26ea41678df4a96048eae14dc391, type: 3}
   audioSource: {fileID: 0}
 --- !u!1 &945995172
 GameObject:
@@ -3028,6 +3030,7 @@ MonoBehaviour:
   attack: {fileID: 8300000, guid: 5553a6465bdb39d4789390f6d864d7ef, type: 3}
   hit: {fileID: 8300000, guid: 291f5a2bed9a42744bae5c90afd4043a, type: 3}
   hijiHit: {fileID: 8300000, guid: 19320b66d88502941a7fba22b5802d49, type: 3}
+  death: {fileID: 8300000, guid: 60cf26ea41678df4a96048eae14dc391, type: 3}
   audioSource: {fileID: 2032333309}
 --- !u!82 &2032333309
 AudioSource:
@@ -3181,6 +3184,7 @@ MonoBehaviour:
   brakeFlag: 0
   AttackMomentFlag: 0
   BlowUpFlag: 0
+  DeathFlag: 0
   JumpButtonState: 0
   XInputState: 0
   ZInputState: 0
@@ -3192,7 +3196,7 @@ MonoBehaviour:
   nowDownTime: 0
   nowHogeTime: 0
   haveItem: 0
-  st_life: 140
+  st_life: 30
   st_punch: 3
   st_kick: 3
   st_downTime: 1.5

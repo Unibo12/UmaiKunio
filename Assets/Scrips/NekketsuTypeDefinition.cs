@@ -87,8 +87,7 @@ public enum DamagePattern
     UmaOttotto,
     UmaTaore,
     UmaTaoreUp,
-    SquatGetUp,
-    Death
+    SquatGetUp
 }
 #endregion
 
@@ -109,7 +108,17 @@ public enum SEPattern
     hijiHit,
     hit,
     jump,
-    attack
+    attack,
+    death
+}
+#endregion
+
+#region Enum 死亡パターン
+public enum DeathPattern
+{
+    None,
+    deathNow,
+    death,
 }
 #endregion
 

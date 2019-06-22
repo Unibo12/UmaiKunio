@@ -47,6 +47,7 @@ public class NekketsuAction : MonoBehaviour
     public bool brakeFlag = false;  //ブレーキフラグ
     public bool AttackMomentFlag = false;  //攻撃し始めフラグ(空中攻撃出し始め判定)
     public bool BlowUpFlag = false; //吹っ飛び状態か否か
+    public DeathPattern DeathFlag = DeathPattern.None; //失格
 
     public JumpButtonPushState JumpButtonState; //ジャンプボタン押下ステータス
     public XInputState XInputState = 0; //疑似Xに対する入力ステータス
@@ -256,6 +257,15 @@ public class NekketsuAction : MonoBehaviour
                     animator.Play("Squat");
                 }
             }
+        }
+
+        #endregion
+
+        #region 失格判定(ゲームシーンから削除)
+
+        if (DeathFlag == DeathPattern.death)
+        {
+            Destroy(this.gameObject);
         }
 
         #endregion

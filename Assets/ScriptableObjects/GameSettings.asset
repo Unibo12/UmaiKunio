@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: GameSettings
   m_EditorClassIdentifier: 
   TopPlayerCameraX: -2
+  DeathTime: 3

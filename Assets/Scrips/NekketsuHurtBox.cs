@@ -52,28 +52,39 @@ public class NekketsuHurtBox
                 break;
         }
 
-
-
-        // 体力0なら失格
-        if (0 < NAct.st_life)
-        {
-            //NAct.NowDamage = DamagePattern.Death;
-        }
-
-
         // ダウン状態の時()
         if (NAct.NowDamage == DamagePattern.UmaTaore
             || NAct.NowDamage == DamagePattern.UmaTaoreUp)
         {
-            //現在計測中のダウン時間が、ダウン時間(各キャラのステータス値)を超えた場合
-            if (NAct.st_downTime < NAct.nowDownTime)
+            // まだ失格していない
+            if (NAct.DeathFlag == DeathPattern.None)
             {
-                NAct.NowDamage = DamagePattern.SquatGetUp; //起き上がり(しゃがみ)
-                NAct.squatFlag = true;
+                // ダウンした瞬間、体力0なら失格
+                if (NAct.st_life <= 0)
+                {
+                    if (NAct.DeathFlag == DeathPattern.None)
+                    {
+                        NSound.SEPlay(SEPattern.death);
+                    }
 
-                NAct.nowDownTime = 0;
+                    NAct.DeathFlag = DeathPattern.deathNow;
+                }
+                else
+                {
+                    // たいりょくがまだあるので起き上がり
+
+                    //現在計測中のダウン時間が、ダウン時間(各キャラのステータス値)を超えた場合
+                    if (NAct.st_downTime < NAct.nowDownTime)
+                    {
+                        NAct.NowDamage = DamagePattern.SquatGetUp; //起き上がり(しゃがみ)
+                        NAct.squatFlag = true;
+
+                        NAct.nowDownTime = 0;
+
+                    }
+                    NAct.nowDownTime += Time.deltaTime;
+                }
             }
-                NAct.nowDownTime += Time.deltaTime;
         }
         else
         {

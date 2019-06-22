@@ -9,6 +9,9 @@ public class NekketsuStateChange
 {
     NekketsuAction NAct; //NekketsuActionが入る変数
     NekketsuInput NInput;
+
+    float NowDeathTime = 0; //プレイヤーが失格してから消えるまでの時間計測
+
     public NekketsuStateChange(NekketsuAction nekketsuAction)
     {
         NAct = nekketsuAction;
@@ -22,6 +25,7 @@ public class NekketsuStateChange
 
     void AttackStateChange()
     {
+        //ジャンプ攻撃中から着地したとき
         if((NAct.NowAttack == AttackPattern.JumpKick
            || NAct.NowAttack == AttackPattern.UmaHariteJump)
             && NAct.Y <= 0)
@@ -53,6 +57,16 @@ public class NekketsuStateChange
             {
                 NAct.nowHogeTime += Time.deltaTime;
             }
+        }
+
+        if (NAct.DeathFlag == DeathPattern.deathNow)
+        {
+            if(Settings.Instance.Game.DeathTime < NowDeathTime)
+            {
+                NAct.DeathFlag = DeathPattern.death;
+            }
+
+            NowDeathTime += Time.deltaTime;
         }
 
         //// TODO：凹み時間正しく計測できていない。

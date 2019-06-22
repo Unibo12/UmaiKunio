@@ -18,6 +18,7 @@ public class NekketsuSound : MonoBehaviour
     public AudioClip attack;
     public AudioClip hit;
     public AudioClip hijiHit;
+    public AudioClip death;
     public AudioSource audioSource;
 
     private void Start()
@@ -53,6 +54,10 @@ public class NekketsuSound : MonoBehaviour
         else if (se == SEPattern.hijiHit)
         {
             audioSource.clip = hijiHit;
+        }
+        else if (se == SEPattern.death)
+        {
+            audioSource.clip = death;
         }
         else
         {
