@@ -67,6 +67,9 @@ public class NekketsuAction : MonoBehaviour
 
     public ItemPattern haveItem = ItemPattern.None; //所持アイテム
 
+
+    Transform shadeTransform;
+
     //♡♡♡♡♡すてーたす♡♡♡♡♡
     public float st_life = 0;       //たいりょく
     public float st_punch = 0;      //ぱんち
@@ -97,6 +100,7 @@ public class NekketsuAction : MonoBehaviour
         NInput = new NekketsuInput(this);
         NHurtBox = new NekketsuHurtBox(this);
         NStateChange = new NekketsuStateChange(this);
+        shadeTransform = GameObject.Find(this.gameObject.name + "_Shade").transform;
     }
 
     void Update()
@@ -218,7 +222,7 @@ public class NekketsuAction : MonoBehaviour
         /// ここに書くと毎フレーム呼ばれることになってしまいます。
         /// Startの中で一度呼び出しshadeTransformに書き込んでおいて
         /// それを使い回すのが良いでしょう
-        Transform shadeTransform = GameObject.Find(this.gameObject.name + "_Shade").transform;
+        //Transform shadeTransform = GameObject.Find(this.gameObject.name + "_Shade").transform;
          
         pos.y = Z - 0.8f;
 
