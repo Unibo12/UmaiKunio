@@ -15,6 +15,18 @@ public class NekketsuHurtBox
         NAct = nekketsuAction;
     }
 
+    /// @@@Main関数が長くなってしまっているので、
+    /// 処理ごとに関数を切るのが良いでしょう
+    /// regionで切るのも良いですが、
+    /// regionは変数のスコープが長いままにもなりますし
+    /// 今後さらに膨れてきた際にバグの発見が難しくなることや
+    /// チームで仕事をする際に、流れを知らない他の人が目的箇所にたどり着くため
+    /// 上から延々と処理を追うことになってしまうので、
+    /// 処理の見出しを作るような感覚で、可能な限り関数で小分けにしておくのが良いかと思います
+    /// 自分はVSCODEを使っていますが、
+    /// VisualStudioにもメソッドの抽出があると思いますので、
+    /// https://docs.microsoft.com/ja-jp/visualstudio/ide/reference/extract-method?view=vs-2019
+    /// 積極的に使ってみてください。
     public void HurtBoxMain(NekketsuSound NSound)
     {
         DamagePattern otherPlayerDmgPtn = DamagePattern.None;
@@ -107,6 +119,8 @@ public class NekketsuHurtBox
                     }
 
                     // 他プレイヤーの攻撃が前か後ろか(おおよそ)で、前後に吹っ飛ぶか分ける
+                    // @@@相手の位置ではなく向きで攻撃方向をとった方がいいですね
+                    // 旋風脚のように相対位置で飛び方向を決めたほうがいいものもあるのでそれは技にフラグをもたせるのが良いです
                     if (otherPlayerX <= NAct.X)
                     {
                         NAct.X += 0.01f;

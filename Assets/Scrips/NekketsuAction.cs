@@ -23,6 +23,9 @@ public class NekketsuAction : MonoBehaviour
     private NekketsuHurtBox NHurtBox; //NekketsuHurtBoxを呼び出す際に使用
     private NekketsuStateChange NStateChange; //NekketsuStateChangeを呼び出す際に使用
 
+    /// @@@変数が膨れてきたので、そろそろ
+    /// ジャンルごとに変数用のクラスを作ったほうが良いかと思います。
+
     // *****共通変数*****
     public float speed = 0.08f;                 // スピード
     public float jumpSpeed = 0f;                // ジャンプスピード管理変数
@@ -126,6 +129,15 @@ public class NekketsuAction : MonoBehaviour
         // 基本的に、描画位置はジャンプなどのキャラ状態かかわらず、同じように内部座標を描画座標に適用する
         // （適用できるように、必要ならば内部座標の段階で調整をしておく）
 
+        /// @@@Y座標も同じ場所で速度反映を行ったほうがよいです
+        /// ここで行うと着地時めり込むということだと思うのですが
+        /// いずれ直面する左右の壁めり込みなども同様の現象なので
+        /// 「速度を座標に反映する」処理の後に、「地形にぶつかっていたら適切な位置に戻す」
+        /// という処理を入れる必要があります。
+        /// とりあえずY座標だけでもめり込み判定をNekketsuJumpから取り出し
+        /// NekketsuMerikomiCheckみたいなクラスを作り、
+        /// 速度を座標に反映する処理の後に、上記クラスの処理を通して適切な位置に戻す流れを作っておくのが良いでしょう
+
         //座標への速度反映
         X += vx;
         //Y += vy;
@@ -135,6 +147,16 @@ public class NekketsuAction : MonoBehaviour
         pos.y = Z + Y;
 
         transform.position = pos;
+
+        /// @@@所持アイテムの位置調整および、くらい判定の移動
+        /// も専用のNekketsuHaveItemのようなクラスを作り、
+        /// そこで管理するのが良いかと思います。
+
+        /// @@@NekketuActionはあくまでマネージャー、管理人というべきクラスなので、
+        /// 管理人の仕事は基本的にNMoveやNJumpなどの仕事人を呼び出すだけに努め
+        /// それ以外のことはできるだけ書かないようにルールを作るのが良いです
+        /// ここに書くと楽なのですが、今後どんどん膨れていくので、
+        /// 今のうちから仕事は仕事クラスにふるようにしていきましょう
 
         #region 所持アイテムの位置調整
         if (haveItem != ItemPattern.None)
@@ -192,6 +214,10 @@ public class NekketsuAction : MonoBehaviour
         #endregion
 
         #region キャラクターの影の位置描画処理
+        /// @@@GameObject.Findは非常に重い処理なので、
+        /// ここに書くと毎フレーム呼ばれることになってしまいます。
+        /// Startの中で一度呼び出しshadeTransformに書き込んでおいて
+        /// それを使い回すのが良いでしょう
         Transform shadeTransform = GameObject.Find(this.gameObject.name + "_Shade").transform;
          
         pos.y = Z - 0.8f;

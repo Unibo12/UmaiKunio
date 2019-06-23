@@ -146,6 +146,13 @@ public class NekketsuMove
                     // ダッシュ中に逆方向を押した場合
                     if (leftDash != NAct.leftFlag)
                     {
+                        /// @@@ if文で代入の値を変える場合は、
+                        /// バグを避けるためにも可能な限り代入を一箇所にしたほうがよいですね。
+                        /// ここで言えば
+                        /// int GetSign(bool leftDash) { return leftDash ? -1 : +1;}
+                        /// というような関数を作っておき、
+                        ///  NAct.vx = GetSign(leftDash) * NAct.speed * Settings.Instance.Move.DashSpeed;
+                        /// と書けば１行ですむ上に、左右で値を間違えてしまうことなどもなくなります。
                         if (leftDash)
                         {
                             // 左ダッシュの移動量を入れる
