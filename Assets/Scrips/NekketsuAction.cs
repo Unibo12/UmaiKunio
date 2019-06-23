@@ -22,6 +22,7 @@ public class NekketsuAction : MonoBehaviour
     private NekketsuInput NInput; //NekketsuInputを呼び出す際に使用
     private NekketsuHurtBox NHurtBox; //NekketsuHurtBoxを呼び出す際に使用
     private NekketsuStateChange NStateChange; //NekketsuStateChangeを呼び出す際に使用
+    private NekketsuHaveItem NHaveItem;
 
     /// @@@変数が膨れてきたので、そろそろ
     /// ジャンルごとに変数用のクラスを作ったほうが良いかと思います。
@@ -100,6 +101,8 @@ public class NekketsuAction : MonoBehaviour
         NInput = new NekketsuInput(this);
         NHurtBox = new NekketsuHurtBox(this);
         NStateChange = new NekketsuStateChange(this);
+        NHaveItem = new NekketsuHaveItem(this);
+
         shadeTransform = GameObject.Find(this.gameObject.name + "_Shade").transform;
     }
 
@@ -126,6 +129,8 @@ public class NekketsuAction : MonoBehaviour
 
         // 攻撃喰らい判定
         NHurtBox.HurtBoxMain(NSound);
+
+        NHaveItem.NekketsuHaveItemMain();
 
         #region 画面への描画
         // 入力された内部XYZをtransformに設定する。
@@ -161,31 +166,6 @@ public class NekketsuAction : MonoBehaviour
         /// それ以外のことはできるだけ書かないようにルールを作るのが良いです
         /// ここに書くと楽なのですが、今後どんどん膨れていくので、
         /// 今のうちから仕事は仕事クラスにふるようにしていきましょう
-
-        #region 所持アイテムの位置調整
-        if (haveItem != ItemPattern.None)
-        {
-            Transform ItemTransform = GameObject.Find(haveItem.ToString()).transform;
-            Vector3 ItemScale = ItemTransform.localScale;
-            Vector3 ItemPos = pos;
-            if (leftFlag)
-            {
-                ItemPos.x = pos.x - 0.4f;
-                ItemScale.x = -1;
-            }
-            else
-            {
-                ItemPos.x = pos.x + 0.4f;
-                ItemScale.x = 1;
-            }
-            ItemPos.y = pos.y + 0.25f;
-            ItemTransform.localScale = ItemScale;
-
-            ItemTransform.position = ItemPos;
-        }
-
-        #endregion
-
 
         // 喰らい判定の移動
         if (NowDamage == DamagePattern.UmaTaore
