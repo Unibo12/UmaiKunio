@@ -7,6 +7,11 @@
 public class NekketsuManager : MonoBehaviour
 {
     private GameObject playerObjct;
+
+    /// @@@PlayerXのように連番になるようなものはリストか配列で管理するほうが良いです
+    /// リストは数が可変するもの、配列は変わらない予定のものという判断で大丈夫です
+    /// 配列で管理するとインデックスでキャラを管理、判断できるので
+    /// 後々楽になります
     public NekketsuAction Player1;
     public NekketsuAction Player2;
     public NekketsuAction Player3;
