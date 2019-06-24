@@ -146,23 +146,8 @@ public class NekketsuMove
                     // ダッシュ中に逆方向を押した場合
                     if (leftDash != NAct.leftFlag)
                     {
-                        /// @@@ if文で代入の値を変える場合は、
-                        /// バグを避けるためにも可能な限り代入を一箇所にしたほうがよいですね。
-                        /// ここで言えば
-                        /// int GetSign(bool leftDash) { return leftDash ? -1 : +1;}
-                        /// というような関数を作っておき、
-                        ///  NAct.vx = GetSign(leftDash) * NAct.speed * Settings.Instance.Move.DashSpeed;
-                        /// と書けば１行ですむ上に、左右で値を間違えてしまうことなどもなくなります。
-                        if (leftDash)
-                        {
-                            // 左ダッシュの移動量を入れる
-                            NAct.vx = -NAct.speed * Settings.Instance.Move.DashSpeed; 
-                        }
-                        else
-                        {
-                            // 右ダッシュの移動量を入れる
-                            NAct.vx = NAct.speed * Settings.Instance.Move.DashSpeed; ;
-                        }
+                        // 逆方向の移動量を入れる
+                        NAct.vx = GetSign(NAct.leftFlag) * NAct.speed * Settings.Instance.Move.DashSpeed;
 
                         NAct.dashFlag = false;
                         pushMove = false;
@@ -177,18 +162,8 @@ public class NekketsuMove
                     }
                     else
                     {
-                        // ダッシュ中の加速を計算する。
-                        // ダッシュ中は方向キー入力なしで自動で進む。(クロカン・障害ふう)
-                        if (NAct.leftFlag)
-                        {
-                            // 左ダッシュの移動量を入れる
-                            NAct.vx = -NAct.speed * Settings.Instance.Move.DashSpeed;
-                        }
-                        else
-                        {
-                            // 右ダッシュの移動量を入れる
-                            NAct.vx = NAct.speed * Settings.Instance.Move.DashSpeed; ;
-                        }
+                        // ダッシュの移動量を入れる
+                        NAct.vx = GetSign(NAct.leftFlag) * NAct.speed * Settings.Instance.Move.DashSpeed;
                     }
                 }
             }
@@ -196,14 +171,9 @@ public class NekketsuMove
             // ブレーキ処理
             if (!NAct.jumpFlag && NAct.brakeFlag)
             {
-                if (NAct.leftFlag)
-                {
-                    NAct.vx = NAct.speed * NAct.st_brake; // 右に進む移動量を入れる
-                }
-                else
-                {
-                    NAct.vx = -NAct.speed * NAct.st_brake; // 左に進む移動量を入れる
-                }
+                // ブレーキ中の移動量を入れる
+                NAct.vx = GetSign(!NAct.leftFlag) * NAct.speed * NAct.st_brake; 
+                
                 // ブレーキ状態の時間計測
                 nowTimebrake += Time.deltaTime;
 
@@ -231,4 +201,13 @@ public class NekketsuMove
             #endregion
         }
     }
+
+    /// <summary>
+    /// 左右の向きの符号を返す(Leftはマイナス、Rightはプラス)
+    /// </summary>
+    /// <param name="leftDash"></param>
+    /// <returns></returns>
+    int GetSign(bool leftDash) { return leftDash ? -1 : +1; }
+
+
 }
