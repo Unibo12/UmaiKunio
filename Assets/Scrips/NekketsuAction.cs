@@ -157,16 +157,6 @@ public class NekketsuAction : MonoBehaviour
 
         transform.position = pos;
 
-        /// @@@所持アイテムの位置調整および、くらい判定の移動
-        /// も専用のNekketsuHaveItemのようなクラスを作り、
-        /// そこで管理するのが良いかと思います。
-
-        /// @@@NekketuActionはあくまでマネージャー、管理人というべきクラスなので、
-        /// 管理人の仕事は基本的にNMoveやNJumpなどの仕事人を呼び出すだけに努め
-        /// それ以外のことはできるだけ書かないようにルールを作るのが良いです
-        /// ここに書くと楽なのですが、今後どんどん膨れていくので、
-        /// 今のうちから仕事は仕事クラスにふるようにしていきましょう
-
         // 喰らい判定の移動
         if (NowDamage == DamagePattern.UmaTaore
             || NowDamage == DamagePattern.UmaTaoreUp)
@@ -179,7 +169,6 @@ public class NekketsuAction : MonoBehaviour
             //通常当たり判定
             hurtBox = new Rect(X, Y+Z, 0.7f, 1.6f);
         }
-
 
         #endregion
 
@@ -198,11 +187,6 @@ public class NekketsuAction : MonoBehaviour
         #endregion
 
         #region キャラクターの影の位置描画処理
-        /// @@@GameObject.Findは非常に重い処理なので、
-        /// ここに書くと毎フレーム呼ばれることになってしまいます。
-        /// Startの中で一度呼び出しshadeTransformに書き込んでおいて
-        /// それを使い回すのが良いでしょう
-        //Transform shadeTransform = GameObject.Find(this.gameObject.name + "_Shade").transform;
          
         pos.y = Z - 0.8f;
 
