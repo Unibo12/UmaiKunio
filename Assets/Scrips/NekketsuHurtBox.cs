@@ -34,6 +34,8 @@ public class NekketsuHurtBox
         float otherPlayerX = 0;
         float otherPlayerZ = 0;
 
+        bool otherPlayerLeftFlag = false;
+
         float otherPlayerPunch = 0;
         float otherPlayerKick = 0;
 
@@ -51,6 +53,7 @@ public class NekketsuHurtBox
                 otherPlayerKick = NAct.Nmng.Player2.st_kick;
                 otherPlayerAttack = NAct.Nmng.Player2.NowAttack;
                 otherHitBox = NAct.Nmng.Player2.hitBox;
+                otherPlayerLeftFlag = NAct.Nmng.Player2.leftFlag;
                 break;
 
             case "Player2":
@@ -61,6 +64,7 @@ public class NekketsuHurtBox
                 otherPlayerKick = NAct.Nmng.Player1.st_kick;
                 otherPlayerAttack = NAct.Nmng.Player1.NowAttack;
                 otherHitBox = NAct.Nmng.Player1.hitBox;
+                otherPlayerLeftFlag = NAct.Nmng.Player1.leftFlag;
                 break;
         }
 
@@ -129,6 +133,12 @@ public class NekketsuHurtBox
                     {
                         NAct.X -= 0.01f;
                     }
+
+                    //TODO:
+                    //相手の向いている方向で吹っ飛びを考慮した下記修正だと、
+                    //攻撃終わり(=otherPlayerAttackがNone)のときNG
+                    //相手のキメ攻撃を覚えて置く必要があるのか？
+                    //NAct.X += GetSign(otherPlayerLeftFlag, otherPlayerAttack) * 0.01f;
                 }
                 else
                 {
@@ -377,6 +387,30 @@ public class NekketsuHurtBox
                     NAct.jumpFlag = false;
                 }
             }
+        }
+    }
+
+    /// <summary>
+    /// 左右の向きの符号を返す(Leftはマイナス、Rightはプラス)
+    /// </summary>
+    /// <param name="leftFlag"></param>
+    /// <param name="otherPlayerAttack"></param>
+    /// <returns></returns>
+    int GetSign(bool leftFlag, AttackPattern otherPlayerAttack)
+    {
+        //TODO
+        //このままだと、攻撃終わり(None)の挙動がNG
+
+
+        // 肘攻撃の場合は逆向きの為、ここで向きを調節
+        if (otherPlayerAttack == AttackPattern.Hiji
+            || otherPlayerAttack == AttackPattern.HijiWalk)
+        {
+            return leftFlag ? +1 : -1;
+        }
+        else
+        {
+            return leftFlag ? -1 : +1;
         }
     }
 }
