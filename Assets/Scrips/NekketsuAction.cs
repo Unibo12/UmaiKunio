@@ -130,6 +130,7 @@ public class NekketsuAction : MonoBehaviour
         // 攻撃喰らい判定
         NHurtBox.HurtBoxMain(NSound);
 
+        // 所持アイテムの管理
         NHaveItem.NekketsuHaveItemMain();
 
         #region 画面への描画
