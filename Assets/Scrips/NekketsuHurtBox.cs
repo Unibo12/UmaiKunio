@@ -10,6 +10,16 @@ public class NekketsuHurtBox
     NekketsuAction NAct; //NekketsuActionが入る変数
     DamageTest DmgTest;
 
+    // 喰らい判定で必要な相手の情報
+    DamagePattern otherPlayerDmgPtn = DamagePattern.None;
+    float otherPlayerX = 0;
+    float otherPlayerZ = 0;
+    bool otherPlayerLeftFlag = false;
+    float otherPlayerPunch = 0;
+    float otherPlayerKick = 0;
+    AttackPattern otherPlayerAttack = AttackPattern.None;
+    Rect otherHitBox = new Rect(0, 0, 0, 0);
+
     public NekketsuHurtBox(NekketsuAction nekketsuAction)
     {
         NAct = nekketsuAction;
@@ -29,44 +39,8 @@ public class NekketsuHurtBox
     /// 積極的に使ってみてください。
     public void HurtBoxMain(NekketsuSound NSound)
     {
-        DamagePattern otherPlayerDmgPtn = DamagePattern.None;
-
-        float otherPlayerX = 0;
-        float otherPlayerZ = 0;
-
-        bool otherPlayerLeftFlag = false;
-
-        float otherPlayerPunch = 0;
-        float otherPlayerKick = 0;
-
-        AttackPattern otherPlayerAttack = AttackPattern.None;
-        Rect otherHitBox = new Rect(0, 0, 0, 0);
-
-        // 自分から見て、他プレイヤーの情報を取得
-        switch (NAct.gameObject.name)
-        {
-            case "Player1":
-                otherPlayerDmgPtn = NAct.Nmng.Player2.NowDamage;
-                otherPlayerX = NAct.Nmng.Player2.X;
-                otherPlayerZ = NAct.Nmng.Player2.Z;
-                otherPlayerPunch = NAct.Nmng.Player2.st_punch;
-                otherPlayerKick = NAct.Nmng.Player2.st_kick;
-                otherPlayerAttack = NAct.Nmng.Player2.NowAttack;
-                otherHitBox = NAct.Nmng.Player2.hitBox;
-                otherPlayerLeftFlag = NAct.Nmng.Player2.leftFlag;
-                break;
-
-            case "Player2":
-                otherPlayerDmgPtn = NAct.Nmng.Player1.NowDamage;
-                otherPlayerX = NAct.Nmng.Player1.X;
-                otherPlayerZ = NAct.Nmng.Player1.Z;
-                otherPlayerPunch = NAct.Nmng.Player1.st_punch;
-                otherPlayerKick = NAct.Nmng.Player1.st_kick;
-                otherPlayerAttack = NAct.Nmng.Player1.NowAttack;
-                otherHitBox = NAct.Nmng.Player1.hitBox;
-                otherPlayerLeftFlag = NAct.Nmng.Player1.leftFlag;
-                break;
-        }
+        //他プレイヤーの攻撃情報取得
+        getOtherPlayerInfo();
 
         // ダウン状態の時()
         if (NAct.NowDamage == DamagePattern.UmaTaore
@@ -243,38 +217,8 @@ public class NekketsuHurtBox
                         else if (NAct.NowDamage == DamagePattern.UmaHoge
                                  && 30 <= NAct.downDamage)
                         {
-                            // 他プレイヤーの攻撃が前か後ろか(おおよそ)と、
-                            // 自キャラの向きから吹っ飛びアニメを切り替え
-                            if (otherPlayerX <= NAct.X)
-                            {
-                                if (NAct.leftFlag)
-                                {
-                                    NAct.NowDamage = DamagePattern.UmaBARF;
-                                }
-                                else
-                                {
-                                    NAct.NowDamage = DamagePattern.UmaOttotto;
-                                }
-                            }
-                            else
-                            {
-                                if (NAct.leftFlag)
-                                {
-                                    NAct.NowDamage = DamagePattern.UmaOttotto;
-                                }
-                                else
-                                {
-                                    NAct.NowDamage = DamagePattern.UmaBARF;
-                                }
-                            }
-
-                            NAct.BlowUpFlag = true;
-
-                            NAct.downDamage = 0;
-                        }
-                        else
-                        {
-
+                            //吹っ飛び状態に切り替え
+                            changeBlowUp();
                         }
                     }
                     else
@@ -282,37 +226,11 @@ public class NekketsuHurtBox
                         //自分がジャンプ状態のときに、
                         //攻撃を受けた際は蓄積ダメージを考慮せず、固定でダウン状態へ
 
-                        // 他プレイヤーの攻撃が前か後ろか(おおよそ)と、
-                        // 自キャラの向きから吹っ飛びアニメを切り替え
-                        if (otherPlayerX <= NAct.X)
-                        {
-                            if (NAct.leftFlag)
-                            {
-                                NAct.NowDamage = DamagePattern.UmaBARF;
-                            }
-                            else
-                            {
-                                NAct.NowDamage = DamagePattern.UmaOttotto;
-                            }
-                        }
-                        else
-                        {
-                            if (NAct.leftFlag)
-                            {
-                                NAct.NowDamage = DamagePattern.UmaOttotto;
-                            }
-                            else
-                            {
-                                NAct.NowDamage = DamagePattern.UmaBARF;
-                            }
-                        }
-
-                        NAct.BlowUpFlag = true;
-
-                        NAct.downDamage = 0;
+                        //吹っ飛び状態に切り替え
+                        changeBlowUp();
 
                         //ジャンプ中にダウンしたので、ジャンプ周りをリセット
-                        NAct.vy = 0; 
+                        NAct.vy = 0;
                         NAct.jumpFlag = false;
                         NAct.jumpSpeed = 0;
                     }
@@ -320,37 +238,8 @@ public class NekketsuHurtBox
                     if (NAct.NowDamage == DamagePattern.UmaHitBack
                         || NAct.NowDamage == DamagePattern.UmaHitFront)
                     {
-                        // ノックバック処理
-                        if (otherPlayerX <= NAct.X)
-                        {
-                            if (otherPlayerAttack == AttackPattern.DosukoiBack)
-                            {
-                                NAct.Z += 0.02f;
-                            }
-                            else if (otherPlayerAttack == AttackPattern.DosukoiFront)
-                            {
-                                NAct.Z -= 0.02f;
-                            }
-                            else
-                            {
-                                NAct.X += 0.02f;
-                            }
-                        }
-                        else
-                        {
-                            if (otherPlayerAttack == AttackPattern.DosukoiBack)
-                            {
-                                NAct.Z += 0.02f;
-                            }
-                            else if (otherPlayerAttack == AttackPattern.DosukoiFront)
-                            {
-                                NAct.Z -= 0.02f;
-                            }
-                            else
-                            {
-                                NAct.X -= 0.02f;
-                            }
-                        }
+                        //ノックバック処理
+                        knockBack();
                     }
 
                     // 攻撃効果音
@@ -387,6 +276,110 @@ public class NekketsuHurtBox
                     NAct.jumpFlag = false;
                 }
             }
+        }
+    }
+
+    /// <summary>
+    /// ノックバック処理
+    /// </summary>
+    private void knockBack()
+    {
+        if (otherPlayerX <= NAct.X)
+        {
+            if (otherPlayerAttack == AttackPattern.DosukoiBack)
+            {
+                NAct.Z += 0.02f;
+            }
+            else if (otherPlayerAttack == AttackPattern.DosukoiFront)
+            {
+                NAct.Z -= 0.02f;
+            }
+            else
+            {
+                NAct.X += 0.02f;
+            }
+        }
+        else
+        {
+            if (otherPlayerAttack == AttackPattern.DosukoiBack)
+            {
+                NAct.Z += 0.02f;
+            }
+            else if (otherPlayerAttack == AttackPattern.DosukoiFront)
+            {
+                NAct.Z -= 0.02f;
+            }
+            else
+            {
+                NAct.X -= 0.02f;
+            }
+        }
+    }
+
+    /// <summary>
+    /// 吹っ飛び状態へ切り替え
+    /// </summary>
+    private void changeBlowUp()
+    {
+        // 他プレイヤーの攻撃が前か後ろか(おおよそ)と、
+        // 自キャラの向きから吹っ飛びアニメを切り替え
+        if (otherPlayerX <= NAct.X)
+        {
+            if (NAct.leftFlag)
+            {
+                NAct.NowDamage = DamagePattern.UmaBARF;
+            }
+            else
+            {
+                NAct.NowDamage = DamagePattern.UmaOttotto;
+            }
+        }
+        else
+        {
+            if (NAct.leftFlag)
+            {
+                NAct.NowDamage = DamagePattern.UmaOttotto;
+            }
+            else
+            {
+                NAct.NowDamage = DamagePattern.UmaBARF;
+            }
+        }
+
+        NAct.BlowUpFlag = true;
+
+        NAct.downDamage = 0;
+    }
+
+    /// <summary>
+    /// 他プレイヤーの情報取得
+    /// </summary>
+    private void getOtherPlayerInfo()
+    {
+        // 自分から見て、他プレイヤーの情報を取得
+        switch (NAct.gameObject.name)
+        {
+            case "Player1":
+                otherPlayerDmgPtn = NAct.Nmng.Player2.NowDamage;
+                otherPlayerX = NAct.Nmng.Player2.X;
+                otherPlayerZ = NAct.Nmng.Player2.Z;
+                otherPlayerPunch = NAct.Nmng.Player2.st_punch;
+                otherPlayerKick = NAct.Nmng.Player2.st_kick;
+                otherPlayerAttack = NAct.Nmng.Player2.NowAttack;
+                otherHitBox = NAct.Nmng.Player2.hitBox;
+                otherPlayerLeftFlag = NAct.Nmng.Player2.leftFlag;
+                break;
+
+            case "Player2":
+                otherPlayerDmgPtn = NAct.Nmng.Player1.NowDamage;
+                otherPlayerX = NAct.Nmng.Player1.X;
+                otherPlayerZ = NAct.Nmng.Player1.Z;
+                otherPlayerPunch = NAct.Nmng.Player1.st_punch;
+                otherPlayerKick = NAct.Nmng.Player1.st_kick;
+                otherPlayerAttack = NAct.Nmng.Player1.NowAttack;
+                otherHitBox = NAct.Nmng.Player1.hitBox;
+                otherPlayerLeftFlag = NAct.Nmng.Player1.leftFlag;
+                break;
         }
     }
 
