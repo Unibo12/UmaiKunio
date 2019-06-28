@@ -49,66 +49,100 @@ public class NekketsuInput
 
         #endregion
 
-        #region 十字キー入力
+        #region 移動入力
 
-        #region キーボード方向キー
-
-        if (Input.GetKeyDown("right"))
+        if (Settings.Instance.Game.isGamePadSetting)
         {
-            NAct.XInputState = XInputState.XRightPushMoment;
+            //ゲームパッドのアナログスティック入力受付
+            GamePadInput();
         }
-        else if (Input.GetKey("right"))
+        else
         {
-            NAct.XInputState = XInputState.XRightPushButton;
-        }
-        else if (Input.GetKeyUp("right"))
-        {
-            NAct.XInputState = XInputState.XRightReleaseButton;
-        }
-
-        if (Input.GetKeyDown("left"))
-        {
-            NAct.XInputState = XInputState.XLeftPushMoment;
-        }
-        else if (Input.GetKey("left"))
-        {
-            NAct.XInputState = XInputState.XLeftPushButton;
-        }
-        else if (Input.GetKeyUp("left"))
-        {
-            NAct.XInputState = XInputState.XLeftReleaseButton;
-        }
-
-        if (Input.GetKeyDown("up"))
-        {
-            NAct.ZInputState = ZInputState.ZBackPushMoment;
-        }
-        else if (Input.GetKey("up"))
-        {
-            NAct.ZInputState = ZInputState.ZBackPushButton;
-        }
-        else if (Input.GetKeyUp("up"))
-        {
-            NAct.ZInputState = ZInputState.ZBackReleaseButton;
-        }
-
-        if (Input.GetKeyDown("down"))
-        {
-            NAct.ZInputState = ZInputState.ZFrontPushMoment;
-        }
-        else if (Input.GetKey("down"))
-        {
-            NAct.ZInputState = ZInputState.ZFrontPushButton;
-        }
-        else if (Input.GetKeyUp("down"))
-        {
-            NAct.ZInputState = ZInputState.ZFrontReleaseButton;
+            //キーボード方向キーの入力受付
+            KeyboardInput();
         }
 
         #endregion
 
-        #region コントロールスティック ※見直し必要
+        #region 攻撃処理
+        NAct.AttackMomentFlag = false;
 
+        if ((Input.GetKeyDown("z") || Input.GetKeyDown("joystick button 0")))
+        {
+            if (NAct.leftFlag)
+            {
+                DosukoiVector();
+            }
+            else
+            {
+                if (NAct.jumpFlag && NAct.Y >= 0)
+                {
+                    if (!NAct.leftFlag)
+                    {
+                        NAct.NowAttack = AttackPattern.JumpKick;
+                        NAct.AttackMomentFlag = true;
+                    }
+                }
+                else
+                {
+                    if (NAct.XInputState == XInputState.XNone
+                        && NAct.ZInputState == ZInputState.ZNone)
+                    {
+                        NAct.NowAttack = AttackPattern.Hiji;
+                    }
+                    else
+                    {
+                        NAct.NowAttack = AttackPattern.HijiWalk;
+                    }
+                }
+            }
+        }
+        else if ((Input.GetKeyDown("x") || Input.GetKeyDown("joystick button 1")))
+        {
+            if (NAct.leftFlag)
+            {
+                if (NAct.jumpFlag && NAct.Y >= 0)
+                {
+                    if (NAct.leftFlag)
+                    {
+                        NAct.NowAttack = AttackPattern.JumpKick;
+                        NAct.AttackMomentFlag = true;
+                    }
+                }
+                else
+                {
+                    if (NAct.XInputState == XInputState.XNone
+                        && NAct.ZInputState == ZInputState.ZNone)
+                    {
+                        NAct.NowAttack = AttackPattern.Hiji;
+                    }
+                    else
+                    {
+                        NAct.NowAttack = AttackPattern.HijiWalk;
+                    }
+                }
+            }
+            else
+            {
+                DosukoiVector();
+            }
+        }
+        else if ((Input.GetKeyDown("s") || Input.GetKeyDown("joystick button 3")))
+        {
+            //animator.Play("UmaThrow");
+        }
+        else
+        {
+            //NAct.NowAttack = AttackPattern.None;
+        }
+        #endregion
+    }
+
+    /// <summary>
+    /// ゲームパッドの入力受付(推奨：Xbox360コン)
+    /// </summary>
+    private void GamePadInput()
+    {
         if (Input.GetAxis("Horizontal") > 0)
         {
             if (NAct.XInputState == XInputState.XNone
@@ -198,83 +232,64 @@ public class NekketsuInput
                 NAct.ZInputState = ZInputState.ZNone;
             }
         }
+    }
 
-        #endregion
+    /// <summary>
+    /// キーボードの方向キー入力受付
+    /// </summary>
+    private void KeyboardInput()
+    {
+        if (Input.GetKeyDown("right"))
+        {
+            NAct.XInputState = XInputState.XRightPushMoment;
+        }
+        else if (Input.GetKey("right"))
+        {
+            NAct.XInputState = XInputState.XRightPushButton;
+        }
+        else if (Input.GetKeyUp("right"))
+        {
+            NAct.XInputState = XInputState.XRightReleaseButton;
+        }
 
-        #endregion
+        if (Input.GetKeyDown("left"))
+        {
+            NAct.XInputState = XInputState.XLeftPushMoment;
+        }
+        else if (Input.GetKey("left"))
+        {
+            NAct.XInputState = XInputState.XLeftPushButton;
+        }
+        else if (Input.GetKeyUp("left"))
+        {
+            NAct.XInputState = XInputState.XLeftReleaseButton;
+        }
 
-        #region 攻撃処理
-        NAct.AttackMomentFlag = false;
+        if (Input.GetKeyDown("up"))
+        {
+            NAct.ZInputState = ZInputState.ZBackPushMoment;
+        }
+        else if (Input.GetKey("up"))
+        {
+            NAct.ZInputState = ZInputState.ZBackPushButton;
+        }
+        else if (Input.GetKeyUp("up"))
+        {
+            NAct.ZInputState = ZInputState.ZBackReleaseButton;
+        }
 
-        if ((Input.GetKeyDown("z") || Input.GetKeyDown("joystick button 0")))
+        if (Input.GetKeyDown("down"))
         {
-            if (NAct.leftFlag)
-            {
-                DosukoiVector();
-            }
-            else
-            {
-                if (NAct.jumpFlag && NAct.Y >= 0)
-                {
-                    if (!NAct.leftFlag)
-                    {
-                        NAct.NowAttack = AttackPattern.JumpKick;
-                        NAct.AttackMomentFlag = true;
-                    }
-                }
-                else
-                {
-                    if (NAct.XInputState == XInputState.XNone
-                        && NAct.ZInputState == ZInputState.ZNone)
-                    {
-                        NAct.NowAttack = AttackPattern.Hiji;
-                    }
-                    else
-                    {
-                        NAct.NowAttack = AttackPattern.HijiWalk;
-                    }
-                }
-            }
+            NAct.ZInputState = ZInputState.ZFrontPushMoment;
         }
-        else if ((Input.GetKeyDown("x") || Input.GetKeyDown("joystick button 1")))
+        else if (Input.GetKey("down"))
         {
-            if (NAct.leftFlag)
-            {
-                if (NAct.jumpFlag && NAct.Y >= 0)
-                {
-                    if (NAct.leftFlag)
-                    {
-                        NAct.NowAttack = AttackPattern.JumpKick;
-                        NAct.AttackMomentFlag = true;
-                    }
-                }
-                else
-                {
-                    if (NAct.XInputState == XInputState.XNone
-                        && NAct.ZInputState == ZInputState.ZNone)
-                    {
-                        NAct.NowAttack = AttackPattern.Hiji;
-                    }
-                    else
-                    {
-                        NAct.NowAttack = AttackPattern.HijiWalk;
-                    }
-                }
-            }
-            else
-            {
-                DosukoiVector();
-            }
+            NAct.ZInputState = ZInputState.ZFrontPushButton;
         }
-        else if ((Input.GetKeyDown("s") || Input.GetKeyDown("joystick button 3")))
+        else if (Input.GetKeyUp("down"))
         {
-            //animator.Play("UmaThrow");
+            NAct.ZInputState = ZInputState.ZFrontReleaseButton;
         }
-        else
-        {
-            //NAct.NowAttack = AttackPattern.None;
-        }
-        #endregion
     }
 
     /// <summary>
