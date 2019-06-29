@@ -360,25 +360,25 @@ public class NekketsuHurtBox
         switch (NAct.gameObject.name)
         {
             case "Player1":
-                otherPlayerDmgPtn = NAct.Nmng.Player2.NowDamage;
-                otherPlayerX = NAct.Nmng.Player2.X;
-                otherPlayerZ = NAct.Nmng.Player2.Z;
-                otherPlayerPunch = NAct.Nmng.Player2.st_punch;
-                otherPlayerKick = NAct.Nmng.Player2.st_kick;
-                otherPlayerAttack = NAct.Nmng.Player2.NowAttack;
-                otherHitBox = NAct.Nmng.Player2.hitBox;
-                otherPlayerLeftFlag = NAct.Nmng.Player2.leftFlag;
+                otherPlayerDmgPtn = NAct.Nmng.Player[1].NowDamage;
+                otherPlayerX = NAct.Nmng.Player[1].X;
+                otherPlayerZ = NAct.Nmng.Player[1].Z;
+                otherPlayerPunch = NAct.Nmng.Player[1].st_punch;
+                otherPlayerKick = NAct.Nmng.Player[1].st_kick;
+                otherPlayerAttack = NAct.Nmng.Player[1].NowAttack;
+                otherHitBox = NAct.Nmng.Player[1].hitBox;
+                otherPlayerLeftFlag = NAct.Nmng.Player[1].leftFlag;
                 break;
 
             case "Player2":
-                otherPlayerDmgPtn = NAct.Nmng.Player1.NowDamage;
-                otherPlayerX = NAct.Nmng.Player1.X;
-                otherPlayerZ = NAct.Nmng.Player1.Z;
-                otherPlayerPunch = NAct.Nmng.Player1.st_punch;
-                otherPlayerKick = NAct.Nmng.Player1.st_kick;
-                otherPlayerAttack = NAct.Nmng.Player1.NowAttack;
-                otherHitBox = NAct.Nmng.Player1.hitBox;
-                otherPlayerLeftFlag = NAct.Nmng.Player1.leftFlag;
+                otherPlayerDmgPtn = NAct.Nmng.Player[0].NowDamage;
+                otherPlayerX = NAct.Nmng.Player[0].X;
+                otherPlayerZ = NAct.Nmng.Player[0].Z;
+                otherPlayerPunch = NAct.Nmng.Player[0].st_punch;
+                otherPlayerKick = NAct.Nmng.Player[0].st_kick;
+                otherPlayerAttack = NAct.Nmng.Player[0].NowAttack;
+                otherHitBox = NAct.Nmng.Player[0].hitBox;
+                otherPlayerLeftFlag = NAct.Nmng.Player[0].leftFlag;
                 break;
         }
     }

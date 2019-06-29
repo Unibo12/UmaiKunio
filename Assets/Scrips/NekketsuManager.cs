@@ -12,10 +12,7 @@ public class NekketsuManager : MonoBehaviour
     /// リストは数が可変するもの、配列は変わらない予定のものという判断で大丈夫です
     /// 配列で管理するとインデックスでキャラを管理、判断できるので
     /// 後々楽になります
-    public NekketsuAction Player1;
-    public NekketsuAction Player2;
-    public NekketsuAction Player3;
-    public NekketsuAction Player4;
+    public NekketsuAction[] Player;
 
     private GameObject ItemObjct;
     public item Item1;
@@ -31,12 +28,14 @@ public class NekketsuManager : MonoBehaviour
 
     void Start()    
     {
+        Player = new NekketsuAction[2];
+
         // 各オブジェクトの変数を参照できるようにする。
         playerObjct = GameObject.Find("Player1");
-        Player1 = playerObjct.GetComponent<NekketsuAction>();
+        Player[0] = playerObjct.GetComponent<NekketsuAction>();
 
         playerObjct = GameObject.Find("Player2");
-        Player2 = playerObjct.GetComponent<NekketsuAction>();
+        Player[1] = playerObjct.GetComponent<NekketsuAction>();
 
         //playerObjct = GameObject.Find("Player3");
         //Player3 = playerObjct.GetComponent<NekketsuAction>();

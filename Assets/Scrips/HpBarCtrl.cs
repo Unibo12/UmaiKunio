@@ -17,12 +17,12 @@ public class HpBarCtrl : MonoBehaviour
         // スライダーを取得する
         Slider = GameObject.Find("Slider").GetComponent<Slider>();
 
-        Slider.maxValue = Nmng.Player1.st_life;
+        Slider.maxValue = Nmng.Player[0].st_life;
     }
 
     void Update()
     {
         // HPゲージに値を設定
-        Slider.value = Nmng.Player1.st_life;
+        Slider.value = Nmng.Player[0].st_life;
     }
 }

@@ -23,15 +23,15 @@ public class Forever_ChaseCameraH : MonoBehaviour {
     void LateUpdate() { // ずっと行う（いろいろな処理の最後に）
 
         // カメラは先頭を走るプレイヤーを追いかける
-        if (Nmng.Player2.X < Nmng.Player1.X)
+        if (Nmng.Player[1].X < Nmng.Player[0].X)
         {
-            TopPlayerX = Nmng.Player1.X;
-            pos.x = Nmng.Player1.X + Settings.Instance.Game.TopPlayerCameraX;
+            TopPlayerX = Nmng.Player[0].X;
+            pos.x = Nmng.Player[0].X + Settings.Instance.Game.TopPlayerCameraX;
         }
         else
         {
-            TopPlayerX = Nmng.Player2.X;
-            pos.x = Nmng.Player2.X + Settings.Instance.Game.TopPlayerCameraX;
+            TopPlayerX = Nmng.Player[1].X;
+            pos.x = Nmng.Player[1].X + Settings.Instance.Game.TopPlayerCameraX;
         }
 
         pos.z = -10; // カメラなので手前に移動させる

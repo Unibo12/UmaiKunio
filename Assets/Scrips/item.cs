@@ -42,14 +42,14 @@ public class item : MonoBehaviour
     void Update()
     {
         // アイテムと重なっていている状態で攻撃ボタンが押された
-        if (Nmng.Player1.haveItem == ItemPattern.None
-            && Nmng.Player1.NowAttack != AttackPattern.None
-            && Nmng.Player1.hurtBox.Overlaps(Nmng.Item1.itemBox))
+        if (Nmng.Player[0].haveItem == ItemPattern.None
+            && Nmng.Player[0].NowAttack != AttackPattern.None
+            && Nmng.Player[0].hurtBox.Overlaps(Nmng.Item1.itemBox))
         {
             // お試しで アイテム上で攻撃ボタン押下で消えるテスト
             //Destroy(this.gameObject);
-            
-            Nmng.Player1.haveItem = ItemPattern.bokutou;
+
+            Nmng.Player[0].haveItem = ItemPattern.bokutou;
             this.transform.Rotate(new Vector3(0, 0, 90));
 
         }
