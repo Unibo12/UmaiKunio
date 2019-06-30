@@ -46,10 +46,10 @@ public class NekketsuAttack : MonoBehaviour
             float hitBoxX = NAct.X;
             float hitBoxY = NAct.Y;
             // 左方向の場合はマイナス値とする。
-            float leftMinusVector = (NAct.leftFlag) ? -1 : 1;
+            float leftMinusVector = (NAct.NMoveV.leftFlag) ? -1 : 1;
 
             if (NAct.vx != 0
-                || NAct.dashFlag)
+                || NAct.NMoveV.dashFlag)
             {
                 NAct.NowAttack = AttackPattern.DosukoiWalk;
             }
@@ -92,7 +92,7 @@ public class NekketsuAttack : MonoBehaviour
         float hitBoxX = NAct.X;
         float hitBoxY = NAct.Y;
         // 左方向の場合はマイナス値とする。
-        float leftMinusVector = (NAct.leftFlag) ? -1 : 1;
+        float leftMinusVector = (NAct.NMoveV.leftFlag) ? -1 : 1;
 
         switch (timing)
         {
@@ -126,7 +126,7 @@ public class NekketsuAttack : MonoBehaviour
         float hitBoxX = NAct.X;
         float hitBoxY = NAct.Y;
         // 左方向の場合はマイナス値とする。
-        float leftMinusVector = (NAct.leftFlag) ? -1 : 1;
+        float leftMinusVector = (NAct.NMoveV.leftFlag) ? -1 : 1;
 
         switch (timing)
         {
@@ -160,7 +160,7 @@ public class NekketsuAttack : MonoBehaviour
         float hitBoxX = NAct.X;
         float hitBoxY = NAct.Y;
         // 左方向の場合はマイナス値とする。
-        float leftMinusVector = (NAct.leftFlag) ? -1 : 1;
+        float leftMinusVector = (NAct.NMoveV.leftFlag) ? -1 : 1;
 
         switch (timing)
         {
@@ -205,7 +205,7 @@ public class NekketsuAttack : MonoBehaviour
         float hitBoxX = NAct.X;
         float hitBoxY = NAct.Y;
         // 右方向の場合はマイナス値とする。
-        float RightMinusVector = (NAct.leftFlag) ? 1 : -1;
+        float RightMinusVector = (NAct.NMoveV.leftFlag) ? 1 : -1;
 
         switch (timing)
         {
@@ -246,7 +246,7 @@ public class NekketsuAttack : MonoBehaviour
         float hitBoxX = NAct.X;
         float hitBoxY = NAct.Y;
         // 左方向の場合はマイナス値とする。
-        float leftMinusVector = (NAct.leftFlag) ? -1 : 1;
+        float leftMinusVector = (NAct.NMoveV.leftFlag) ? -1 : 1;
 
 
         switch (timing)

@@ -150,7 +150,7 @@ public class NekketsuHurtBox
                     && otherHitBox != Settings.Instance.Attack.AttackNone)
                 {
                     NAct.NowAttack = AttackPattern.None;
-                    NAct.dashFlag = false;  //被弾したらダッシュ解除
+                    NAct.NMoveV.dashFlag = false;  //被弾したらダッシュ解除
 
                     if (NAct.NowDamage == DamagePattern.None)
                     {
@@ -325,7 +325,7 @@ public class NekketsuHurtBox
         // 自キャラの向きから吹っ飛びアニメを切り替え
         if (otherPlayerX <= NAct.X)
         {
-            if (NAct.leftFlag)
+            if (NAct.NMoveV.leftFlag)
             {
                 NAct.NowDamage = DamagePattern.UmaBARF;
             }
@@ -336,7 +336,7 @@ public class NekketsuHurtBox
         }
         else
         {
-            if (NAct.leftFlag)
+            if (NAct.NMoveV.leftFlag)
             {
                 NAct.NowDamage = DamagePattern.UmaOttotto;
             }
@@ -367,7 +367,7 @@ public class NekketsuHurtBox
                 otherPlayerKick = NAct.Nmng.Player[1].st_kick;
                 otherPlayerAttack = NAct.Nmng.Player[1].NowAttack;
                 otherHitBox = NAct.Nmng.Player[1].hitBox;
-                otherPlayerLeftFlag = NAct.Nmng.Player[1].leftFlag;
+                otherPlayerLeftFlag = NAct.Nmng.Player[1].NMoveV.leftFlag;
                 break;
 
             case "Player2":
@@ -378,7 +378,7 @@ public class NekketsuHurtBox
                 otherPlayerKick = NAct.Nmng.Player[0].st_kick;
                 otherPlayerAttack = NAct.Nmng.Player[0].NowAttack;
                 otherHitBox = NAct.Nmng.Player[0].hitBox;
-                otherPlayerLeftFlag = NAct.Nmng.Player[0].leftFlag;
+                otherPlayerLeftFlag = NAct.Nmng.Player[0].NMoveV.leftFlag;
                 break;
         }
     }

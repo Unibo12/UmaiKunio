@@ -24,6 +24,8 @@ public class NekketsuAction : MonoBehaviour
     private NekketsuStateChange NStateChange; //NekketsuStateChangeを呼び出す際に使用
     private NekketsuHaveItem NHaveItem;
 
+    public NekketsuMoveVariable NMoveV;
+
     /// @@@変数が膨れてきたので、そろそろ
     /// ジャンルごとに変数用のクラスを作ったほうが良いかと思います。
 
@@ -31,7 +33,7 @@ public class NekketsuAction : MonoBehaviour
     public float st_life = 0;       //たいりょく
     public float st_punch = 0;      //ぱんち
     public float st_kick = 0;       //きっく
-    public float st_speed = 0.08f;     //すばやさ
+    public float st_speed = 0.08f;  //すばやさ
     public float st_downTime = 1;   //おきあがりじかん
     public float st_brake = 0.5f;   //ぶれーき
     //♡♡♡♡♡♡♡♡♡♡♡♡♡♡♡♡♡♡♡♡
@@ -45,15 +47,6 @@ public class NekketsuAction : MonoBehaviour
     public float vz = 0;   //内部Z値用変数
     public DeathPattern DeathFlag = DeathPattern.None; //失格
     // *****共通変数*****
-
-    //移動
-    public float InitalVelocity = 0.188f;       // 内部での初速
-    public float nextButtonDownTimeDash = 1f;   // ダッシュを受け付ける時間
-    public bool leftFlag = false;   //左向きかどうか
-    public bool dashFlag = false;   //走っているか否か
-    public bool brakeFlag = false;  //ブレーキフラグ
-    public XInputState XInputState = 0; //疑似Xに対する入力ステータス
-    public ZInputState ZInputState = 0; //疑似Zに対する入力ステータス
 
     //ジャンプ
     public float jumpSpeed = 0f;                // ジャンプスピード管理変数
@@ -89,9 +82,12 @@ public class NekketsuAction : MonoBehaviour
         pos = transform.position;
         animator = this.GetComponent<Animator>();
 
+        //自分にアタッチされている効果音、変数クラスを取得
         gameObjct = this.gameObject;
         NSound = gameObjct.GetComponent<NekketsuSound>();
+        NMoveV = gameObjct.GetComponent<NekketsuMoveVariable>();
 
+        //熱血マネージャ取得
         gameObjct = GameObject.Find("NekketsuManager");
         Nmng = gameObjct.GetComponent<NekketsuManager>();
 
@@ -175,7 +171,7 @@ public class NekketsuAction : MonoBehaviour
 
         #region スプライト反転処理
         Vector3 scale = transform.localScale;
-        if (leftFlag)
+        if (NMoveV.leftFlag)
         {
             scale.x = -1; // 反転する（左向き）
         }
@@ -206,7 +202,7 @@ public class NekketsuAction : MonoBehaviour
         }
         else
         {
-            if (!squatFlag && !brakeFlag)
+            if (!squatFlag && !NMoveV.brakeFlag)
             {
                 if (NowAttack != AttackPattern.None)
                 {
@@ -242,7 +238,7 @@ public class NekketsuAction : MonoBehaviour
             }
             else
             {
-                if (brakeFlag)
+                if (NMoveV.brakeFlag)
                 {
                     animator.Play("Brake");
                 }

@@ -69,7 +69,7 @@ public class NekketsuInput
 
         if ((Input.GetKeyDown("z") || Input.GetKeyDown("joystick button 0")))
         {
-            if (NAct.leftFlag)
+            if (NAct.NMoveV.leftFlag)
             {
                 DosukoiVector();
             }
@@ -77,7 +77,7 @@ public class NekketsuInput
             {
                 if (NAct.jumpFlag && NAct.Y >= 0)
                 {
-                    if (!NAct.leftFlag)
+                    if (!NAct.NMoveV.leftFlag)
                     {
                         NAct.NowAttack = AttackPattern.JumpKick;
                         NAct.AttackMomentFlag = true;
@@ -85,8 +85,8 @@ public class NekketsuInput
                 }
                 else
                 {
-                    if (NAct.XInputState == XInputState.XNone
-                        && NAct.ZInputState == ZInputState.ZNone)
+                    if (NAct.NMoveV.XInputState == XInputState.XNone
+                        && NAct.NMoveV.ZInputState == ZInputState.ZNone)
                     {
                         NAct.NowAttack = AttackPattern.Hiji;
                     }
@@ -99,11 +99,11 @@ public class NekketsuInput
         }
         else if ((Input.GetKeyDown("x") || Input.GetKeyDown("joystick button 1")))
         {
-            if (NAct.leftFlag)
+            if (NAct.NMoveV.leftFlag)
             {
                 if (NAct.jumpFlag && NAct.Y >= 0)
                 {
-                    if (NAct.leftFlag)
+                    if (NAct.NMoveV.leftFlag)
                     {
                         NAct.NowAttack = AttackPattern.JumpKick;
                         NAct.AttackMomentFlag = true;
@@ -111,8 +111,8 @@ public class NekketsuInput
                 }
                 else
                 {
-                    if (NAct.XInputState == XInputState.XNone
-                        && NAct.ZInputState == ZInputState.ZNone)
+                    if (NAct.NMoveV.XInputState == XInputState.XNone
+                        && NAct.NMoveV.ZInputState == ZInputState.ZNone)
                     {
                         NAct.NowAttack = AttackPattern.Hiji;
                     }
@@ -145,91 +145,91 @@ public class NekketsuInput
     {
         if (Input.GetAxis("Horizontal") > 0)
         {
-            if (NAct.XInputState == XInputState.XNone
-                || NAct.XInputState == XInputState.XLeftPushMoment
-                || NAct.XInputState == XInputState.XLeftPushButton
-                || NAct.XInputState == XInputState.XLeftReleaseButton)
+            if (NAct.NMoveV.XInputState == XInputState.XNone
+                || NAct.NMoveV.XInputState == XInputState.XLeftPushMoment
+                || NAct.NMoveV.XInputState == XInputState.XLeftPushButton
+                || NAct.NMoveV.XInputState == XInputState.XLeftReleaseButton)
             {
-                NAct.XInputState = XInputState.XRightPushMoment;
+                NAct.NMoveV.XInputState = XInputState.XRightPushMoment;
             }
-            else if (NAct.XInputState == XInputState.XRightPushMoment)
+            else if (NAct.NMoveV.XInputState == XInputState.XRightPushMoment)
             {
-                NAct.XInputState = XInputState.XRightPushButton;
+                NAct.NMoveV.XInputState = XInputState.XRightPushButton;
             }
         }
         else if (Input.GetAxis("Horizontal") < 0)
         {
-            if (NAct.XInputState == XInputState.XNone
-                || NAct.XInputState == XInputState.XRightPushMoment
-                || NAct.XInputState == XInputState.XRightPushButton
-                || NAct.XInputState == XInputState.XRightReleaseButton)
+            if (NAct.NMoveV.XInputState == XInputState.XNone
+                || NAct.NMoveV.XInputState == XInputState.XRightPushMoment
+                || NAct.NMoveV.XInputState == XInputState.XRightPushButton
+                || NAct.NMoveV.XInputState == XInputState.XRightReleaseButton)
             {
-                NAct.XInputState = XInputState.XLeftPushMoment;
+                NAct.NMoveV.XInputState = XInputState.XLeftPushMoment;
             }
-            else if (NAct.XInputState == XInputState.XLeftPushMoment)
+            else if (NAct.NMoveV.XInputState == XInputState.XLeftPushMoment)
             {
-                NAct.XInputState = XInputState.XLeftPushButton;
+                NAct.NMoveV.XInputState = XInputState.XLeftPushButton;
             }
         }
         else
         {
-            if (NAct.XInputState == XInputState.XRightPushButton)
+            if (NAct.NMoveV.XInputState == XInputState.XRightPushButton)
             {
-                NAct.XInputState = XInputState.XRightReleaseButton;
+                NAct.NMoveV.XInputState = XInputState.XRightReleaseButton;
             }
-            else if (NAct.XInputState == XInputState.XLeftPushButton)
+            else if (NAct.NMoveV.XInputState == XInputState.XLeftPushButton)
             {
-                NAct.XInputState = XInputState.XLeftReleaseButton;
+                NAct.NMoveV.XInputState = XInputState.XLeftReleaseButton;
             }
-            else if (NAct.XInputState == XInputState.XRightReleaseButton
-                || NAct.XInputState == XInputState.XLeftReleaseButton)
+            else if (NAct.NMoveV.XInputState == XInputState.XRightReleaseButton
+                || NAct.NMoveV.XInputState == XInputState.XLeftReleaseButton)
             {
-                NAct.XInputState = XInputState.XNone;
+                NAct.NMoveV.XInputState = XInputState.XNone;
             }
         }
 
         if (Input.GetAxis("Vertical") > 0)
         {
-            if (NAct.ZInputState == ZInputState.ZNone
-                || NAct.ZInputState == ZInputState.ZFrontPushMoment
-                || NAct.ZInputState == ZInputState.ZFrontPushButton
-                || NAct.ZInputState == ZInputState.ZFrontReleaseButton)
+            if (NAct.NMoveV.ZInputState == ZInputState.ZNone
+                || NAct.NMoveV.ZInputState == ZInputState.ZFrontPushMoment
+                || NAct.NMoveV.ZInputState == ZInputState.ZFrontPushButton
+                || NAct.NMoveV.ZInputState == ZInputState.ZFrontReleaseButton)
             {
-                NAct.ZInputState = ZInputState.ZBackPushMoment;
+                NAct.NMoveV.ZInputState = ZInputState.ZBackPushMoment;
             }
-            else if (NAct.ZInputState == ZInputState.ZBackPushMoment)
+            else if (NAct.NMoveV.ZInputState == ZInputState.ZBackPushMoment)
             {
-                NAct.ZInputState = ZInputState.ZBackPushButton;
+                NAct.NMoveV.ZInputState = ZInputState.ZBackPushButton;
             }
         }
         else if (Input.GetAxis("Vertical") < 0)
         {
-            if (NAct.ZInputState == ZInputState.ZNone
-                || NAct.ZInputState == ZInputState.ZBackPushMoment
-                || NAct.ZInputState == ZInputState.ZBackPushButton
-                || NAct.ZInputState == ZInputState.ZBackReleaseButton)
+            if (NAct.NMoveV.ZInputState == ZInputState.ZNone
+                || NAct.NMoveV.ZInputState == ZInputState.ZBackPushMoment
+                || NAct.NMoveV.ZInputState == ZInputState.ZBackPushButton
+                || NAct.NMoveV.ZInputState == ZInputState.ZBackReleaseButton)
             {
-                NAct.ZInputState = ZInputState.ZFrontPushMoment;
+                NAct.NMoveV.ZInputState = ZInputState.ZFrontPushMoment;
             }
-            else if (NAct.ZInputState == ZInputState.ZFrontPushMoment)
+            else if (NAct.NMoveV.ZInputState == ZInputState.ZFrontPushMoment)
             {
-                NAct.ZInputState = ZInputState.ZFrontPushButton;
+                NAct.NMoveV.ZInputState = ZInputState.ZFrontPushButton;
             }
         }
         else
         {
-            if (NAct.ZInputState == ZInputState.ZBackPushButton)
+            if (NAct.NMoveV.ZInputState == ZInputState.ZBackPushButton)
             {
-                NAct.ZInputState = ZInputState.ZBackReleaseButton;
+                NAct.NMoveV.ZInputState = ZInputState.ZBackReleaseButton;
             }
-            else if (NAct.ZInputState == ZInputState.ZFrontPushButton)
+            else if (NAct.NMoveV.ZInputState == ZInputState.ZFrontPushButton)
             {
-                NAct.ZInputState = ZInputState.ZFrontReleaseButton;
+                NAct.NMoveV.ZInputState = ZInputState.ZFrontReleaseButton;
             }
-            else if (NAct.ZInputState == ZInputState.ZBackReleaseButton
-                     || NAct.ZInputState == ZInputState.ZFrontReleaseButton)
+            else if (NAct.NMoveV.ZInputState == ZInputState.ZBackReleaseButton
+                     || NAct.NMoveV.ZInputState == ZInputState.ZFrontReleaseButton)
             {
-                NAct.ZInputState = ZInputState.ZNone;
+                NAct.NMoveV.ZInputState = ZInputState.ZNone;
             }
         }
     }
@@ -241,54 +241,54 @@ public class NekketsuInput
     {
         if (Input.GetKeyDown("right"))
         {
-            NAct.XInputState = XInputState.XRightPushMoment;
+            NAct.NMoveV.XInputState = XInputState.XRightPushMoment;
         }
         else if (Input.GetKey("right"))
         {
-            NAct.XInputState = XInputState.XRightPushButton;
+            NAct.NMoveV.XInputState = XInputState.XRightPushButton;
         }
         else if (Input.GetKeyUp("right"))
         {
-            NAct.XInputState = XInputState.XRightReleaseButton;
+            NAct.NMoveV.XInputState = XInputState.XRightReleaseButton;
         }
 
         if (Input.GetKeyDown("left"))
         {
-            NAct.XInputState = XInputState.XLeftPushMoment;
+            NAct.NMoveV.XInputState = XInputState.XLeftPushMoment;
         }
         else if (Input.GetKey("left"))
         {
-            NAct.XInputState = XInputState.XLeftPushButton;
+            NAct.NMoveV.XInputState = XInputState.XLeftPushButton;
         }
         else if (Input.GetKeyUp("left"))
         {
-            NAct.XInputState = XInputState.XLeftReleaseButton;
+            NAct.NMoveV.XInputState = XInputState.XLeftReleaseButton;
         }
 
         if (Input.GetKeyDown("up"))
         {
-            NAct.ZInputState = ZInputState.ZBackPushMoment;
+            NAct.NMoveV.ZInputState = ZInputState.ZBackPushMoment;
         }
         else if (Input.GetKey("up"))
         {
-            NAct.ZInputState = ZInputState.ZBackPushButton;
+            NAct.NMoveV.ZInputState = ZInputState.ZBackPushButton;
         }
         else if (Input.GetKeyUp("up"))
         {
-            NAct.ZInputState = ZInputState.ZBackReleaseButton;
+            NAct.NMoveV.ZInputState = ZInputState.ZBackReleaseButton;
         }
 
         if (Input.GetKeyDown("down"))
         {
-            NAct.ZInputState = ZInputState.ZFrontPushMoment;
+            NAct.NMoveV.ZInputState = ZInputState.ZFrontPushMoment;
         }
         else if (Input.GetKey("down"))
         {
-            NAct.ZInputState = ZInputState.ZFrontPushButton;
+            NAct.NMoveV.ZInputState = ZInputState.ZFrontPushButton;
         }
         else if (Input.GetKeyUp("down"))
         {
-            NAct.ZInputState = ZInputState.ZFrontReleaseButton;
+            NAct.NMoveV.ZInputState = ZInputState.ZFrontReleaseButton;
         }
     }
 
@@ -302,24 +302,24 @@ public class NekketsuInput
             NAct.NowAttack = AttackPattern.UmaHariteJump;
             NAct.AttackMomentFlag = true;
         }
-        else if ((NAct.ZInputState == ZInputState.ZBackPushMoment
-            || NAct.ZInputState == ZInputState.ZBackPushButton)
+        else if ((NAct.NMoveV.ZInputState == ZInputState.ZBackPushMoment
+            || NAct.NMoveV.ZInputState == ZInputState.ZBackPushButton)
             && !NAct.jumpFlag)
         {
             NAct.NowAttack = AttackPattern.DosukoiBack;
         }
-        else if ((NAct.ZInputState == ZInputState.ZFrontPushMoment
-                 || NAct.ZInputState == ZInputState.ZFrontPushButton)
+        else if ((NAct.NMoveV.ZInputState == ZInputState.ZFrontPushMoment
+                 || NAct.NMoveV.ZInputState == ZInputState.ZFrontPushButton)
                  && !NAct.jumpFlag)
         {
             NAct.NowAttack = AttackPattern.DosukoiFront;
         }
         else
         {
-            if (NAct.XInputState == XInputState.XLeftPushButton
-                || NAct.XInputState == XInputState.XLeftPushMoment
-                || NAct.XInputState == XInputState.XRightPushButton
-                || NAct.XInputState == XInputState.XRightPushMoment)
+            if (NAct.NMoveV.XInputState == XInputState.XLeftPushButton
+                || NAct.NMoveV.XInputState == XInputState.XLeftPushMoment
+                || NAct.NMoveV.XInputState == XInputState.XRightPushButton
+                || NAct.NMoveV.XInputState == XInputState.XRightPushMoment)
             {
                 NAct.NowAttack = AttackPattern.DosukoiWalk;
             }

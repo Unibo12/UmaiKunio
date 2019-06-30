@@ -150,10 +150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae73289683ae1fa45ad30c1e6c95bbe3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player1: {fileID: 0}
-  Player2: {fileID: 0}
-  Player3: {fileID: 0}
-  Player4: {fileID: 0}
+  Player: []
   Item1: {fileID: 0}
   sandbag: {fileID: 0}
   uni: {fileID: 0}
@@ -1144,6 +1141,7 @@ GameObject:
   - component: {fileID: 820763014}
   - component: {fileID: 820763015}
   - component: {fileID: 820763013}
+  - component: {fileID: 820763019}
   - component: {fileID: 820763016}
   - component: {fileID: 820763017}
   - component: {fileID: 820763018}
@@ -1250,17 +1248,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
   Nmng: {fileID: 0}
-  speed: 0.08
-  jumpSpeed: 0
-  Gravity: -0.006
-  InitalVelocity: 0.188
-  nextButtonDownTimeDash: 1
+  NMoveV: {fileID: 0}
+  st_life: 220
+  st_punch: 10
+  st_kick: 10
+  st_speed: 0.08
+  st_downTime: 1
+  st_brake: 0.5
   X: -1.5
   Y: 0
   Z: -0.5
   vx: 0
   vy: 0
   vz: 0
+  DeathFlag: 0
+  dashFlag: 0
+  XInputState: 0
+  ZInputState: 0
+  jumpSpeed: 0
+  Gravity: -0.006
+  jumpFlag: 0
+  squatFlag: 0
+  JumpButtonState: 0
   hurtBox:
     serializedVersion: 2
     x: 0
@@ -1273,17 +1282,8 @@ MonoBehaviour:
     y: 0
     width: 0
     height: 0
-  leftFlag: 0
-  jumpFlag: 0
-  dashFlag: 0
-  squatFlag: 0
-  brakeFlag: 0
   AttackMomentFlag: 0
   BlowUpFlag: 0
-  DeathFlag: 0
-  JumpButtonState: 0
-  XInputState: 0
-  ZInputState: 0
   NowAttack: 0
   NowDamage: 0
   BlowUpNowTime: 0
@@ -1292,11 +1292,6 @@ MonoBehaviour:
   nowDownTime: 0
   nowHogeTime: 0
   haveItem: 0
-  st_life: 220
-  st_punch: 10
-  st_kick: 10
-  st_downTime: 1
-  st_brake: 0.5
 --- !u!114 &820763014
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1454,6 +1449,25 @@ MonoBehaviour:
   hijiHit: {fileID: 8300000, guid: 19320b66d88502941a7fba22b5802d49, type: 3}
   death: {fileID: 8300000, guid: 60cf26ea41678df4a96048eae14dc391, type: 3}
   audioSource: {fileID: 0}
+--- !u!114 &820763019
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 820763009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b9551436f0d3934e92741febdff425c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InitalVelocity: 0.188
+  nextButtonDownTimeDash: 1
+  leftFlag: 0
+  dashFlag: 0
+  brakeFlag: 0
+  XInputState: 0
+  ZInputState: 0
 --- !u!1 &945995172
 GameObject:
   m_ObjectHideFlags: 0
@@ -3006,6 +3020,7 @@ GameObject:
   - component: {fileID: 2032333310}
   - component: {fileID: 2032333309}
   - component: {fileID: 2032333308}
+  - component: {fileID: 2032333317}
   m_Layer: 0
   m_Name: Player2
   m_TagString: Untagged
@@ -3154,17 +3169,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
   Nmng: {fileID: 0}
-  speed: 0
-  jumpSpeed: 0.08
-  Gravity: -0.006
-  InitalVelocity: 0.088
-  nextButtonDownTimeDash: 1
+  NMoveV: {fileID: 0}
+  st_life: 30
+  st_punch: 3
+  st_kick: 3
+  st_speed: 0.01
+  st_downTime: 1.5
+  st_brake: 0.5
   X: -1.5
   Y: 0
   Z: -1
   vx: 0
   vy: 0
   vz: 0
+  DeathFlag: 0
+  dashFlag: 0
+  XInputState: 0
+  ZInputState: 0
+  jumpSpeed: 0.08
+  Gravity: -0.006
+  jumpFlag: 0
+  squatFlag: 0
+  JumpButtonState: 0
   hurtBox:
     serializedVersion: 2
     x: 0
@@ -3177,17 +3203,8 @@ MonoBehaviour:
     y: 0
     width: 0
     height: 0
-  leftFlag: 0
-  jumpFlag: 0
-  dashFlag: 0
-  squatFlag: 0
-  brakeFlag: 0
   AttackMomentFlag: 0
   BlowUpFlag: 0
-  DeathFlag: 0
-  JumpButtonState: 0
-  XInputState: 0
-  ZInputState: 0
   NowAttack: 0
   NowDamage: 0
   BlowUpNowTime: 0
@@ -3196,11 +3213,6 @@ MonoBehaviour:
   nowDownTime: 0
   nowHogeTime: 0
   haveItem: 0
-  st_life: 30
-  st_punch: 3
-  st_kick: 3
-  st_downTime: 1.5
-  st_brake: 0.5
 --- !u!114 &2032333312
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3313,6 +3325,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2032333317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2032333307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b9551436f0d3934e92741febdff425c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InitalVelocity: 0.188
+  nextButtonDownTimeDash: 1
+  leftFlag: 0
+  dashFlag: 0
+  brakeFlag: 0
+  XInputState: 0
+  ZInputState: 0
 --- !u!1 &2033548012
 GameObject:
   m_ObjectHideFlags: 0
