@@ -1146,6 +1146,7 @@ GameObject:
   - component: {fileID: 820763016}
   - component: {fileID: 820763017}
   - component: {fileID: 820763018}
+  - component: {fileID: 820763021}
   m_Layer: 0
   m_Name: Player1
   m_TagString: Untagged
@@ -1251,6 +1252,7 @@ MonoBehaviour:
   Nmng: {fileID: 0}
   NMoveV: {fileID: 0}
   NJumpV: {fileID: 0}
+  NAttackV: {fileID: 0}
   st_life: 220
   st_punch: 10
   st_kick: 10
@@ -1264,15 +1266,6 @@ MonoBehaviour:
   vy: 0
   vz: 0
   DeathFlag: 0
-  jumpFlag: 0
-  squatFlag: 0
-  JumpButtonState: 0
-  hurtBox:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 0.7
-    height: 1.6
   hitBox:
     serializedVersion: 2
     x: 0
@@ -1482,6 +1475,39 @@ MonoBehaviour:
   jumpFlag: 0
   squatFlag: 0
   JumpButtonState: 0
+--- !u!114 &820763021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 820763009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22c0741680de24d4899a1007e4fd4011, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hurtBox:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 0.7
+    height: 1.6
+  hitBox:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 0
+    height: 0
+  AttackMomentFlag: 0
+  BlowUpFlag: 0
+  NowAttack: 0
+  NowDamage: 0
+  BlowUpNowTime: 0
+  BlowUpInitalVelocityTime: 0.2
+  downDamage: 0
+  nowDownTime: 0
+  nowHogeTime: 0
 --- !u!1 &945995172
 GameObject:
   m_ObjectHideFlags: 0
@@ -3036,6 +3062,7 @@ GameObject:
   - component: {fileID: 2032333308}
   - component: {fileID: 2032333317}
   - component: {fileID: 2032333318}
+  - component: {fileID: 2032333319}
   m_Layer: 0
   m_Name: Player2
   m_TagString: Untagged
@@ -3186,6 +3213,7 @@ MonoBehaviour:
   Nmng: {fileID: 0}
   NMoveV: {fileID: 0}
   NJumpV: {fileID: 0}
+  NAttackV: {fileID: 0}
   st_life: 30
   st_punch: 3
   st_kick: 3
@@ -3199,15 +3227,6 @@ MonoBehaviour:
   vy: 0
   vz: 0
   DeathFlag: 0
-  jumpFlag: 0
-  squatFlag: 0
-  JumpButtonState: 0
-  hurtBox:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 0.7
-    height: 1.6
   hitBox:
     serializedVersion: 2
     x: 0
@@ -3372,6 +3391,39 @@ MonoBehaviour:
   jumpFlag: 0
   squatFlag: 0
   JumpButtonState: 0
+--- !u!114 &2032333319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2032333307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22c0741680de24d4899a1007e4fd4011, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hurtBox:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 0.7
+    height: 1.6
+  hitBox:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 0
+    height: 0
+  AttackMomentFlag: 0
+  BlowUpFlag: 0
+  NowAttack: 0
+  NowDamage: 0
+  BlowUpNowTime: 0
+  BlowUpInitalVelocityTime: 0.2
+  downDamage: 0
+  nowDownTime: 0
+  nowHogeTime: 0
 --- !u!1 &2033548012
 GameObject:
   m_ObjectHideFlags: 0

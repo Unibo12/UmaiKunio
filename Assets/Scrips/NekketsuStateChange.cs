@@ -26,36 +26,36 @@ public class NekketsuStateChange
     void AttackStateChange()
     {
         //ジャンプ攻撃中から着地したとき
-        if((NAct.NowAttack == AttackPattern.JumpKick
-           || NAct.NowAttack == AttackPattern.UmaHariteJump)
+        if((NAct.NAttackV.NowAttack == AttackPattern.JumpKick
+           || NAct.NAttackV.NowAttack == AttackPattern.UmaHariteJump)
             && NAct.Y <= 0)
         {
-            NAct.NowAttack = AttackPattern.None;
+            NAct.NAttackV.NowAttack = AttackPattern.None;
         }
 
         // ダウン時に攻撃状態(攻撃ボタンを押している)なら、クイックスタンディングとする。
-        if ((NAct.NowDamage == DamagePattern.UmaTaore
-            || NAct.NowDamage == DamagePattern.UmaTaoreUp)
+        if ((NAct.NAttackV.NowDamage == DamagePattern.UmaTaore
+            || NAct.NAttackV.NowDamage == DamagePattern.UmaTaoreUp)
             && NAct.Y == 0)
         {
-            if (NAct.NowAttack != AttackPattern.None)
+            if (NAct.NAttackV.NowAttack != AttackPattern.None)
             {
-                NAct.nowDownTime += NAct.st_downTime / 100;
-                NAct.NowAttack = AttackPattern.None;
+                NAct.NAttackV.nowDownTime += NAct.st_downTime / 100;
+                NAct.NAttackV.NowAttack = AttackPattern.None;
             }
         }
 
         // 蓄積ダメージはXX秒経てば、リセット
-        if (0 < NAct.downDamage)
+        if (0 < NAct.NAttackV.downDamage)
         {
-            if (2 < NAct.nowHogeTime)
+            if (2 < NAct.NAttackV.nowHogeTime)
             {
-                NAct.nowHogeTime = 0;
-                NAct.downDamage = 0;
+                NAct.NAttackV.nowHogeTime = 0;
+                NAct.NAttackV.downDamage = 0;
             }
             else
             {
-                NAct.nowHogeTime += Time.deltaTime;
+                NAct.NAttackV.nowHogeTime += Time.deltaTime;
             }
         }
 

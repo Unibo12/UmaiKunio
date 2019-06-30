@@ -31,7 +31,7 @@ public class NekketsuJump
 
         if (!NAct.NJumpV.squatFlag 
             && NAct.NJumpV.jumpFlag
-            && NAct.NowDamage == DamagePattern.None)
+            && NAct.NAttackV.NowDamage == DamagePattern.None)
         {
             if (!NAct.NMoveV.dashFlag)
             {
@@ -142,7 +142,7 @@ public class NekketsuJump
 
         if (!NAct.NJumpV.squatFlag 
             && !NAct.NMoveV.brakeFlag
-            && NAct.NowDamage == DamagePattern.None)
+            && NAct.NAttackV.NowDamage == DamagePattern.None)
         {
             // ジャンプした瞬間
             if (!NAct.NJumpV.jumpFlag

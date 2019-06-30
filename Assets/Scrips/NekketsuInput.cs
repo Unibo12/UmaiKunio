@@ -65,7 +65,7 @@ public class NekketsuInput
         #endregion
 
         #region 攻撃処理
-        NAct.AttackMomentFlag = false;
+        NAct.NAttackV.AttackMomentFlag = false;
 
         if ((Input.GetKeyDown("z") || Input.GetKeyDown("joystick button 0")))
         {
@@ -79,8 +79,8 @@ public class NekketsuInput
                 {
                     if (!NAct.NMoveV.leftFlag)
                     {
-                        NAct.NowAttack = AttackPattern.JumpKick;
-                        NAct.AttackMomentFlag = true;
+                        NAct.NAttackV.NowAttack = AttackPattern.JumpKick;
+                        NAct.NAttackV.AttackMomentFlag = true;
                     }
                 }
                 else
@@ -88,11 +88,11 @@ public class NekketsuInput
                     if (NAct.NMoveV.XInputState == XInputState.XNone
                         && NAct.NMoveV.ZInputState == ZInputState.ZNone)
                     {
-                        NAct.NowAttack = AttackPattern.Hiji;
+                        NAct.NAttackV.NowAttack = AttackPattern.Hiji;
                     }
                     else
                     {
-                        NAct.NowAttack = AttackPattern.HijiWalk;
+                        NAct.NAttackV.NowAttack = AttackPattern.HijiWalk;
                     }
                 }
             }
@@ -105,8 +105,8 @@ public class NekketsuInput
                 {
                     if (NAct.NMoveV.leftFlag)
                     {
-                        NAct.NowAttack = AttackPattern.JumpKick;
-                        NAct.AttackMomentFlag = true;
+                        NAct.NAttackV.NowAttack = AttackPattern.JumpKick;
+                        NAct.NAttackV.AttackMomentFlag = true;
                     }
                 }
                 else
@@ -114,11 +114,11 @@ public class NekketsuInput
                     if (NAct.NMoveV.XInputState == XInputState.XNone
                         && NAct.NMoveV.ZInputState == ZInputState.ZNone)
                     {
-                        NAct.NowAttack = AttackPattern.Hiji;
+                        NAct.NAttackV.NowAttack = AttackPattern.Hiji;
                     }
                     else
                     {
-                        NAct.NowAttack = AttackPattern.HijiWalk;
+                        NAct.NAttackV.NowAttack = AttackPattern.HijiWalk;
                     }
                 }
             }
@@ -299,20 +299,20 @@ public class NekketsuInput
     {
         if (NAct.NJumpV.jumpFlag)
         {
-            NAct.NowAttack = AttackPattern.UmaHariteJump;
-            NAct.AttackMomentFlag = true;
+            NAct.NAttackV.NowAttack = AttackPattern.UmaHariteJump;
+            NAct.NAttackV.AttackMomentFlag = true;
         }
         else if ((NAct.NMoveV.ZInputState == ZInputState.ZBackPushMoment
             || NAct.NMoveV.ZInputState == ZInputState.ZBackPushButton)
             && !NAct.NJumpV.jumpFlag)
         {
-            NAct.NowAttack = AttackPattern.DosukoiBack;
+            NAct.NAttackV.NowAttack = AttackPattern.DosukoiBack;
         }
         else if ((NAct.NMoveV.ZInputState == ZInputState.ZFrontPushMoment
                  || NAct.NMoveV.ZInputState == ZInputState.ZFrontPushButton)
                  && !NAct.NJumpV.jumpFlag)
         {
-            NAct.NowAttack = AttackPattern.DosukoiFront;
+            NAct.NAttackV.NowAttack = AttackPattern.DosukoiFront;
         }
         else
         {
@@ -321,11 +321,11 @@ public class NekketsuInput
                 || NAct.NMoveV.XInputState == XInputState.XRightPushButton
                 || NAct.NMoveV.XInputState == XInputState.XRightPushMoment)
             {
-                NAct.NowAttack = AttackPattern.DosukoiWalk;
+                NAct.NAttackV.NowAttack = AttackPattern.DosukoiWalk;
             }
             else
             {
-                NAct.NowAttack = AttackPattern.Dosukoi;
+                NAct.NAttackV.NowAttack = AttackPattern.Dosukoi;
             }
         }
     }

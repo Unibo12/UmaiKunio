@@ -26,6 +26,7 @@ public class NekketsuAction : MonoBehaviour
 
     public NekketsuMoveVariable NMoveV;
     public NekketsuJumpVariable NJumpV;
+    public NekketsuAttackVariable NAttackV;
 
     /// @@@変数が膨れてきたので、そろそろ
     /// ジャンルごとに変数用のクラスを作ったほうが良いかと思います。
@@ -49,19 +50,6 @@ public class NekketsuAction : MonoBehaviour
     public DeathPattern DeathFlag = DeathPattern.None; //失格
     // *****共通変数*****
 
-    //攻撃
-    public Rect hurtBox = new Rect(0, 0, 0.7f, 1.6f);
-    public Rect hitBox = new Rect(0, 0, 0, 0);  
-    public bool AttackMomentFlag = false;  //攻撃し始めフラグ(空中攻撃出し始め判定)
-    public bool BlowUpFlag = false; //吹っ飛び状態か否か  
-    public AttackPattern NowAttack = 0; //現在の攻撃パターン格納変数
-    public DamagePattern NowDamage = 0; //現在の攻撃喰らいパターン格納変数
-    public float BlowUpNowTime = 0;               //吹っ飛んでいる時間計測
-    public float BlowUpInitalVelocityTime = 0.2f; //きめ攻撃等で吹っ飛んだ際の吹っ飛び時間
-    public float downDamage = 0;  //ダウンまでの蓄積ダメージ
-    public float nowDownTime = 0; //ダウン時間計測
-    public float nowHogeTime = 0; //凹み状態時間計測
-
     //アイテム
     public ItemPattern haveItem = ItemPattern.None; //所持アイテム
 
@@ -81,6 +69,7 @@ public class NekketsuAction : MonoBehaviour
         NSound = gameObjct.GetComponent<NekketsuSound>();
         NMoveV = gameObjct.GetComponent<NekketsuMoveVariable>();
         NJumpV = gameObjct.GetComponent<NekketsuJumpVariable>();
+        NAttackV = gameObjct.GetComponent<NekketsuAttackVariable>();
 
         //熱血マネージャ取得
         gameObjct = GameObject.Find("NekketsuManager");
@@ -150,16 +139,16 @@ public class NekketsuAction : MonoBehaviour
         transform.position = pos;
 
         // 喰らい判定の移動
-        if (NowDamage == DamagePattern.UmaTaore
-            || NowDamage == DamagePattern.UmaTaoreUp)
+        if (NAttackV.NowDamage == DamagePattern.UmaTaore
+            || NAttackV.NowDamage == DamagePattern.UmaTaoreUp)
         {
             //倒れ状態の当たり判定(アイテム化)
-            hurtBox = new Rect(X, Y+Z, 1.6f, 0.7f);
+            NAttackV.hurtBox = new Rect(X, Y+Z, 1.6f, 0.7f);
         }
         else
         {
             //通常当たり判定
-            hurtBox = new Rect(X, Y+Z, 0.7f, 1.6f);
+            NAttackV.hurtBox = new Rect(X, Y+Z, 0.7f, 1.6f);
         }
 
         #endregion
@@ -190,21 +179,21 @@ public class NekketsuAction : MonoBehaviour
 
         #region アニメ処理
 
-        if (NowDamage != DamagePattern.None)
+        if (NAttackV.NowDamage != DamagePattern.None)
         {
             // ダメージアニメ処理
-            animator.Play(NowDamage.ToString());
+            animator.Play(NAttackV.NowDamage.ToString());
         }
         else
         {
             if (!NJumpV.squatFlag && !NMoveV.brakeFlag)
             {
-                if (NowAttack != AttackPattern.None)
+                if (NAttackV.NowAttack != AttackPattern.None)
                 {
                     if (haveItem == ItemPattern.None)
                     {
                         // 現在の攻撃状態をアニメーションさせる。
-                        animator.Play(NowAttack.ToString());
+                        animator.Play(NAttackV.NowAttack.ToString());
                     }
                     else
                     {
@@ -225,7 +214,7 @@ public class NekketsuAction : MonoBehaviour
                     }
 
                     if (NJumpV.jumpFlag
-                        && NowDamage == DamagePattern.None)
+                        && NAttackV.NowDamage == DamagePattern.None)
                     {
                         animator.Play("Jump");
                     }
@@ -261,10 +250,10 @@ public class NekketsuAction : MonoBehaviour
     {
         // 喰らい判定のギズモを表示
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireCube(transform.position, new Vector3(hurtBox.width, hurtBox.height, 0));
+        Gizmos.DrawWireCube(transform.position, new Vector3(NAttackV.hurtBox.width, NAttackV.hurtBox.height, 0));
 
         // 攻撃判定のギズモを表示
         Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(new Vector3(hitBox.x, Z + hitBox.y), new Vector3(hitBox.width, hitBox.height, 0.1f));
+        Gizmos.DrawWireCube(new Vector3(NAttackV.hitBox.x, Z + NAttackV.hitBox.y), new Vector3(NAttackV.hitBox.width, NAttackV.hitBox.height, 0.1f));
     }
 }
