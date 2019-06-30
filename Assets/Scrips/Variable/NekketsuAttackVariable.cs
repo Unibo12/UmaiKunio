@@ -16,4 +16,7 @@ public class NekketsuAttackVariable : MonoBehaviour
     public float downDamage = 0;  //ダウンまでの蓄積ダメージ
     public float nowDownTime = 0; //ダウン時間計測
     public float nowHogeTime = 0; //凹み状態時間計測
+
+    //アイテム関連
+    public ItemPattern haveItem = ItemPattern.None; //所持アイテム
 }

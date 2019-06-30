@@ -9,31 +9,27 @@ public class NekketsuAction : MonoBehaviour
 {
     #region 変数定義
 
-    Vector3 pos;               // 最終的な描画で使用
-    public Animator animator;  // アニメ変更用
+    Vector3 pos;               //最終的な描画で使用
+    public Animator animator;  //アニメ変更用
+    GameObject ThisGameObjct;   //自身にアタッチされたゲームオブジェクト取得用
+    GameObject NmngGameObjct;   //熱血マネージャ取得用
 
-    GameObject gameObjct;
-    private NekketsuSound NSound;
-    private NekketsuAttack NAttack;
-    public NekketsuManager Nmng;
+    //変数クラス
+    public NekketsuVariable NVariable;      //座標・ステータス変数
+    public NekketsuMoveVariable NMoveV;     //移動関連変数
+    public NekketsuJumpVariable NJumpV;     //ジャンプ関連変数
+    public NekketsuAttackVariable NAttackV; //攻撃関連変数
 
-    private NekketsuMove NMove; //NekketsuMoveを呼び出す際に使用
-    private NekketsuJump NJump; //NekketsuJumpを呼び出す際に使用
-    private NekketsuInput NInput; //NekketsuInputを呼び出す際に使用
-    private NekketsuHurtBox NHurtBox; //NekketsuHurtBoxを呼び出す際に使用
-    private NekketsuStateChange NStateChange; //NekketsuStateChangeを呼び出す際に使用
-    private NekketsuHaveItem NHaveItem;
-
-    public NekketsuVariable NVariable;
-    public NekketsuMoveVariable NMoveV;
-    public NekketsuJumpVariable NJumpV;
-    public NekketsuAttackVariable NAttackV;
-
-    /// @@@変数が膨れてきたので、そろそろ
-    /// ジャンルごとに変数用のクラスを作ったほうが良いかと思います。
-
-    //アイテム
-    public ItemPattern haveItem = ItemPattern.None; //所持アイテム
+    //各処理を呼び出す為の定義
+    public NekketsuManager Nmng;                //熱血マネージャ
+    private NekketsuSound NSound;               //効果音
+    private NekketsuAttack NAttack;             //攻撃処理
+    private NekketsuMove NMove;                 //移動処理
+    private NekketsuJump NJump;                 //ジャンプ処理
+    private NekketsuInput NInput;               //キー入力受付
+    private NekketsuHurtBox NHurtBox;           //喰らい判定処理
+    private NekketsuStateChange NStateChange;   //状態変化処理
+    private NekketsuHaveItem NHaveItem;         //所持アイテム処理
 
     //影の位置
     Transform shadeTransform;
@@ -47,16 +43,16 @@ public class NekketsuAction : MonoBehaviour
         animator = this.GetComponent<Animator>();
 
         //自分にアタッチされている効果音、変数クラスを取得
-        gameObjct = this.gameObject;
-        NSound = gameObjct.GetComponent<NekketsuSound>();
-        NVariable = gameObjct.GetComponent<NekketsuVariable>();
-        NMoveV = gameObjct.GetComponent<NekketsuMoveVariable>();
-        NJumpV = gameObjct.GetComponent<NekketsuJumpVariable>();
-        NAttackV = gameObjct.GetComponent<NekketsuAttackVariable>();
+        ThisGameObjct = this.gameObject;
+        NSound = ThisGameObjct.GetComponent<NekketsuSound>();
+        NVariable = ThisGameObjct.GetComponent<NekketsuVariable>();
+        NMoveV = ThisGameObjct.GetComponent<NekketsuMoveVariable>();
+        NJumpV = ThisGameObjct.GetComponent<NekketsuJumpVariable>();
+        NAttackV = ThisGameObjct.GetComponent<NekketsuAttackVariable>();
 
         //熱血マネージャ取得
-        gameObjct = GameObject.Find("NekketsuManager");
-        Nmng = gameObjct.GetComponent<NekketsuManager>();
+        NmngGameObjct = GameObject.Find("NekketsuManager");
+        Nmng = NmngGameObjct.GetComponent<NekketsuManager>();
 
         // 生成（コンストラクタ）の引数にNekketsuActionを渡してやる
         NMove = new NekketsuMove(this);
@@ -173,7 +169,7 @@ public class NekketsuAction : MonoBehaviour
             {
                 if (NAttackV.NowAttack != AttackPattern.None)
                 {
-                    if (haveItem == ItemPattern.None)
+                    if (NAttackV.haveItem == ItemPattern.None)
                     {
                         // 現在の攻撃状態をアニメーションさせる。
                         animator.Play(NAttackV.NowAttack.ToString());

@@ -15,10 +15,10 @@ public class NekketsuHaveItem : MonoBehaviour
     public void NekketsuHaveItemMain()
     {
         #region 所持アイテムの位置調整
-        if (NAct.haveItem != ItemPattern.None)
+        if (NAct.NAttackV.haveItem != ItemPattern.None)
         {
             //★TODO：毎回呼ばれてしまう
-            Transform ItemTransform = GameObject.Find(NAct.haveItem.ToString()).transform;
+            Transform ItemTransform = GameObject.Find(NAct.NAttackV.haveItem.ToString()).transform;
 
             Vector3 ItemScale = ItemTransform.localScale;
             Vector3 ItemPos = new Vector3(0, 0, 0);
