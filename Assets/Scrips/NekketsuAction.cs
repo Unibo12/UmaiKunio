@@ -27,59 +27,59 @@ public class NekketsuAction : MonoBehaviour
     /// @@@変数が膨れてきたので、そろそろ
     /// ジャンルごとに変数用のクラスを作ったほうが良いかと思います。
 
-    // *****共通変数*****
-    public float speed = 0.08f;                 // スピード
-    public float jumpSpeed = 0f;                // ジャンプスピード管理変数
-    public float Gravity = -0.006f;             // 内部での重力
-    public float InitalVelocity = 0.188f;        // 内部での初速
-    public float nextButtonDownTimeDash = 1f;   // ダッシュを受け付ける時間
+    //♡♡♡♡♡すてーたす♡♡♡♡♡
+    public float st_life = 0;       //たいりょく
+    public float st_punch = 0;      //ぱんち
+    public float st_kick = 0;       //きっく
+    public float st_speed = 0.08f;     //すばやさ
+    public float st_downTime = 1;   //おきあがりじかん
+    public float st_brake = 0.5f;   //ぶれーき
+    //♡♡♡♡♡♡♡♡♡♡♡♡♡♡♡♡♡♡♡♡
 
+    // *****共通変数*****
     public float X = 0;    //内部での横
     public float Y = 0;    //内部での高さ
     public float Z = 0;    //内部での奥行き
     public float vx = 0;   //内部X値用変数
     public float vy = 0;   //内部Y値用変数
     public float vz = 0;   //内部Z値用変数
-
-    public Rect hurtBox = new Rect(0, 0, 0.7f, 1.6f);
-    public Rect hitBox = new Rect(0, 0, 0, 0);
-
-    public bool leftFlag = false;   //左向きかどうか
-    public bool jumpFlag = false;   //ジャンプして空中にいるか
-    public bool dashFlag = false;   //走っているか否か
-    public bool squatFlag = false;  //しゃがみ状態フラグ
-    public bool brakeFlag = false;  //ブレーキフラグ
-    public bool AttackMomentFlag = false;  //攻撃し始めフラグ(空中攻撃出し始め判定)
-    public bool BlowUpFlag = false; //吹っ飛び状態か否か
     public DeathPattern DeathFlag = DeathPattern.None; //失格
+    // *****共通変数*****
 
-    public JumpButtonPushState JumpButtonState; //ジャンプボタン押下ステータス
+    //移動
+    public float InitalVelocity = 0.188f;       // 内部での初速
+    public float nextButtonDownTimeDash = 1f;   // ダッシュを受け付ける時間
+    public bool leftFlag = false;   //左向きかどうか
+    public bool dashFlag = false;   //走っているか否か
+    public bool brakeFlag = false;  //ブレーキフラグ
     public XInputState XInputState = 0; //疑似Xに対する入力ステータス
     public ZInputState ZInputState = 0; //疑似Zに対する入力ステータス
+
+    //ジャンプ
+    public float jumpSpeed = 0f;                // ジャンプスピード管理変数
+    public float Gravity = -0.006f;             // 内部での重力
+    public bool jumpFlag = false;   //ジャンプして空中にいるか
+    public bool squatFlag = false;  //しゃがみ状態フラグ    
+    public JumpButtonPushState JumpButtonState; //ジャンプボタン押下ステータス
+
+    //攻撃
+    public Rect hurtBox = new Rect(0, 0, 0.7f, 1.6f);
+    public Rect hitBox = new Rect(0, 0, 0, 0);  
+    public bool AttackMomentFlag = false;  //攻撃し始めフラグ(空中攻撃出し始め判定)
+    public bool BlowUpFlag = false; //吹っ飛び状態か否か  
     public AttackPattern NowAttack = 0; //現在の攻撃パターン格納変数
     public DamagePattern NowDamage = 0; //現在の攻撃喰らいパターン格納変数
-
     public float BlowUpNowTime = 0;               //吹っ飛んでいる時間計測
     public float BlowUpInitalVelocityTime = 0.2f; //きめ攻撃等で吹っ飛んだ際の吹っ飛び時間
-
     public float downDamage = 0;  //ダウンまでの蓄積ダメージ
     public float nowDownTime = 0; //ダウン時間計測
     public float nowHogeTime = 0; //凹み状態時間計測
 
+    //アイテム
     public ItemPattern haveItem = ItemPattern.None; //所持アイテム
 
-
+    //影の位置
     Transform shadeTransform;
-
-    //♡♡♡♡♡すてーたす♡♡♡♡♡
-    public float st_life = 0;       //たいりょく
-    public float st_punch = 0;      //ぱんち
-    public float st_kick = 0;       //きっく
-    public float st_downTime = 1;   //おきあがりじかん
-    public float st_brake = 0.5f;   //ぶれーき
-    //♡♡♡♡♡♡♡♡♡♡♡♡♡♡♡♡♡♡♡♡
-
-    // *****共通変数*****
 
     #endregion
 

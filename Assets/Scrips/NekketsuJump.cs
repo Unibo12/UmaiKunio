@@ -50,7 +50,7 @@ public class NekketsuJump
                                 {
                                     //垂直ジャンプ時の加速を設定
                                     NAct.jumpSpeed += 
-                                        NAct.speed * Settings.Instance.Move.VerticalJumpSpeed;
+                                        NAct.st_speed * Settings.Instance.Move.VerticalJumpSpeed;
                                     NAct.vx += NAct.jumpSpeed; // 右に進む移動量を入れる
                                     NAct.leftFlag = false;
                                 }
@@ -63,7 +63,7 @@ public class NekketsuJump
                                 {
                                     //垂直ジャンプ時の加速を設定
                                     NAct.jumpSpeed +=
-                                        NAct.speed * Settings.Instance.Move.VerticalJumpSpeed;
+                                        NAct.st_speed * Settings.Instance.Move.VerticalJumpSpeed;
                                     NAct.vx += -NAct.jumpSpeed; // 左に進む移動量を入れる
                                     NAct.leftFlag = true;
                                 }
@@ -165,7 +165,7 @@ public class NekketsuJump
                     else
                     {
                         // 垂直ジャンプ以外(横・奥移動ジャンプ)
-                        NAct.jumpSpeed = NAct.speed;
+                        NAct.jumpSpeed = NAct.st_speed;
                     }
 
 

@@ -44,7 +44,7 @@ public class NekketsuMove
 
                 if (!NAct.dashFlag && !NAct.jumpFlag && !NAct.brakeFlag)
                 {
-                    NAct.vx = NAct.speed; // 右に歩く移動量を入れる
+                    NAct.vx = NAct.st_speed; // 右に歩く移動量を入れる
                 }
             }
             // もし、左キーが押されたら ★else if でもキーボード同時押し対策NG★
@@ -58,7 +58,7 @@ public class NekketsuMove
 
                 if (!NAct.dashFlag && !NAct.jumpFlag && !NAct.brakeFlag)
                 {
-                    NAct.vx = -NAct.speed; // 左に歩く移動量を入れる
+                    NAct.vx = -NAct.st_speed; // 左に歩く移動量を入れる
                 }
             }
 
@@ -68,7 +68,7 @@ public class NekketsuMove
             {             
                 if (!NAct.jumpFlag)
                 {
-                    NAct.vz = NAct.speed * Settings.Instance.Move.ZWalkSpeed; // 上に進む移動量を入れる(熱血っぽく奥行きは移動量小)
+                    NAct.vz = NAct.st_speed * Settings.Instance.Move.ZWalkSpeed; // 上に進む移動量を入れる(熱血っぽく奥行きは移動量小)
                 }
             }
             // もし、下キーが押されたら
@@ -77,7 +77,7 @@ public class NekketsuMove
             {
                 if (!NAct.jumpFlag)
                 {
-                    NAct.vz = -NAct.speed * Settings.Instance.Move.ZWalkSpeed; // 下に進む移動量を入れる(熱血っぽく奥行きは移動量小)
+                    NAct.vz = -NAct.st_speed * Settings.Instance.Move.ZWalkSpeed; // 下に進む移動量を入れる(熱血っぽく奥行きは移動量小)
                 }
             }
 
@@ -147,7 +147,7 @@ public class NekketsuMove
                     if (leftDash != NAct.leftFlag)
                     {
                         // 逆方向の移動量を入れる
-                        NAct.vx = GetSign(NAct.leftFlag) * NAct.speed * Settings.Instance.Move.DashSpeed;
+                        NAct.vx = GetSign(NAct.leftFlag) * NAct.st_speed * Settings.Instance.Move.DashSpeed;
 
                         NAct.dashFlag = false;
                         pushMove = false;
@@ -163,7 +163,7 @@ public class NekketsuMove
                     else
                     {
                         // ダッシュの移動量を入れる
-                        NAct.vx = GetSign(NAct.leftFlag) * NAct.speed * Settings.Instance.Move.DashSpeed;
+                        NAct.vx = GetSign(NAct.leftFlag) * NAct.st_speed * Settings.Instance.Move.DashSpeed;
                     }
                 }
             }
@@ -172,7 +172,7 @@ public class NekketsuMove
             if (!NAct.jumpFlag && NAct.brakeFlag)
             {
                 // ブレーキ中の移動量を入れる
-                NAct.vx = GetSign(!NAct.leftFlag) * NAct.speed * NAct.st_brake; 
+                NAct.vx = GetSign(!NAct.leftFlag) * NAct.st_speed * NAct.st_brake; 
                 
                 // ブレーキ状態の時間計測
                 nowTimebrake += Time.deltaTime;
