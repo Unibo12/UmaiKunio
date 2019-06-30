@@ -67,7 +67,7 @@ public class NekketsuHurtBox
                     if (NAct.st_downTime < NAct.nowDownTime)
                     {
                         NAct.NowDamage = DamagePattern.SquatGetUp; //起き上がり(しゃがみ)
-                        NAct.squatFlag = true;
+                        NAct.NJumpV.squatFlag = true;
 
                         NAct.nowDownTime = 0;
 
@@ -180,7 +180,7 @@ public class NekketsuHurtBox
                     }
 
                     // 自キャラが空中にいるか？
-                    if (!NAct.jumpFlag)
+                    if (!NAct.NJumpV.jumpFlag)
                     {
                         //自キャラが地上にいるので通常のダメージ計算
 
@@ -231,8 +231,8 @@ public class NekketsuHurtBox
 
                         //ジャンプ中にダウンしたので、ジャンプ周りをリセット
                         NAct.vy = 0;
-                        NAct.jumpFlag = false;
-                        NAct.jumpSpeed = 0;
+                        NAct.NJumpV.jumpFlag = false;
+                        NAct.NJumpV.jumpSpeed = 0;
                     }
 
                     if (NAct.NowDamage == DamagePattern.UmaHitBack
@@ -273,7 +273,7 @@ public class NekketsuHurtBox
 
                     //ジャンプ中にダウンを考慮して、ジャンプ周りをリセット
                     NAct.vy = 0;
-                    NAct.jumpFlag = false;
+                    NAct.NJumpV.jumpFlag = false;
                 }
             }
         }

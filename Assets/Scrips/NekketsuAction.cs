@@ -25,6 +25,7 @@ public class NekketsuAction : MonoBehaviour
     private NekketsuHaveItem NHaveItem;
 
     public NekketsuMoveVariable NMoveV;
+    public NekketsuJumpVariable NJumpV;
 
     /// @@@変数が膨れてきたので、そろそろ
     /// ジャンルごとに変数用のクラスを作ったほうが良いかと思います。
@@ -47,13 +48,6 @@ public class NekketsuAction : MonoBehaviour
     public float vz = 0;   //内部Z値用変数
     public DeathPattern DeathFlag = DeathPattern.None; //失格
     // *****共通変数*****
-
-    //ジャンプ
-    public float jumpSpeed = 0f;                // ジャンプスピード管理変数
-    public float Gravity = -0.006f;             // 内部での重力
-    public bool jumpFlag = false;   //ジャンプして空中にいるか
-    public bool squatFlag = false;  //しゃがみ状態フラグ    
-    public JumpButtonPushState JumpButtonState; //ジャンプボタン押下ステータス
 
     //攻撃
     public Rect hurtBox = new Rect(0, 0, 0.7f, 1.6f);
@@ -86,6 +80,7 @@ public class NekketsuAction : MonoBehaviour
         gameObjct = this.gameObject;
         NSound = gameObjct.GetComponent<NekketsuSound>();
         NMoveV = gameObjct.GetComponent<NekketsuMoveVariable>();
+        NJumpV = gameObjct.GetComponent<NekketsuJumpVariable>();
 
         //熱血マネージャ取得
         gameObjct = GameObject.Find("NekketsuManager");
@@ -187,7 +182,7 @@ public class NekketsuAction : MonoBehaviour
          
         pos.y = Z - 0.8f;
 
-        if (!squatFlag)
+        if (!NJumpV.squatFlag)
         {
             shadeTransform.position = pos;
         }
@@ -202,7 +197,7 @@ public class NekketsuAction : MonoBehaviour
         }
         else
         {
-            if (!squatFlag && !NMoveV.brakeFlag)
+            if (!NJumpV.squatFlag && !NMoveV.brakeFlag)
             {
                 if (NowAttack != AttackPattern.None)
                 {
@@ -229,7 +224,7 @@ public class NekketsuAction : MonoBehaviour
                         animator.SetBool("Walk", true);
                     }
 
-                    if (jumpFlag
+                    if (NJumpV.jumpFlag
                         && NowDamage == DamagePattern.None)
                     {
                         animator.Play("Jump");
@@ -243,7 +238,7 @@ public class NekketsuAction : MonoBehaviour
                     animator.Play("Brake");
                 }
 
-                if (squatFlag)
+                if (NJumpV.squatFlag)
                 {
                     animator.Play("Squat");
                 }

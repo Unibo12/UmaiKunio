@@ -1142,6 +1142,7 @@ GameObject:
   - component: {fileID: 820763015}
   - component: {fileID: 820763013}
   - component: {fileID: 820763019}
+  - component: {fileID: 820763020}
   - component: {fileID: 820763016}
   - component: {fileID: 820763017}
   - component: {fileID: 820763018}
@@ -1249,6 +1250,7 @@ MonoBehaviour:
   animator: {fileID: 0}
   Nmng: {fileID: 0}
   NMoveV: {fileID: 0}
+  NJumpV: {fileID: 0}
   st_life: 220
   st_punch: 10
   st_kick: 10
@@ -1262,11 +1264,6 @@ MonoBehaviour:
   vy: 0
   vz: 0
   DeathFlag: 0
-  dashFlag: 0
-  XInputState: 0
-  ZInputState: 0
-  jumpSpeed: 0
-  Gravity: -0.006
   jumpFlag: 0
   squatFlag: 0
   JumpButtonState: 0
@@ -1468,6 +1465,23 @@ MonoBehaviour:
   brakeFlag: 0
   XInputState: 0
   ZInputState: 0
+--- !u!114 &820763020
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 820763009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d8f534ef03e3bb4c823b523368da9c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jumpSpeed: 0
+  Gravity: -0.006
+  jumpFlag: 0
+  squatFlag: 0
+  JumpButtonState: 0
 --- !u!1 &945995172
 GameObject:
   m_ObjectHideFlags: 0
@@ -3021,6 +3035,7 @@ GameObject:
   - component: {fileID: 2032333309}
   - component: {fileID: 2032333308}
   - component: {fileID: 2032333317}
+  - component: {fileID: 2032333318}
   m_Layer: 0
   m_Name: Player2
   m_TagString: Untagged
@@ -3170,6 +3185,7 @@ MonoBehaviour:
   animator: {fileID: 0}
   Nmng: {fileID: 0}
   NMoveV: {fileID: 0}
+  NJumpV: {fileID: 0}
   st_life: 30
   st_punch: 3
   st_kick: 3
@@ -3183,11 +3199,6 @@ MonoBehaviour:
   vy: 0
   vz: 0
   DeathFlag: 0
-  dashFlag: 0
-  XInputState: 0
-  ZInputState: 0
-  jumpSpeed: 0.08
-  Gravity: -0.006
   jumpFlag: 0
   squatFlag: 0
   JumpButtonState: 0
@@ -3344,6 +3355,23 @@ MonoBehaviour:
   brakeFlag: 0
   XInputState: 0
   ZInputState: 0
+--- !u!114 &2032333318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2032333307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d8f534ef03e3bb4c823b523368da9c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jumpSpeed: 0
+  Gravity: -0.006
+  jumpFlag: 0
+  squatFlag: 0
+  JumpButtonState: 0
 --- !u!1 &2033548012
 GameObject:
   m_ObjectHideFlags: 0

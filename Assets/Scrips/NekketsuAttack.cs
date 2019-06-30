@@ -184,9 +184,9 @@ public class NekketsuAttack : MonoBehaviour
                                hitBoxY + 0.2f,
                                0.6f, 0.5f);
 
-                if (!NAct.jumpFlag
+                if (!NAct.NJumpV.jumpFlag
                     || NAct.Y <= 0
-                    || NAct.squatFlag
+                    || NAct.NJumpV.squatFlag
                     || NAct.NowDamage != DamagePattern.None)
                 {
                     NAct.NowAttack = AttackPattern.None;
@@ -262,9 +262,9 @@ public class NekketsuAttack : MonoBehaviour
                     NSound.SEPlay(SEPattern.attack);
                 }
 
-                if (!NAct.jumpFlag
+                if (!NAct.NJumpV.jumpFlag
                     || NAct.Y <= 0
-                    || NAct.squatFlag
+                    || NAct.NJumpV.squatFlag
                     || NAct.NowDamage != DamagePattern.None)
                 {
                     NAct.NowAttack = AttackPattern.None;

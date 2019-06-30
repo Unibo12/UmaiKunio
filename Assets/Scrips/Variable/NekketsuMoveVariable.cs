@@ -12,18 +12,4 @@ public class NekketsuMoveVariable : MonoBehaviour
     public bool brakeFlag = false;  //ブレーキフラグ
     public XInputState XInputState = 0; //疑似Xに対する入力ステータス
     public ZInputState ZInputState = 0; //疑似Zに対する入力ステータス
-
-
-    //NekketsuAction NAct; //NekketsuActionが入る変数
-
-    //public NekketsuMoveVariable(NekketsuAction nekketsuAction)
-    //{
-    //    NAct = nekketsuAction;
-    //}
-
-
-    //public void NekketsuMoveVariableMain()
-    //{
-
-    //}
 }

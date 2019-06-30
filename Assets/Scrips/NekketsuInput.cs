@@ -32,19 +32,19 @@ public class NekketsuInput
                 || (Input.GetKeyDown("z") || Input.GetKeyDown("joystick button 0"))
                 && (Input.GetKeyDown("x") || Input.GetKeyDown("joystick button 1")))
         {
-            NAct.JumpButtonState = JumpButtonPushState.PushMoment;
+            NAct.NJumpV.JumpButtonState = JumpButtonPushState.PushMoment;
         }
         else if (Input.GetKey("a") || Input.GetKey("joystick button 2")
                 || (Input.GetKey("z") || Input.GetKey("joystick button 0"))
                 && (Input.GetKey("x") || Input.GetKey("joystick button 1")))
         {
-            NAct.JumpButtonState = JumpButtonPushState.PushButton;
+            NAct.NJumpV.JumpButtonState = JumpButtonPushState.PushButton;
         }
         else if (Input.GetKeyUp("a") || Input.GetKeyUp("joystick button 2")
                 || (Input.GetKeyUp("z") || Input.GetKeyUp("joystick button 0"))
                 && (Input.GetKeyUp("x") || Input.GetKeyUp("joystick button 1")))
         {
-            NAct.JumpButtonState = JumpButtonPushState.ReleaseButton;
+            NAct.NJumpV.JumpButtonState = JumpButtonPushState.ReleaseButton;
         }
 
         #endregion
@@ -75,7 +75,7 @@ public class NekketsuInput
             }
             else
             {
-                if (NAct.jumpFlag && NAct.Y >= 0)
+                if (NAct.NJumpV.jumpFlag && NAct.Y >= 0)
                 {
                     if (!NAct.NMoveV.leftFlag)
                     {
@@ -101,7 +101,7 @@ public class NekketsuInput
         {
             if (NAct.NMoveV.leftFlag)
             {
-                if (NAct.jumpFlag && NAct.Y >= 0)
+                if (NAct.NJumpV.jumpFlag && NAct.Y >= 0)
                 {
                     if (NAct.NMoveV.leftFlag)
                     {
@@ -297,20 +297,20 @@ public class NekketsuInput
     /// </summary>
     void DosukoiVector()
     {
-        if (NAct.jumpFlag)
+        if (NAct.NJumpV.jumpFlag)
         {
             NAct.NowAttack = AttackPattern.UmaHariteJump;
             NAct.AttackMomentFlag = true;
         }
         else if ((NAct.NMoveV.ZInputState == ZInputState.ZBackPushMoment
             || NAct.NMoveV.ZInputState == ZInputState.ZBackPushButton)
-            && !NAct.jumpFlag)
+            && !NAct.NJumpV.jumpFlag)
         {
             NAct.NowAttack = AttackPattern.DosukoiBack;
         }
         else if ((NAct.NMoveV.ZInputState == ZInputState.ZFrontPushMoment
                  || NAct.NMoveV.ZInputState == ZInputState.ZFrontPushButton)
-                 && !NAct.jumpFlag)
+                 && !NAct.NJumpV.jumpFlag)
         {
             NAct.NowAttack = AttackPattern.DosukoiFront;
         }

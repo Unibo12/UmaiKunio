@@ -28,7 +28,7 @@ public class NekketsuMove
     /// </summary>
     public void MoveMain(NekketsuSound NSound)
     {
-        if (!NAct.squatFlag
+        if (!NAct.NJumpV.squatFlag
             && NAct.NowDamage == DamagePattern.None)
         {
             #region 歩き
@@ -42,7 +42,7 @@ public class NekketsuMove
                     NAct.NMoveV.leftFlag = false;
                 }
 
-                if (!NAct.NMoveV.dashFlag && !NAct.jumpFlag && !NAct.NMoveV.brakeFlag)
+                if (!NAct.NMoveV.dashFlag && !NAct.NJumpV.jumpFlag && !NAct.NMoveV.brakeFlag)
                 {
                     NAct.vx = NAct.st_speed; // 右に歩く移動量を入れる
                 }
@@ -56,7 +56,7 @@ public class NekketsuMove
                     NAct.NMoveV.leftFlag = true;
                 }
 
-                if (!NAct.NMoveV.dashFlag && !NAct.jumpFlag && !NAct.NMoveV.brakeFlag)
+                if (!NAct.NMoveV.dashFlag && !NAct.NJumpV.jumpFlag && !NAct.NMoveV.brakeFlag)
                 {
                     NAct.vx = -NAct.st_speed; // 左に歩く移動量を入れる
                 }
@@ -66,7 +66,7 @@ public class NekketsuMove
             if (NAct.NMoveV.ZInputState == ZInputState.ZBackPushMoment
                 || NAct.NMoveV.ZInputState == ZInputState.ZBackPushButton)
             {             
-                if (!NAct.jumpFlag)
+                if (!NAct.NJumpV.jumpFlag)
                 {
                     NAct.vz = NAct.st_speed * Settings.Instance.Move.ZWalkSpeed; // 上に進む移動量を入れる(熱血っぽく奥行きは移動量小)
                 }
@@ -75,7 +75,7 @@ public class NekketsuMove
             else if (NAct.NMoveV.ZInputState == ZInputState.ZFrontPushMoment
                     || NAct.NMoveV.ZInputState == ZInputState.ZFrontPushButton)
             {
-                if (!NAct.jumpFlag)
+                if (!NAct.NJumpV.jumpFlag)
                 {
                     NAct.vz = -NAct.st_speed * Settings.Instance.Move.ZWalkSpeed; // 下に進む移動量を入れる(熱血っぽく奥行きは移動量小)
                 }
@@ -108,7 +108,7 @@ public class NekketsuMove
                     else
                     {
                         // ダッシュ準備済なので、ダッシュしてよい状態か判断
-                        if (canDash && !NAct.jumpFlag
+                        if (canDash && !NAct.NJumpV.jumpFlag
                             && leftDash == NAct.NMoveV.leftFlag
                             && nowTimeDash <= NAct.NMoveV.nextButtonDownTimeDash)
                         {
@@ -154,7 +154,7 @@ public class NekketsuMove
                         canDash = false;
 
                         // ブレーキ状態
-                        if (!NAct.jumpFlag)
+                        if (!NAct.NJumpV.jumpFlag)
                         {
                             NAct.NMoveV.brakeFlag = true;
                             NSound.SEPlay(SEPattern.brake);
@@ -169,7 +169,7 @@ public class NekketsuMove
             }
 
             // ブレーキ処理
-            if (!NAct.jumpFlag && NAct.NMoveV.brakeFlag)
+            if (!NAct.NJumpV.jumpFlag && NAct.NMoveV.brakeFlag)
             {
                 // ブレーキ中の移動量を入れる
                 NAct.vx = GetSign(!NAct.NMoveV.leftFlag) * NAct.st_speed * NAct.st_brake; 
