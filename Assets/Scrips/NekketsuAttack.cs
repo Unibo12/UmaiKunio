@@ -43,12 +43,12 @@ public class NekketsuAttack : MonoBehaviour
     {
         if (NAct.NAttackV.NowDamage == DamagePattern.None)
         {
-            float hitBoxX = NAct.X;
-            float hitBoxY = NAct.Y;
+            float hitBoxX = NAct.NVariable.X;
+            float hitBoxY = NAct.NVariable.Y;
             // 左方向の場合はマイナス値とする。
             float leftMinusVector = (NAct.NMoveV.leftFlag) ? -1 : 1;
 
-            if (NAct.vx != 0
+            if (NAct.NVariable.vx != 0
                 || NAct.NMoveV.dashFlag)
             {
                 NAct.NAttackV.NowAttack = AttackPattern.DosukoiWalk;
@@ -89,8 +89,8 @@ public class NekketsuAttack : MonoBehaviour
 
     void DosukoiBack(float timing)
     {
-        float hitBoxX = NAct.X;
-        float hitBoxY = NAct.Y;
+        float hitBoxX = NAct.NVariable.X;
+        float hitBoxY = NAct.NVariable.Y;
         // 左方向の場合はマイナス値とする。
         float leftMinusVector = (NAct.NMoveV.leftFlag) ? -1 : 1;
 
@@ -123,8 +123,8 @@ public class NekketsuAttack : MonoBehaviour
 
     void DosukoiFront(float timing)
     {
-        float hitBoxX = NAct.X;
-        float hitBoxY = NAct.Y;
+        float hitBoxX = NAct.NVariable.X;
+        float hitBoxY = NAct.NVariable.Y;
         // 左方向の場合はマイナス値とする。
         float leftMinusVector = (NAct.NMoveV.leftFlag) ? -1 : 1;
 
@@ -157,8 +157,8 @@ public class NekketsuAttack : MonoBehaviour
 
     void JumpDosukoi(float timing)
     {
-        float hitBoxX = NAct.X;
-        float hitBoxY = NAct.Y;
+        float hitBoxX = NAct.NVariable.X;
+        float hitBoxY = NAct.NVariable.Y;
         // 左方向の場合はマイナス値とする。
         float leftMinusVector = (NAct.NMoveV.leftFlag) ? -1 : 1;
 
@@ -185,7 +185,7 @@ public class NekketsuAttack : MonoBehaviour
                                0.6f, 0.5f);
 
                 if (!NAct.NJumpV.jumpFlag
-                    || NAct.Y <= 0
+                    || NAct.NVariable.Y <= 0
                     || NAct.NJumpV.squatFlag
                     || NAct.NAttackV.NowDamage != DamagePattern.None)
                 {
@@ -202,8 +202,8 @@ public class NekketsuAttack : MonoBehaviour
 
     void Hiji(float timing)
     {
-        float hitBoxX = NAct.X;
-        float hitBoxY = NAct.Y;
+        float hitBoxX = NAct.NVariable.X;
+        float hitBoxY = NAct.NVariable.Y;
         // 右方向の場合はマイナス値とする。
         float RightMinusVector = (NAct.NMoveV.leftFlag) ? 1 : -1;
 
@@ -243,8 +243,8 @@ public class NekketsuAttack : MonoBehaviour
 
     void JumpKick(float timing)
     {
-        float hitBoxX = NAct.X;
-        float hitBoxY = NAct.Y;
+        float hitBoxX = NAct.NVariable.X;
+        float hitBoxY = NAct.NVariable.Y;
         // 左方向の場合はマイナス値とする。
         float leftMinusVector = (NAct.NMoveV.leftFlag) ? -1 : 1;
 
@@ -263,7 +263,7 @@ public class NekketsuAttack : MonoBehaviour
                 }
 
                 if (!NAct.NJumpV.jumpFlag
-                    || NAct.Y <= 0
+                    || NAct.NVariable.Y <= 0
                     || NAct.NJumpV.squatFlag
                     || NAct.NAttackV.NowDamage != DamagePattern.None)
                 {

@@ -28,7 +28,7 @@ public class NekketsuStateChange
         //ジャンプ攻撃中から着地したとき
         if((NAct.NAttackV.NowAttack == AttackPattern.JumpKick
            || NAct.NAttackV.NowAttack == AttackPattern.UmaHariteJump)
-            && NAct.Y <= 0)
+            && NAct.NVariable.Y <= 0)
         {
             NAct.NAttackV.NowAttack = AttackPattern.None;
         }
@@ -36,11 +36,11 @@ public class NekketsuStateChange
         // ダウン時に攻撃状態(攻撃ボタンを押している)なら、クイックスタンディングとする。
         if ((NAct.NAttackV.NowDamage == DamagePattern.UmaTaore
             || NAct.NAttackV.NowDamage == DamagePattern.UmaTaoreUp)
-            && NAct.Y == 0)
+            && NAct.NVariable.Y == 0)
         {
             if (NAct.NAttackV.NowAttack != AttackPattern.None)
             {
-                NAct.NAttackV.nowDownTime += NAct.st_downTime / 100;
+                NAct.NAttackV.nowDownTime += NAct.NVariable.st_downTime / 100;
                 NAct.NAttackV.NowAttack = AttackPattern.None;
             }
         }
@@ -59,11 +59,11 @@ public class NekketsuStateChange
             }
         }
 
-        if (NAct.DeathFlag == DeathPattern.deathNow)
+        if (NAct.NVariable.DeathFlag == DeathPattern.deathNow)
         {
             if(Settings.Instance.Game.DeathTime < NowDeathTime)
             {
-                NAct.DeathFlag = DeathPattern.death;
+                NAct.NVariable.DeathFlag = DeathPattern.death;
             }
 
             NowDeathTime += Time.deltaTime;

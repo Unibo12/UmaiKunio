@@ -23,10 +23,10 @@ public class NekketsuHaveItem : MonoBehaviour
             Vector3 ItemScale = ItemTransform.localScale;
             Vector3 ItemPos = new Vector3(0, 0, 0);
 
-            ItemPos.x = NAct.X + (0.4f * GetSign(NAct.NMoveV.leftFlag));
+            ItemPos.x = NAct.NVariable.X + (0.4f * GetSign(NAct.NMoveV.leftFlag));
             ItemScale.x = GetSign(NAct.NMoveV.leftFlag);
 
-            ItemPos.y = NAct.Y + NAct.Z + 0.25f;
+            ItemPos.y = NAct.NVariable.Y + NAct.NVariable.Z + 0.25f;
             ItemTransform.localScale = ItemScale;
 
             ItemTransform.position = ItemPos;

@@ -75,7 +75,7 @@ public class NekketsuInput
             }
             else
             {
-                if (NAct.NJumpV.jumpFlag && NAct.Y >= 0)
+                if (NAct.NJumpV.jumpFlag && NAct.NVariable.Y >= 0)
                 {
                     if (!NAct.NMoveV.leftFlag)
                     {
@@ -101,7 +101,7 @@ public class NekketsuInput
         {
             if (NAct.NMoveV.leftFlag)
             {
-                if (NAct.NJumpV.jumpFlag && NAct.Y >= 0)
+                if (NAct.NJumpV.jumpFlag && NAct.NVariable.Y >= 0)
                 {
                     if (NAct.NMoveV.leftFlag)
                     {

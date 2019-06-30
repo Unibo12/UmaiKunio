@@ -45,7 +45,7 @@ public class UmaiboSandbag : MonoBehaviour
         Vector3 scale = transform.localScale;
 
         // どすこい奥手前は、Z -0.4で処理できない。今後のためにも改良すべし
-        if ((Z - 0.4f <= Nmng.Player[0].Z && Nmng.Player[0].Z <= Z + 0.4f)
+        if ((Z - 0.4f <= Nmng.Player[0].NVariable.Z && Nmng.Player[0].NVariable.Z <= Z + 0.4f)
             && Nmng.Player[0].NAttackV.hitBox.Overlaps(UmaiboSandbagHitBox))
         {
             animator.Play("UmaHitFrontWh");

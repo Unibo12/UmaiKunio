@@ -1147,6 +1147,7 @@ GameObject:
   - component: {fileID: 820763017}
   - component: {fileID: 820763018}
   - component: {fileID: 820763021}
+  - component: {fileID: 820763022}
   m_Layer: 0
   m_Name: Player1
   m_TagString: Untagged
@@ -1250,37 +1251,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
   Nmng: {fileID: 0}
+  NVariable: {fileID: 0}
   NMoveV: {fileID: 0}
   NJumpV: {fileID: 0}
   NAttackV: {fileID: 0}
-  st_life: 220
-  st_punch: 10
-  st_kick: 10
-  st_speed: 0.08
-  st_downTime: 1
-  st_brake: 0.5
-  X: -1.5
-  Y: 0
-  Z: -0.5
-  vx: 0
-  vy: 0
-  vz: 0
-  DeathFlag: 0
-  hitBox:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 0
-    height: 0
-  AttackMomentFlag: 0
-  BlowUpFlag: 0
-  NowAttack: 0
-  NowDamage: 0
-  BlowUpNowTime: 0
-  BlowUpInitalVelocityTime: 0.2
-  downDamage: 0
-  nowDownTime: 0
-  nowHogeTime: 0
   haveItem: 0
 --- !u!114 &820763014
 MonoBehaviour:
@@ -1508,6 +1482,31 @@ MonoBehaviour:
   downDamage: 0
   nowDownTime: 0
   nowHogeTime: 0
+--- !u!114 &820763022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 820763009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d471ae6d99ac5ec46933f53a97a199f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  st_life: 140
+  st_punch: 10
+  st_kick: 10
+  st_speed: 0.08
+  st_downTime: 1
+  st_brake: 0.5
+  X: -1.5
+  Y: 0
+  Z: -0.5
+  vx: 0
+  vy: 0
+  vz: 0
+  DeathFlag: 0
 --- !u!1 &945995172
 GameObject:
   m_ObjectHideFlags: 0
@@ -3063,6 +3062,7 @@ GameObject:
   - component: {fileID: 2032333317}
   - component: {fileID: 2032333318}
   - component: {fileID: 2032333319}
+  - component: {fileID: 2032333320}
   m_Layer: 0
   m_Name: Player2
   m_TagString: Untagged
@@ -3211,37 +3211,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
   Nmng: {fileID: 0}
+  NVariable: {fileID: 0}
   NMoveV: {fileID: 0}
   NJumpV: {fileID: 0}
   NAttackV: {fileID: 0}
-  st_life: 30
-  st_punch: 3
-  st_kick: 3
-  st_speed: 0.01
-  st_downTime: 1.5
-  st_brake: 0.5
-  X: -1.5
-  Y: 0
-  Z: -1
-  vx: 0
-  vy: 0
-  vz: 0
-  DeathFlag: 0
-  hitBox:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 0
-    height: 0
-  AttackMomentFlag: 0
-  BlowUpFlag: 0
-  NowAttack: 0
-  NowDamage: 0
-  BlowUpNowTime: 0
-  BlowUpInitalVelocityTime: 0.2
-  downDamage: 0
-  nowDownTime: 0
-  nowHogeTime: 0
   haveItem: 0
 --- !u!114 &2032333312
 MonoBehaviour:
@@ -3424,6 +3397,31 @@ MonoBehaviour:
   downDamage: 0
   nowDownTime: 0
   nowHogeTime: 0
+--- !u!114 &2032333320
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2032333307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d471ae6d99ac5ec46933f53a97a199f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  st_life: 30
+  st_punch: 10
+  st_kick: 10
+  st_speed: 0.01
+  st_downTime: 1
+  st_brake: 0.5
+  X: -1.5
+  Y: 0
+  Z: -1
+  vx: 0
+  vy: 0
+  vz: 0
+  DeathFlag: 0
 --- !u!1 &2033548012
 GameObject:
   m_ObjectHideFlags: 0

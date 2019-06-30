@@ -24,31 +24,13 @@ public class NekketsuAction : MonoBehaviour
     private NekketsuStateChange NStateChange; //NekketsuStateChangeを呼び出す際に使用
     private NekketsuHaveItem NHaveItem;
 
+    public NekketsuVariable NVariable;
     public NekketsuMoveVariable NMoveV;
     public NekketsuJumpVariable NJumpV;
     public NekketsuAttackVariable NAttackV;
 
     /// @@@変数が膨れてきたので、そろそろ
     /// ジャンルごとに変数用のクラスを作ったほうが良いかと思います。
-
-    //♡♡♡♡♡すてーたす♡♡♡♡♡
-    public float st_life = 0;       //たいりょく
-    public float st_punch = 0;      //ぱんち
-    public float st_kick = 0;       //きっく
-    public float st_speed = 0.08f;  //すばやさ
-    public float st_downTime = 1;   //おきあがりじかん
-    public float st_brake = 0.5f;   //ぶれーき
-    //♡♡♡♡♡♡♡♡♡♡♡♡♡♡♡♡♡♡♡♡
-
-    // *****共通変数*****
-    public float X = 0;    //内部での横
-    public float Y = 0;    //内部での高さ
-    public float Z = 0;    //内部での奥行き
-    public float vx = 0;   //内部X値用変数
-    public float vy = 0;   //内部Y値用変数
-    public float vz = 0;   //内部Z値用変数
-    public DeathPattern DeathFlag = DeathPattern.None; //失格
-    // *****共通変数*****
 
     //アイテム
     public ItemPattern haveItem = ItemPattern.None; //所持アイテム
@@ -67,6 +49,7 @@ public class NekketsuAction : MonoBehaviour
         //自分にアタッチされている効果音、変数クラスを取得
         gameObjct = this.gameObject;
         NSound = gameObjct.GetComponent<NekketsuSound>();
+        NVariable = gameObjct.GetComponent<NekketsuVariable>();
         NMoveV = gameObjct.GetComponent<NekketsuMoveVariable>();
         NJumpV = gameObjct.GetComponent<NekketsuJumpVariable>();
         NAttackV = gameObjct.GetComponent<NekketsuAttackVariable>();
@@ -89,8 +72,8 @@ public class NekketsuAction : MonoBehaviour
     void Update()
     { // ずっと行う
 
-        vx = 0;
-        vz = 0;
+        NVariable.vx = 0;
+        NVariable.vz = 0;
 
         // インプット処理呼び出し
         NInput.InputMain();
@@ -129,12 +112,12 @@ public class NekketsuAction : MonoBehaviour
         /// 速度を座標に反映する処理の後に、上記クラスの処理を通して適切な位置に戻す流れを作っておくのが良いでしょう
 
         //座標への速度反映
-        X += vx;
+        NVariable.X += NVariable.vx;
         //Y += vy;
-        Z += vz;
+        NVariable.Z += NVariable.vz;
 
-        pos.x = X;
-        pos.y = Z + Y;
+        pos.x = NVariable.X;
+        pos.y = NVariable.Z + NVariable.Y;
 
         transform.position = pos;
 
@@ -143,12 +126,12 @@ public class NekketsuAction : MonoBehaviour
             || NAttackV.NowDamage == DamagePattern.UmaTaoreUp)
         {
             //倒れ状態の当たり判定(アイテム化)
-            NAttackV.hurtBox = new Rect(X, Y+Z, 1.6f, 0.7f);
+            NAttackV.hurtBox = new Rect(NVariable.X, NVariable.Y+NVariable.Z, 1.6f, 0.7f);
         }
         else
         {
             //通常当たり判定
-            NAttackV.hurtBox = new Rect(X, Y+Z, 0.7f, 1.6f);
+            NAttackV.hurtBox = new Rect(NVariable.X, NVariable.Y+NVariable.Z, 0.7f, 1.6f);
         }
 
         #endregion
@@ -169,7 +152,7 @@ public class NekketsuAction : MonoBehaviour
 
         #region キャラクターの影の位置描画処理
          
-        pos.y = Z - 0.8f;
+        pos.y = NVariable.Z - 0.8f;
 
         if (!NJumpV.squatFlag)
         {
@@ -204,7 +187,7 @@ public class NekketsuAction : MonoBehaviour
                 else
                 {
                     //  攻撃以外のアニメーション
-                    if (vx == 0 && vz == 0)
+                    if (NVariable.vx == 0 && NVariable.vz == 0)
                     {
                         animator.SetBool("Walk", false);
                     }
@@ -238,7 +221,7 @@ public class NekketsuAction : MonoBehaviour
 
         #region 失格判定(ゲームシーンから削除)
 
-        if (DeathFlag == DeathPattern.death)
+        if (NVariable.DeathFlag == DeathPattern.death)
         {
             Destroy(this.gameObject);
         }
@@ -254,6 +237,6 @@ public class NekketsuAction : MonoBehaviour
 
         // 攻撃判定のギズモを表示
         Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(new Vector3(NAttackV.hitBox.x, Z + NAttackV.hitBox.y), new Vector3(NAttackV.hitBox.width, NAttackV.hitBox.height, 0.1f));
+        Gizmos.DrawWireCube(new Vector3(NAttackV.hitBox.x, NVariable.Z + NAttackV.hitBox.y), new Vector3(NAttackV.hitBox.width, NAttackV.hitBox.height, 0.1f));
     }
 }
