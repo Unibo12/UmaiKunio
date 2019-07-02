@@ -89,10 +89,12 @@ public class NekketsuInput
                         && NAct.NMoveV.ZInputState == ZInputState.ZNone)
                     {
                         NAct.NAttackV.NowAttack = AttackPattern.Hiji;
+                        NAct.NAttackV.AttackMomentFlag = true;
                     }
                     else
                     {
                         NAct.NAttackV.NowAttack = AttackPattern.HijiWalk;
+                        NAct.NAttackV.AttackMomentFlag = true;
                     }
                 }
             }
@@ -115,16 +117,19 @@ public class NekketsuInput
                         && NAct.NMoveV.ZInputState == ZInputState.ZNone)
                     {
                         NAct.NAttackV.NowAttack = AttackPattern.Hiji;
+                        NAct.NAttackV.AttackMomentFlag = true;
                     }
                     else
                     {
                         NAct.NAttackV.NowAttack = AttackPattern.HijiWalk;
+                        NAct.NAttackV.AttackMomentFlag = true;
                     }
                 }
             }
             else
             {
                 DosukoiVector();
+                NAct.NAttackV.AttackMomentFlag = true;
             }
         }
         else if ((Input.GetKeyDown("s") || Input.GetKeyDown("joystick button 3")))

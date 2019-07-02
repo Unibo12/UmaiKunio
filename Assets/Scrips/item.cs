@@ -42,8 +42,9 @@ public class item : MonoBehaviour
     void Update()
     {
         // アイテムと重なっていている状態で攻撃ボタンが押された
-        if (Nmng.Player[0].NAttackV.haveItem == ItemPattern.None
-            && Nmng.Player[0].NAttackV.NowAttack != AttackPattern.None
+        if (Nmng.Player[0].NVariable.Y == 0
+            && Nmng.Player[0].NAttackV.haveItem == ItemPattern.None
+            && Nmng.Player[0].NAttackV.AttackMomentFlag
             && Nmng.Player[0].NAttackV.hurtBox.Overlaps(Nmng.Item1.itemBox))
         {
             // お試しで アイテム上で攻撃ボタン押下で消えるテスト

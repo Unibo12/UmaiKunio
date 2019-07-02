@@ -1138,16 +1138,16 @@ GameObject:
   - component: {fileID: 820763012}
   - component: {fileID: 820763011}
   - component: {fileID: 820763010}
+  - component: {fileID: 820763017}
   - component: {fileID: 820763014}
   - component: {fileID: 820763015}
   - component: {fileID: 820763013}
+  - component: {fileID: 820763016}
+  - component: {fileID: 820763022}
   - component: {fileID: 820763019}
   - component: {fileID: 820763020}
-  - component: {fileID: 820763016}
-  - component: {fileID: 820763017}
-  - component: {fileID: 820763018}
   - component: {fileID: 820763021}
-  - component: {fileID: 820763022}
+  - component: {fileID: 820763018}
   m_Layer: 0
   m_Name: Player1
   m_TagString: Untagged
@@ -1250,12 +1250,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
-  Nmng: {fileID: 0}
   NVariable: {fileID: 0}
   NMoveV: {fileID: 0}
   NJumpV: {fileID: 0}
   NAttackV: {fileID: 0}
-  haveItem: 0
+  Nmng: {fileID: 0}
 --- !u!114 &820763014
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1482,6 +1481,7 @@ MonoBehaviour:
   downDamage: 0
   nowDownTime: 0
   nowHogeTime: 0
+  haveItem: 0
 --- !u!114 &820763022
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3210,12 +3210,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
-  Nmng: {fileID: 0}
   NVariable: {fileID: 0}
   NMoveV: {fileID: 0}
   NJumpV: {fileID: 0}
   NAttackV: {fileID: 0}
-  haveItem: 0
+  Nmng: {fileID: 0}
 --- !u!114 &2032333312
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3397,6 +3396,7 @@ MonoBehaviour:
   downDamage: 0
   nowDownTime: 0
   nowHogeTime: 0
+  haveItem: 0
 --- !u!114 &2032333320
 MonoBehaviour:
   m_ObjectHideFlags: 0
