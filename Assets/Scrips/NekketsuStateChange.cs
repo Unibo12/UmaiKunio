@@ -84,6 +84,13 @@ public class NekketsuStateChange
         //    }
         //}
 
+        //自動ダッシュ中(十字入力なし)に肘打した場合、ここで歩き肘打ちに補完
+        if (NAct.NMoveV.dashFlag
+            && NAct.NAttackV.NowAttack == AttackPattern.Hiji)
+        {
+            NAct.NAttackV.NowAttack = AttackPattern.HijiWalk;
+        }
+
     }
 }
 
