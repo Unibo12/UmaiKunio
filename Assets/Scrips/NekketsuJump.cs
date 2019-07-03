@@ -239,12 +239,6 @@ public class NekketsuJump
                     NAct.NJumpV.squatFlag = true; //しゃがみ状態
                     NAct.NJumpV.jumpSpeed = 0;    //ジャンプ速度初期化
 
-                    // 地面めりこみ補正は着地したタイミングで行う
-                    if (NAct.NVariable.Y < 0)
-                    {
-                        NAct.NVariable.Y = 0; // マイナス値は入れないようにする
-                    }
-
                     if (NAct.NMoveV.InitalVelocity != 0)
                     {
                         // 内部Y軸変数を初期値に戻す

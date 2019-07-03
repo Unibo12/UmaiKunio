@@ -21,15 +21,16 @@ public class NekketsuAction : MonoBehaviour
     public NekketsuAttackVariable NAttackV; //攻撃関連変数
 
     //各処理を呼び出す為の定義
-    public NekketsuManager Nmng;                //熱血マネージャ
-    private NekketsuSound NSound;               //効果音
-    private NekketsuAttack NAttack;             //攻撃処理
-    private NekketsuMove NMove;                 //移動処理
-    private NekketsuJump NJump;                 //ジャンプ処理
-    private NekketsuInput NInput;               //キー入力受付
-    private NekketsuHurtBox NHurtBox;           //喰らい判定処理
-    private NekketsuStateChange NStateChange;   //状態変化処理
-    private NekketsuHaveItem NHaveItem;         //所持アイテム処理
+    public NekketsuManager Nmng;                    //熱血マネージャ
+    private NekketsuSound NSound;                   //効果音
+    private NekketsuAttack NAttack;                 //攻撃処理
+    private NekketsuMove NMove;                     //移動処理
+    private NekketsuJump NJump;                     //ジャンプ処理
+    private NekketsuInput NInput;                   //キー入力受付
+    private NekketsuHurtBox NHurtBox;               //喰らい判定処理
+    private NekketsuStateChange NStateChange;       //状態変化処理
+    private NekketsuHaveItem NHaveItem;             //所持アイテム処理
+    private NekketsuMerikomiCheck NMerikomiCheck;   //壁・地面めり込みチェック
 
     //影の位置
     Transform shadeTransform;
@@ -61,6 +62,7 @@ public class NekketsuAction : MonoBehaviour
         NHurtBox = new NekketsuHurtBox(this);
         NStateChange = new NekketsuStateChange(this);
         NHaveItem = new NekketsuHaveItem(this);
+        NMerikomiCheck = new NekketsuMerikomiCheck(this);
 
         shadeTransform = GameObject.Find(this.gameObject.name + "_Shade").transform;
     }
@@ -92,20 +94,11 @@ public class NekketsuAction : MonoBehaviour
         // 所持アイテムの管理
         NHaveItem.NekketsuHaveItemMain();
 
+        // 壁・地面のめり込み状態をチェックし、必要であれば補正
+        NMerikomiCheck.MerikomiMain();
+
         #region 画面への描画
         // 入力された内部XYZをtransformに設定する。
-
-        // 基本的に、描画位置はジャンプなどのキャラ状態かかわらず、同じように内部座標を描画座標に適用する
-        // （適用できるように、必要ならば内部座標の段階で調整をしておく）
-
-        /// @@@Y座標も同じ場所で速度反映を行ったほうがよいです
-        /// ここで行うと着地時めり込むということだと思うのですが
-        /// いずれ直面する左右の壁めり込みなども同様の現象なので
-        /// 「速度を座標に反映する」処理の後に、「地形にぶつかっていたら適切な位置に戻す」
-        /// という処理を入れる必要があります。
-        /// とりあえずY座標だけでもめり込み判定をNekketsuJumpから取り出し
-        /// NekketsuMerikomiCheckみたいなクラスを作り、
-        /// 速度を座標に反映する処理の後に、上記クラスの処理を通して適切な位置に戻す流れを作っておくのが良いでしょう
 
         //座標への速度反映
         NVariable.X += NVariable.vx;
