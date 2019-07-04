@@ -11,6 +11,8 @@ public class NekketsuStateChange
     NekketsuInput NInput;
 
     float NowDeathTime = 0; //プレイヤーが失格してから消えるまでの時間計測
+    DamagePattern NowDmgRigidity; //現在硬直中のダメージパターン
+    float RigidityDmgTime; //硬直ダメージ時間
 
     public NekketsuStateChange(NekketsuAction nekketsuAction)
     {
@@ -69,20 +71,62 @@ public class NekketsuStateChange
             NowDeathTime += Time.deltaTime;
         }
 
-        //// TODO：凹み時間正しく計測できていない。
-        //if (NAct.NowDamage == DamagePattern.UmaHoge)
-        //{
-        //    if (2 < NAct.nowHogeTime)
-        //    {
-        //        NAct.nowHogeTime = 0;
-        //        NAct.NowDamage = DamagePattern.None;
-        //    }
-        //    else
-        //    {
-        //        NAct.nowHogeTime += Time.deltaTime;
-        //        NAct.NowDamage = DamagePattern.UmaHoge;
-        //    }
-        //}
+        //被ダメ硬直処理
+        //被ダメ中で、硬直時間時間未計測の場合、硬直時間計測する
+        if (NAct.NAttackV.DamageRigidityFlag == false
+            && (NAct.NAttackV.NowDamage == DamagePattern.UmaHoge
+            || NAct.NAttackV.NowDamage == DamagePattern.UmaHitBack
+            || NAct.NAttackV.NowDamage == DamagePattern.UmaHitFront))
+        {
+            NAct.NAttackV.DamageRigidityFlag = true;
+            NowDmgRigidity = NAct.NAttackV.NowDamage;
+        }
+
+        //被ダメ硬直計測
+        if (NAct.NAttackV.DamageRigidityFlag == true)
+        {
+            if (NowDmgRigidity == DamagePattern.UmaHitBack
+                || NowDmgRigidity == DamagePattern.UmaHitFront)
+            {
+                //被ダメ状態１(ダメージ軽)
+                RigidityDmgTime = Settings.Instance.Attack.Damage1Time;
+            }
+            else if (NowDmgRigidity == DamagePattern.UmaHoge)
+            {
+                //被ダメ状態２(ダメージ重 凹み状態)
+                RigidityDmgTime = Settings.Instance.Attack.Damage2Time;
+            }
+
+
+            //★１回目のたいりょく０のダウンで失格にならない？
+            //★１回目のたいりょく０のダウンで失格にならない？
+            //★１回目のたいりょく０のダウンで失格にならない？
+
+            //硬直解除
+            if (RigidityDmgTime < NAct.NAttackV.nowHogeTime)
+            {
+                NAct.NAttackV.nowHogeTime = 0;
+                NAct.NAttackV.DamageRigidityFlag = false;
+
+                if (!NAct.NAttackV.BlowUpFlag)
+                {
+                    NAct.NAttackV.NowDamage = DamagePattern.None;
+                }
+            }
+            else
+            {
+                //硬直継続
+                NAct.NAttackV.nowHogeTime += Time.deltaTime;
+
+                if (!NAct.NAttackV.BlowUpFlag)
+                {
+                    NAct.NAttackV.NowDamage = NowDmgRigidity;
+                }
+
+                NAct.NVariable.vx = 0;
+                NAct.NVariable.vz = 0;
+            }
+        }
 
         //自動ダッシュ中(十字入力なし)に肘打した場合、ここで歩き肘打ちに補完
         if (NAct.NMoveV.dashFlag

@@ -122,7 +122,18 @@ public enum DeathPattern
 }
 #endregion
 
+//#region Enum 攻撃喰らい状態
+//public enum HaveAttackedPattern
+//{
+//    None,
+//    deathNow,
+//    death,
+//}
+//#endregion
+
+
 #endregion
+
 public class NekketsuTypeDefinition
 {
 
