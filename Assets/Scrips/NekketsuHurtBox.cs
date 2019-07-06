@@ -125,6 +125,7 @@ public class NekketsuHurtBox
                         NAct.NVariable.Y = 0;
                         NAct.NAttackV.BlowUpFlag = false; ;
                         NAct.NAttackV.downDamage = 0;
+                        NAct.NAttackV.nowHogeTime = 100;
 
                         //ふっとびパターンによってダウン状態(ドット絵)を変更
                         if (NAct.NAttackV.NowDamage == DamagePattern.UmaBARF)
@@ -220,6 +221,71 @@ public class NekketsuHurtBox
                             //吹っ飛び状態に切り替え
                             changeBlowUp();
                         }
+
+
+
+
+
+                        //被ダメ硬直処理
+                        //被ダメ中で、硬直時間未計測の場合、硬直時間計測開始する
+                        if (NAct.NAttackV.DamageRigidityFlag == false
+                            && (NAct.NAttackV.NowDamage == DamagePattern.UmaHoge
+                            || NAct.NAttackV.NowDamage == DamagePattern.UmaHitBack
+                            || NAct.NAttackV.NowDamage == DamagePattern.UmaHitFront))
+                        {
+                            NAct.NAttackV.DamageRigidityFlag = true;
+                        }
+
+                        //被ダメ硬直計測
+                        if (NAct.NAttackV.DamageRigidityFlag == true)
+                        {
+                            NAct.NAttackV.NowDmgRigidity = NAct.NAttackV.NowDamage;
+
+                            if (NAct.NAttackV.NowDmgRigidity == DamagePattern.UmaHitBack
+                                || NAct.NAttackV.NowDmgRigidity == DamagePattern.UmaHitFront)
+                            {
+                                //被ダメ状態１(ダメージ軽)
+                                NAct.NAttackV.RigidityDmgTime = Settings.Instance.Attack.Damage1Time;
+                            }
+                            else if (NAct.NAttackV.NowDmgRigidity == DamagePattern.UmaHoge)
+                            {
+                                //被ダメ状態２(ダメージ重 凹み状態)
+                                NAct.NAttackV.RigidityDmgTime = Settings.Instance.Attack.Damage2Time;
+                            }
+                        }
+
+                        //被ダメ硬直計測
+                        if (NAct.NAttackV.DamageRigidityFlag == true)
+                        {
+                            //硬直解除
+                            if (NAct.NAttackV.RigidityDmgTime < NAct.NAttackV.nowHogeTime)
+                            {
+                                NAct.NAttackV.nowHogeTime = 0;
+                                NAct.NAttackV.DamageRigidityFlag = false;
+
+                                //if (!NAct.NAttackV.BlowUpFlag)
+                                //{
+                                //    NAct.NAttackV.NowDamage = DamagePattern.None;
+                                //}
+                            }
+                            else
+                            {
+                                //硬直継続
+                                NAct.NAttackV.nowHogeTime += Time.deltaTime;
+
+                                if (!NAct.NAttackV.BlowUpFlag)
+                                {
+                                    NAct.NAttackV.NowDamage = NAct.NAttackV.NowDmgRigidity;
+                                }
+
+                                NAct.NVariable.vx = 0;
+                                NAct.NVariable.vz = 0;
+                            }
+                        }
+
+
+
+
                     }
                     else
                     {
