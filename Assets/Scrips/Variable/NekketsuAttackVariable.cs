@@ -19,6 +19,7 @@ public class NekketsuAttackVariable : MonoBehaviour
     public bool DamageRigidityFlag = false; //攻撃喰らい硬直状態
     public DamagePattern NowDmgRigidity; //現在硬直中のダメージパターン
     public float RigidityDmgTime; //硬直ダメージ時間
+    public bool MyAttackHit; //自身の出した攻撃がヒット済みか
 
     //アイテム関連
     public ItemPattern haveItem = ItemPattern.None; //所持アイテム

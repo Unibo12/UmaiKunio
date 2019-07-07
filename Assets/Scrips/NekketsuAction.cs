@@ -76,9 +76,6 @@ public class NekketsuAction : MonoBehaviour
         // インプット処理呼び出し
         NInput.InputMain();
 
-        // 入力されたインプット内容でステータスを変更
-        NStateChange.StateChangeMain();
-
         // 攻撃の処理
         //NAttack.AttackMain();
 
@@ -93,6 +90,9 @@ public class NekketsuAction : MonoBehaviour
 
         // 所持アイテムの管理
         NHaveItem.NekketsuHaveItemMain();
+
+        // 入力されたインプット内容でステータスを変更
+        NStateChange.StateChangeMain();
 
         // 壁・地面のめり込み状態をチェックし、必要であれば補正
         NMerikomiCheck.MerikomiMain();

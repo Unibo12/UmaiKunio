@@ -19,6 +19,7 @@ public class NekketsuHurtBox
     float otherPlayerKick = 0;
     AttackPattern otherPlayerAttack = AttackPattern.None;
     Rect otherHitBox = new Rect(0, 0, 0, 0);
+    bool otherPlayeAttackHit = false;
 
     public NekketsuHurtBox(NekketsuAction nekketsuAction)
     {
@@ -153,7 +154,15 @@ public class NekketsuHurtBox
                     NAct.NAttackV.NowAttack = AttackPattern.None;
                     NAct.NMoveV.dashFlag = false;  //被弾したらダッシュ解除
 
-                    if (NAct.NAttackV.NowDamage == DamagePattern.None)
+                    //他プレイヤーの攻撃ヒットフラグが、False(未ヒット)
+                    //かつ、自身のダメージパターンが被ダメを受け付ける状態か？
+                    if (!otherPlayeAttackHit
+                        && (NAct.NAttackV.NowDamage == DamagePattern.None
+                        || NAct.NAttackV.NowDamage == DamagePattern.SquatGetUp
+                        || NAct.NAttackV.NowDamage == DamagePattern.UmaHitBack
+                        || NAct.NAttackV.NowDamage == DamagePattern.UmaHitFront
+                        || NAct.NAttackV.NowDamage == DamagePattern.UmaHoge
+                        || NAct.NAttackV.NowDamage == DamagePattern.UmaHogeWalk))
                     {
                         // 喰らったダメージを計算
                         switch (otherPlayerAttack)
@@ -185,6 +194,16 @@ public class NekketsuHurtBox
                     {
                         //自キャラが地上にいるので通常のダメージ計算
 
+                        //被ダメ硬直処理
+                        //被ダメ中で、硬直時間未計測の場合、硬直時間計測開始する
+                        if (NAct.NAttackV.DamageRigidityFlag == false
+                            && (NAct.NAttackV.NowDamage == DamagePattern.UmaHoge
+                            || NAct.NAttackV.NowDamage == DamagePattern.UmaHitBack
+                            || NAct.NAttackV.NowDamage == DamagePattern.UmaHitFront))
+                        {
+                            NAct.NAttackV.DamageRigidityFlag = true;
+                        }
+
                         // ダメージ喰らい状態に変更
                         if (NAct.NAttackV.downDamage < 20)
                         {
@@ -204,6 +223,11 @@ public class NekketsuHurtBox
                                 NAct.NAttackV.NowDamage = DamagePattern.UmaHogeWalk;
                             }
 
+                            //被ダメ状態１(ダメージ軽)
+                            NAct.NAttackV.RigidityDmgTime = Settings.Instance.Attack.Damage1Time;
+
+                            NAct.NAttackV.NowDmgRigidity = NAct.NAttackV.NowDamage;
+
                             //ダメージ受けた瞬間から、蓄積ダメージリセットまでの時間を計測
                             NAct.NAttackV.nowHogeTime = 0;
                         }
@@ -211,6 +235,11 @@ public class NekketsuHurtBox
                                  && 20 <= NAct.NAttackV.downDamage)
                         {
                             NAct.NAttackV.NowDamage = DamagePattern.UmaHoge;
+
+                            //被ダメ状態２(ダメージ重 凹み状態)
+                            NAct.NAttackV.RigidityDmgTime = Settings.Instance.Attack.Damage2Time;
+
+                            NAct.NAttackV.NowDmgRigidity = NAct.NAttackV.NowDamage;
 
                             //ダメージ受けた瞬間から、蓄積ダメージリセットまでの時間を計測
                             NAct.NAttackV.nowHogeTime = 0;
@@ -221,71 +250,6 @@ public class NekketsuHurtBox
                             //吹っ飛び状態に切り替え
                             changeBlowUp();
                         }
-
-
-
-
-
-                        //被ダメ硬直処理
-                        //被ダメ中で、硬直時間未計測の場合、硬直時間計測開始する
-                        if (NAct.NAttackV.DamageRigidityFlag == false
-                            && (NAct.NAttackV.NowDamage == DamagePattern.UmaHoge
-                            || NAct.NAttackV.NowDamage == DamagePattern.UmaHitBack
-                            || NAct.NAttackV.NowDamage == DamagePattern.UmaHitFront))
-                        {
-                            NAct.NAttackV.DamageRigidityFlag = true;
-                        }
-
-                        //被ダメ硬直計測
-                        if (NAct.NAttackV.DamageRigidityFlag == true)
-                        {
-                            NAct.NAttackV.NowDmgRigidity = NAct.NAttackV.NowDamage;
-
-                            if (NAct.NAttackV.NowDmgRigidity == DamagePattern.UmaHitBack
-                                || NAct.NAttackV.NowDmgRigidity == DamagePattern.UmaHitFront)
-                            {
-                                //被ダメ状態１(ダメージ軽)
-                                NAct.NAttackV.RigidityDmgTime = Settings.Instance.Attack.Damage1Time;
-                            }
-                            else if (NAct.NAttackV.NowDmgRigidity == DamagePattern.UmaHoge)
-                            {
-                                //被ダメ状態２(ダメージ重 凹み状態)
-                                NAct.NAttackV.RigidityDmgTime = Settings.Instance.Attack.Damage2Time;
-                            }
-                        }
-
-                        //被ダメ硬直計測
-                        if (NAct.NAttackV.DamageRigidityFlag == true)
-                        {
-                            //硬直解除
-                            if (NAct.NAttackV.RigidityDmgTime < NAct.NAttackV.nowHogeTime)
-                            {
-                                NAct.NAttackV.nowHogeTime = 0;
-                                NAct.NAttackV.DamageRigidityFlag = false;
-
-                                //if (!NAct.NAttackV.BlowUpFlag)
-                                //{
-                                //    NAct.NAttackV.NowDamage = DamagePattern.None;
-                                //}
-                            }
-                            else
-                            {
-                                //硬直継続
-                                NAct.NAttackV.nowHogeTime += Time.deltaTime;
-
-                                if (!NAct.NAttackV.BlowUpFlag)
-                                {
-                                    NAct.NAttackV.NowDamage = NAct.NAttackV.NowDmgRigidity;
-                                }
-
-                                NAct.NVariable.vx = 0;
-                                NAct.NVariable.vz = 0;
-                            }
-                        }
-
-
-
-
                     }
                     else
                     {
@@ -319,6 +283,10 @@ public class NekketsuHurtBox
                     {
                         NSound.SEPlay(SEPattern.hijiHit);
                     }
+
+                    //攻撃をヒットさせたプレイヤーの攻撃ヒットフラグをTrueにする。
+                    //（1度の攻撃で連続ヒットさせない為）
+                    setOtherPlayerAttackHitFlag();
                 }
                 else
                 {
@@ -434,6 +402,7 @@ public class NekketsuHurtBox
                 otherPlayerAttack = NAct.Nmng.Player[1].NAttackV.NowAttack;
                 otherHitBox = NAct.Nmng.Player[1].NAttackV.hitBox;
                 otherPlayerLeftFlag = NAct.Nmng.Player[1].NMoveV.leftFlag;
+                otherPlayeAttackHit = NAct.Nmng.Player[1].NAttackV.MyAttackHit;
                 break;
 
             case "Player2":
@@ -445,6 +414,25 @@ public class NekketsuHurtBox
                 otherPlayerAttack = NAct.Nmng.Player[0].NAttackV.NowAttack;
                 otherHitBox = NAct.Nmng.Player[0].NAttackV.hitBox;
                 otherPlayerLeftFlag = NAct.Nmng.Player[0].NMoveV.leftFlag;
+                otherPlayeAttackHit = NAct.Nmng.Player[0].NAttackV.MyAttackHit;
+                break;
+        }
+    }
+
+    /// <summary>
+    /// 他プレイヤーの攻撃ヒットフラグ更新
+    /// </summary>
+    private void setOtherPlayerAttackHitFlag()
+    {
+        // 自分から見て、他プレイヤーの情報を取得
+        switch (NAct.gameObject.name)
+        {
+            case "Player1":
+                NAct.Nmng.Player[1].NAttackV.MyAttackHit = true;
+                break;
+
+            case "Player2":
+                NAct.Nmng.Player[0].NAttackV.MyAttackHit = true;
                 break;
         }
     }

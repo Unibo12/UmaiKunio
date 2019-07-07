@@ -296,7 +296,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -512.27, y: -391.57}
+  m_AnchoredPosition: {x: -511.16, y: -389.83}
   m_SizeDelta: {x: 16.864, y: 2.24}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &173205956
@@ -1561,6 +1561,9 @@ MonoBehaviour:
   nowDownTime: 0
   nowHogeTime: 0
   DamageRigidityFlag: 0
+  NowDmgRigidity: 0
+  RigidityDmgTime: 0
+  MyAttackHit: 0
   haveItem: 0
 --- !u!114 &820763022
 MonoBehaviour:
@@ -3477,6 +3480,9 @@ MonoBehaviour:
   nowDownTime: 0
   nowHogeTime: 0
   DamageRigidityFlag: 0
+  NowDmgRigidity: 0
+  RigidityDmgTime: 0
+  MyAttackHit: 0
   haveItem: 0
 --- !u!114 &2032333320
 MonoBehaviour:

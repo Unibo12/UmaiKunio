@@ -37,6 +37,9 @@ public class NekketsuAttack : MonoBehaviour
     {
         //攻撃判定初期化
         NAct.NAttackV.hitBox = new Rect(0, 0, 0, 0);
+
+        //攻撃ヒットフラグ初期化
+        NAct.NAttackV.MyAttackHit = false;
     }
 
     void DosukoiSide(float timing)

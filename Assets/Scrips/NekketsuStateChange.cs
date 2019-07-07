@@ -78,6 +78,31 @@ public class NekketsuStateChange
             NAct.NAttackV.NowAttack = AttackPattern.HijiWalk;
         }
 
+
+        //被ダメ硬直計測
+        if (NAct.NAttackV.DamageRigidityFlag == true)
+        {
+            //硬直解除
+            if (NAct.NAttackV.RigidityDmgTime < NAct.NAttackV.nowHogeTime)
+            {
+                NAct.NAttackV.nowHogeTime = 0;
+                NAct.NAttackV.DamageRigidityFlag = false;
+            }
+            else
+            {
+                //硬直継続
+                NAct.NAttackV.nowHogeTime += Time.deltaTime;
+
+                if (!NAct.NAttackV.BlowUpFlag)
+                {
+                    NAct.NAttackV.NowDamage = NAct.NAttackV.NowDmgRigidity;
+                }
+
+                NAct.NVariable.vx = 0;
+                NAct.NVariable.vz = 0;
+            }
+        }
+
     }
 }
 
