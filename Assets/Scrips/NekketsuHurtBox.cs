@@ -273,15 +273,18 @@ public class NekketsuHurtBox
                     }
 
                     // 攻撃効果音
-                    if (otherPlayerAttack == AttackPattern.Dosukoi
-                        || otherPlayerAttack == AttackPattern.DosukoiBack
-                        || otherPlayerAttack == AttackPattern.DosukoiFront)
+                    if (!otherPlayeAttackHit)
                     {
-                        NSound.SEPlay(SEPattern.hit);
-                    }
-                    else
-                    {
-                        NSound.SEPlay(SEPattern.hijiHit);
+                        if (otherPlayerAttack == AttackPattern.Dosukoi
+                            || otherPlayerAttack == AttackPattern.DosukoiBack
+                            || otherPlayerAttack == AttackPattern.DosukoiFront)
+                        {
+                            NSound.SEPlay(SEPattern.hit);
+                        }
+                        else
+                        {
+                            NSound.SEPlay(SEPattern.hijiHit);
+                        }
                     }
 
                     //攻撃をヒットさせたプレイヤーの攻撃ヒットフラグをTrueにする。
