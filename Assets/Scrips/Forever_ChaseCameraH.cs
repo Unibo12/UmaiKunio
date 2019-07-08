@@ -57,12 +57,14 @@ public class Forever_ChaseCameraH : MonoBehaviour {
         //playersX[3] = Nmng.Player[3].NVariable.X;
 
         if (playersX[1] < playersX[0]
-            && Nmng.Player[0].NVariable.DeathFlag != DeathPattern.death)
+            && (Nmng.Player[0].NVariable.DeathFlag != DeathPattern.death
+                || Nmng.Player[1].NVariable.DeathFlag == DeathPattern.death))
         {
             TopPlayerNum = 0;
         }
         else if (playersX[0] < playersX[1]
-                && Nmng.Player[1].NVariable.DeathFlag != DeathPattern.death)
+                && (Nmng.Player[1].NVariable.DeathFlag != DeathPattern.death
+                    || Nmng.Player[0].NVariable.DeathFlag == DeathPattern.death))
         {
             TopPlayerNum = 1;
         }
