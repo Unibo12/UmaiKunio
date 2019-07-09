@@ -121,7 +121,7 @@ public class NekketsuHurtBox
                     NAct.NVariable.Y -= 0.08f;
 
                     //ふっとび状態から地面についたら
-                    if (NAct.NVariable.Y <= 0)
+                    if (NAct.NVariable.Y <= 0)/*■*/
                     {
                         NAct.NVariable.Y = 0;
                         NAct.NAttackV.BlowUpFlag = false; ;

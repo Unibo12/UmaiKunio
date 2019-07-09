@@ -17,9 +17,9 @@ public class NekketsuMerikomiCheck
     public void MerikomiMain()
     {
         // 地面めりこみ補正は着地したタイミングで行う
-        if (NAct.NVariable.Y < 0)
+        if (NAct.NVariable.Y < 0)/*■*/
         {
-            NAct.NVariable.Y = 0; // マイナス値は入れないようにする
+            NAct.NVariable.Y = 0;/*■*/ // マイナス値は入れないようにする
         }
     }
 }
