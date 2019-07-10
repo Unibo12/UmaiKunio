@@ -149,7 +149,7 @@ public class NekketsuJump
                 && NAct.NJumpV.JumpButtonState == JumpButtonPushState.PushMoment)
             {
                 // 着地状態
-                if (NAct.NVariable.Y <= 0)/*■*/
+                if (NAct.NVariable.Y <= NAct.NVariable.mapY)
                 {
                     NAct.NJumpV.jumpFlag = true; // ジャンプの準備
                     miniJumpFlag = false; // 小ジャンプ
@@ -231,7 +231,7 @@ public class NekketsuJump
                 NAct.NVariable.Y += NAct.NVariable.vy;
 
                 // 着地判定
-                if (NAct.NVariable.Y <= 0)/*■*/
+                if (NAct.NVariable.Y <= NAct.NVariable.mapY)
                 {
                     NAct.NJumpV.jumpFlag = false;
                     NAct.NJumpV.JumpButtonState = JumpButtonPushState.None; // ジャンプボタン非押下状態とする。

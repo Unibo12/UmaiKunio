@@ -22,4 +22,7 @@ public class NekketsuVariable : MonoBehaviour
     public float vz = 0;   //内部Z値用変数
     public DeathPattern DeathFlag = DeathPattern.None; //失格
     // *****共通変数*****
+
+    public float[, ,] map;   //地形判定
+    public float mapY = 0;   //マップで定義された高さ(現在地より取得する)
 }

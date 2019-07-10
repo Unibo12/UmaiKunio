@@ -65,10 +65,27 @@ public class NekketsuAction : MonoBehaviour
         NMerikomiCheck = new NekketsuMerikomiCheck(this);
 
         shadeTransform = GameObject.Find(this.gameObject.name + "_Shade").transform;
+
+        NVariable.map = new float[0, 0, 0]; 
     }
 
     void Update()
     { // ずっと行う
+
+        //NVariable.mapY= NVariable.map[(int)NVariable.X, (int)NVariable.Y, (int)NVariable.Z];
+
+        //★テスト　民家のテーブルの高さを固定で設定してみる★
+        if (0 <= NVariable.X && NVariable.X <= 3
+            && -2 <= NVariable.Z && NVariable.Z <= 1)
+        {
+            NVariable.mapY = 0.25f;
+        }
+        else
+        {
+            NVariable.mapY = 0;
+        }
+
+
 
         NVariable.vx = 0;
         NVariable.vz = 0;
@@ -141,7 +158,7 @@ public class NekketsuAction : MonoBehaviour
 
         #region キャラクターの影の位置描画処理
          
-        pos.y = NVariable.Z - 0.8f;
+        pos.y = NVariable.mapY + NVariable.Z - 0.8f;
 
         if (!NJumpV.squatFlag)
         {
