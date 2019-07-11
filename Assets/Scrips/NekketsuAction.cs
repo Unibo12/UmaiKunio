@@ -76,7 +76,7 @@ public class NekketsuAction : MonoBehaviour
 
         //★テスト　民家のテーブルの高さを固定で設定してみる★
         if (0 <= NVariable.X && NVariable.X <= 3
-            && -2 <= NVariable.Z && NVariable.Z <= 1)
+            && -0.5 <= NVariable.Z && NVariable.Z <= 0.65f)
         {
             NVariable.mapY = 0.25f;
         }
