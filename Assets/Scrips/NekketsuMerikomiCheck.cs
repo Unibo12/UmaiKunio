@@ -23,12 +23,19 @@ public class NekketsuMerikomiCheck
         }
 
 
-        //// 壁(X・Z座標)めりこみ補正
-        //if (X・Z条件
-        //    && NAct.NVariable.Y < NAct.NVariable.mapY) //壁なのでY座標は最大値？(着地できない高さ)
-        //{
-        //    NAct.NVariable.X = // X・Zを押し戻す
-        //}
+        //テスト用テーブル地形
+        //ベタガキなので要修正
+
+        // 壁(X・Z座標)めりこみ補正
+        if (!NAct.NJumpV.jumpFlag
+            && 0 <= NAct.NVariable.X && NAct.NVariable.X <= 3
+            && -1.1 <= NAct.NVariable.Z && NAct.NVariable.Z <= -0.5)
+        {
+            NAct.NVariable.X -= NAct.NVariable.vx + 0.01f; // X・Zを押し戻す
+            NAct.NVariable.Z -= NAct.NVariable.vz + 0.01f; // X・Zを押し戻す
+
+
+        }
 
 
         // ★ここではなく適切な処理場所へ移動すること★

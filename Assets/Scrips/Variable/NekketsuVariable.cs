@@ -25,4 +25,7 @@ public class NekketsuVariable : MonoBehaviour
 
     public float[, ,] map;   //地形判定
     public float mapY = 0;   //マップで定義された高さ(現在地より取得する)
+
+    public float playerX_Legt = 0;    //プレイヤーの左端の座標
+    public float playerX_Right = 0;   //プレイヤーの右端の座標
 }
