@@ -14,8 +14,13 @@ public class NekketsuManager : MonoBehaviour
     /// 後々楽になります
     public NekketsuAction[] Player;
 
+    //アイテム
     private GameObject ItemObjct;
     public item Item1;
+
+    //マップ上の障害物
+    private GameObject MapObjct;
+    public  Object MapObjct1;
 
     //　★デバッグ用★
     public UmaiboSandbag sandbag;
@@ -47,6 +52,8 @@ public class NekketsuManager : MonoBehaviour
         ItemObjct = GameObject.Find("bokutou");
         Item1 = ItemObjct.GetComponent<item>();
 
+        //障害物取得
+        GetMapObject();
 
         //　★デバッグ用★
         playerObjct = GameObject.Find("UmaiboSandbag");
@@ -60,5 +67,12 @@ public class NekketsuManager : MonoBehaviour
     void Update()
     {
 
+    }
+
+
+    void GetMapObject()
+    {
+        MapObjct = GameObject.Find("table");
+        MapObjct1 = MapObjct.GetComponent<Object>();
     }
 }
