@@ -8,6 +8,8 @@ public class Object : MonoBehaviour
     public float Y = 0;    //内部での高さ
     public float Z = 0;    //内部での奥行き
 
+    public Rect Box = new Rect(0, 0, 0, 0);
+
     public float topBoxY = 0;    //天板の高さ
     public Rect TopBoxSetting = new Rect(0, 0, 0, 0);
     public Rect TopBox = new Rect(0, 0, 0, 0);
@@ -25,6 +27,11 @@ public class Object : MonoBehaviour
     {
         myObjectWidth = this.gameObject.GetComponent<RectTransform>().rect.width;
         myObjectHeight = this.gameObject.GetComponent<RectTransform>().rect.height;
+
+        Box.x = transform.position.x;
+        Box.y = transform.position.y;
+        Box.width = myObjectWidth;
+        Box.height = myObjectHeight;
     }
 
     // Update is called once per frame

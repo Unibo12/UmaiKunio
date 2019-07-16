@@ -28,12 +28,25 @@ public class NekketsuMerikomiCheck
 
         // 壁(X・Z座標)めりこみ補正
         if (!NAct.NJumpV.jumpFlag
-            && 0 <= NAct.NVariable.X && NAct.NVariable.X <= 3
-            && -1.1 <= NAct.NVariable.Z && NAct.NVariable.Z <= -0.5)
+            && NAct.NVariable.Y != NAct.Nmng.MapObjct1.topBoxY
+            && NAct.Nmng.MapObjct1.TopBox.x - (NAct.Nmng.MapObjct1.myObjectWidth / 2) < NAct.NVariable.X 
+            && NAct.NVariable.X < NAct.Nmng.MapObjct1.TopBox.x + (NAct.Nmng.MapObjct1.myObjectWidth / 2)
+            && NAct.Nmng.MapObjct1.Box.yMin < NAct.NVariable.Z
+            && NAct.NVariable.Z < NAct.Nmng.MapObjct1.Box.yMax)
         {
-            NAct.NVariable.X -= NAct.NVariable.vx + 0.01f; // X・Zを押し戻す
-            NAct.NVariable.Z -= NAct.NVariable.vz + 0.01f; // X・Zを押し戻す
 
+            // どの面でめり込んでいるかの判断がNG
+
+            if (NAct.Nmng.MapObjct1.TopBox.x - (NAct.Nmng.MapObjct1.myObjectWidth / 2) < NAct.NVariable.X)
+            {
+                NAct.NVariable.X = NAct.Nmng.MapObjct1.TopBox.x - (NAct.Nmng.MapObjct1.myObjectWidth / 2); // Xを押し戻す
+
+            }
+
+            if (NAct.NVariable.X < NAct.Nmng.MapObjct1.TopBox.x + (NAct.Nmng.MapObjct1.myObjectWidth / 2))
+            {
+                NAct.NVariable.X = NAct.Nmng.MapObjct1.TopBox.x + (NAct.Nmng.MapObjct1.myObjectWidth / 2);
+            }
 
         }
 

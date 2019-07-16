@@ -75,11 +75,15 @@ public class NekketsuAction : MonoBehaviour
         //NVariable.mapY= NVariable.map[(int)NVariable.X, (int)NVariable.Y, (int)NVariable.Z];
 
         //★テスト　民家のテーブルの高さを固定で設定してみる★
+        //X座標はオブジェクトの中心部を指す為、中止部から全体幅÷2したものを加減算
         if (Nmng.MapObjct1.TopBox.x - (Nmng.MapObjct1.myObjectWidth / 2) <= NVariable.X 
             && NVariable.X <= Nmng.MapObjct1.TopBox.x + (Nmng.MapObjct1.myObjectWidth / 2)
             && Nmng.MapObjct1.TopBox.yMin <= NVariable.Z && NVariable.Z <= Nmng.MapObjct1.TopBox.yMax)
         {
-            NVariable.mapY = Nmng.MapObjct1.topBoxY;
+            if (NJumpV.squatFlag)
+            {
+                NVariable.mapY = Nmng.MapObjct1.topBoxY;
+            }
         }
         else
         {
