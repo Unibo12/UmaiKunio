@@ -17,6 +17,7 @@ public class NekketsuMerikomiCheck
     public void MerikomiMain()
     {
         // 地面(Y座標)めりこみ補正は着地したタイミングで行う
+        // プレイヤーの現在地と障害物が重なっている場合
         if (NAct.NVariable.Y < NAct.NVariable.mapY)
         {
             NAct.NVariable.Y = NAct.NVariable.mapY; // マイナス値は入れないようにする

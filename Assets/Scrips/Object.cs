@@ -8,21 +8,22 @@ public class Object : MonoBehaviour
     public float Y = 0;    //内部での高さ
     public float Z = 0;    //内部での奥行き
 
-    public Rect Box = new Rect(0, 0, 0, 0);
+    public Rect Box = new Rect(0, 0, 0, 0); //障害物全体の大きさ
 
-    public float topBoxY = 0;    //天板の高さ
-    public Rect TopBoxSetting = new Rect(0, 0, 0, 0);
-    public Rect TopBox = new Rect(0, 0, 0, 0);
+    public float topBoxY = 0;    //天板(足場となるスペース)の高さ
+    public Rect TopBoxSetting = new Rect(0, 0, 0, 0); //障害物の天板を設定する変数(インスペクターで設定 固定値とする)
+    public Rect TopBox = new Rect(0, 0, 0, 0); //障害物の天板を設定する変数(画面上で描画するときに使用)
 
-    public float myObjectWidth = 0;
-    public float myObjectHeight = 0;
+    public float myObjectWidth = 0; //障害物オブジェクトの幅
+    public float myObjectHeight = 0; //障害物オブジェクトの高さ
+    // 変数にしなくてもtransformで取れるのでは？
+
 
     //障害物も動きだしたくなるかもしれない
     //public float vx = 0;   //内部X値用変数
     //public float vy = 0;   //内部Y値用変数
     //public float vz = 0;   //内部Z値用変数
 
-    // Start is called before the first frame update
     void Start()
     {
         myObjectWidth = this.gameObject.GetComponent<RectTransform>().rect.width;
@@ -34,7 +35,6 @@ public class Object : MonoBehaviour
         Box.height = myObjectHeight;
     }
 
-    // Update is called once per frame
     void Update()
     {
         //天板の位置調整
