@@ -29,7 +29,7 @@ public class Object : MonoBehaviour
         myObjectWidth = this.gameObject.GetComponent<RectTransform>().rect.width;
         myObjectHeight = this.gameObject.GetComponent<RectTransform>().rect.height;
 
-        Box.x = transform.position.x;
+        Box.x = transform.position.x - (myObjectWidth / 2); //Rectの左端の値
         Box.y = transform.position.y;
         Box.width = myObjectWidth;
         Box.height = myObjectHeight;
