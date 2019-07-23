@@ -11,15 +11,14 @@ public class NekketsuHurtBox
     DamageTest DmgTest;
 
     // 喰らい判定で必要な相手の情報
-    DamagePattern otherPlayerDmgPtn = DamagePattern.None;
-    float otherPlayerX = 0;
-    float otherPlayerZ = 0;
-    bool otherPlayerLeftFlag = false;
-    float otherPlayerPunch = 0;
-    float otherPlayerKick = 0;
-    AttackPattern otherPlayerAttack = AttackPattern.None;
-    Rect otherHitBox = new Rect(0, 0, 0, 0);
-    bool otherPlayeAttackHit = false;
+    float otherPlayerX = 0; //相手のX座標
+    float otherPlayerZ = 0; //相手のZ座標
+    bool otherPlayerLeftFlag = false; //相手が左・右を向いているか
+    float otherPlayerPunch = 0; //相手のぱんち力
+    float otherPlayerKick = 0; //相手のきっく力
+    AttackPattern otherPlayerAttack = AttackPattern.None; //相手の攻撃パターン
+    Rect otherHitBox = new Rect(0, 0, 0, 0); //相手の攻撃当たり判定
+    bool otherPlayeAttackHit = false; // 相手の攻撃がヒット済みか
 
     public NekketsuHurtBox(NekketsuAction nekketsuAction)
     {
@@ -43,14 +42,14 @@ public class NekketsuHurtBox
         //他プレイヤーの攻撃情報取得
         getOtherPlayerInfo();
 
-        // ダウン状態の時()
+        // 自分がダウン状態の時()
         if (NAct.NAttackV.NowDamage == DamagePattern.UmaTaore
             || NAct.NAttackV.NowDamage == DamagePattern.UmaTaoreUp)
         {
             // まだ失格していない
             if (NAct.NVariable.DeathFlag == DeathPattern.None)
             {
-                // ダウンした瞬間、体力0なら失格
+                // ダウンした瞬間、たいりょく0なら失格
                 if (NAct.NVariable.st_life <= 0)
                 {
                     if (NAct.NVariable.DeathFlag == DeathPattern.None)
@@ -79,6 +78,10 @@ public class NekketsuHurtBox
         }
         else
         {
+            //ダウン状態ではない
+            //→ふっ飛ばされているか or 被ダメ状態
+
+
             //ふっとばされ中
             if (NAct.NAttackV.BlowUpFlag)
             {
@@ -146,6 +149,8 @@ public class NekketsuHurtBox
             }
             else
             {
+                //被ダメ状態を分岐させる処理
+
                 // プレイヤー1～4の喰らい判定
                 if ((otherPlayerZ - 0.4f <= NAct.NVariable.Z && NAct.NVariable.Z <= otherPlayerZ + 0.4f)
                     && NAct.NAttackV.hurtBox.Overlaps(otherHitBox)
@@ -397,26 +402,22 @@ public class NekketsuHurtBox
         switch (NAct.gameObject.name)
         {
             case "Player1":
-                otherPlayerDmgPtn = NAct.Nmng.Player[1].NAttackV.NowDamage;
                 otherPlayerX = NAct.Nmng.Player[1].NVariable.X;
                 otherPlayerZ = NAct.Nmng.Player[1].NVariable.Z;
                 otherPlayerPunch = NAct.Nmng.Player[1].NVariable.st_punch;
                 otherPlayerKick = NAct.Nmng.Player[1].NVariable.st_kick;
                 otherPlayerAttack = NAct.Nmng.Player[1].NAttackV.NowAttack;
                 otherHitBox = NAct.Nmng.Player[1].NAttackV.hitBox;
-                otherPlayerLeftFlag = NAct.Nmng.Player[1].NMoveV.leftFlag;
                 otherPlayeAttackHit = NAct.Nmng.Player[1].NAttackV.MyAttackHit;
                 break;
 
             case "Player2":
-                otherPlayerDmgPtn = NAct.Nmng.Player[0].NAttackV.NowDamage;
                 otherPlayerX = NAct.Nmng.Player[0].NVariable.X;
                 otherPlayerZ = NAct.Nmng.Player[0].NVariable.Z;
                 otherPlayerPunch = NAct.Nmng.Player[0].NVariable.st_punch;
                 otherPlayerKick = NAct.Nmng.Player[0].NVariable.st_kick;
                 otherPlayerAttack = NAct.Nmng.Player[0].NAttackV.NowAttack;
                 otherHitBox = NAct.Nmng.Player[0].NAttackV.hitBox;
-                otherPlayerLeftFlag = NAct.Nmng.Player[0].NMoveV.leftFlag;
                 otherPlayeAttackHit = NAct.Nmng.Player[0].NAttackV.MyAttackHit;
                 break;
         }
