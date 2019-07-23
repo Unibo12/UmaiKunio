@@ -1071,7 +1071,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   X: 4.34
   Y: 0
-  Z: -1.18
+  Z: -2.95
   Box:
     serializedVersion: 2
     x: 0
@@ -1081,8 +1081,8 @@ MonoBehaviour:
   topBoxY: 0.25
   TopBoxSetting:
     serializedVersion: 2
-    x: 5.28
-    y: -0.9
+    x: 4.34
+    y: -2.95
     width: 2.8
     height: 1.2
   TopBox:

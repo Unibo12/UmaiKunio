@@ -80,10 +80,11 @@ public class NekketsuAction : MonoBehaviour
             && NVariable.X <= Nmng.MapObjct1.TopBox.x + (Nmng.MapObjct1.myObjectWidth / 2)
             && Nmng.MapObjct1.TopBox.yMin <= NVariable.Z && NVariable.Z <= Nmng.MapObjct1.TopBox.yMax)
         {
-            if (NJumpV.squatFlag)
-            {
-                NVariable.mapY = Nmng.MapObjct1.topBoxY;
-            }
+            NVariable.mapY = Nmng.MapObjct1.topBoxY;
+
+            //if (NJumpV.squatFlag)
+            //{
+            //}
         }
         else
         {
@@ -162,13 +163,21 @@ public class NekketsuAction : MonoBehaviour
         #endregion
 
         #region キャラクターの影の位置描画処理
-         
+
         pos.y = NVariable.mapY + NVariable.Z - 0.8f;
 
         if (!NJumpV.squatFlag)
         {
-            shadeTransform.position = pos;
+            pos.y = NVariable.mapY + NVariable.Z - 0.8f;
+
         }
+        else if (NJumpV.jumpFlag)
+        {
+            pos.y = NVariable.mapY + NVariable.Z;
+        }
+
+        shadeTransform.position = pos;
+
         #endregion
 
         #region アニメ処理
