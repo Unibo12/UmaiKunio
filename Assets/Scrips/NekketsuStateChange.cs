@@ -30,7 +30,7 @@ public class NekketsuStateChange
         //ジャンプ攻撃中から着地したとき
         if((NAct.NAttackV.NowAttack == AttackPattern.JumpKick
            || NAct.NAttackV.NowAttack == AttackPattern.UmaHariteJump)
-            && NAct.NVariable.Y <= 0)
+            && NAct.NVariable.Y <= NAct.NVariable.mapY)
         {
             NAct.NAttackV.NowAttack = AttackPattern.None;
         }
@@ -38,7 +38,7 @@ public class NekketsuStateChange
         // ダウン時に攻撃状態(攻撃ボタンを押している)なら、クイックスタンディングとする。
         if ((NAct.NAttackV.NowDamage == DamagePattern.UmaTaore
             || NAct.NAttackV.NowDamage == DamagePattern.UmaTaoreUp)
-            && NAct.NVariable.Y == 0)
+            && NAct.NVariable.Y == NAct.NVariable.mapY)
         {
             if (NAct.NAttackV.NowAttack != AttackPattern.None)
             {
