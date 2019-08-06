@@ -132,6 +132,18 @@ public enum DeathPattern
 //#endregion
 
 
+#region Enum めり込みチェック方向
+public enum MerikomiCheckPattern
+{
+    Up,
+    Down,
+    Left,
+    Right,
+    None
+}
+#endregion
+
+
 #endregion
 
 public class NekketsuTypeDefinition
