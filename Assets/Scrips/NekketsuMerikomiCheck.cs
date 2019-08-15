@@ -21,18 +21,14 @@ public class NekketsuMerikomiCheck
         // 地面(Y座標)めりこみ補正は着地したタイミングで行う
         // プレイヤーの現在地と障害物が重なっている場合
 
-        //if (NAct.NJumpV.squatFlag
-        //    && NAct.NVariable.Y < NAct.NVariable.mapY)
-        //{
-        //    NAct.NVariable.Y = NAct.NVariable.mapY; // マイナス値は入れないようにする
-        //}
+        if (NAct.NJumpV.squatFlag
+            && NAct.NVariable.Y < NAct.NVariable.mapY)
+        {
+            NAct.NVariable.Y = NAct.NVariable.mapY; // マイナス値は入れないようにする
+        }
 
         //テスト用テーブル地形
         //ベタガキなので要修正
-
-
-
-
 
         if (!NAct.NJumpV.jumpFlag
             && !NAct.NJumpV.squatFlag
@@ -50,8 +46,120 @@ public class NekketsuMerikomiCheck
                 MeriCheckPtn = MerikomiCheckPattern.Down;
                 //NAct.NVariable.Z = NAct.Nmng.MapObjct1.Box.yMin;
             }
+            //else
+            //{
+            //    MeriCheckPtn = MerikomiCheckPattern.None;
+            //}
         }
 
+
+        //if (MeriCheckPtn == MerikomiCheckPattern.None)
+        //{
+
+        //}
+
+        // 壁(X座標)めりこみ補正
+        if (!NAct.NJumpV.jumpFlag
+            && !NAct.NJumpV.squatFlag
+            && NAct.NVariable.Y != NAct.Nmng.MapObjct1.topBoxY
+            && NAct.Nmng.MapObjct1.Box.yMin < NAct.NVariable.Z
+            && NAct.NVariable.Z < NAct.Nmng.MapObjct1.Box.yMax)
+        {
+            if (NAct.NVariable.X < NAct.Nmng.MapObjct1.Box.x)
+            {
+                MeriCheckPtn = MerikomiCheckPattern.Left;
+            }
+            if (NAct.Nmng.MapObjct1.Box.x + NAct.Nmng.MapObjct1.Box.width < NAct.NVariable.X)
+            {
+                MeriCheckPtn = MerikomiCheckPattern.Right;
+            }
+        }
+
+
+
+        switch (MeriCheckPtn)
+        {
+            case MerikomiCheckPattern.Up:
+
+
+                if (NAct.Nmng.MapObjct1.Box.yMin <= NAct.NVariable.Z
+                    && NAct.NVariable.Z <= NAct.Nmng.MapObjct1.Box.yMax
+                    && !NAct.NJumpV.jumpFlag
+                    && !NAct.NJumpV.squatFlag
+                    && NAct.NVariable.Y != NAct.Nmng.MapObjct1.topBoxY
+                    && NAct.Nmng.MapObjct1.TopBox.x - (NAct.Nmng.MapObjct1.myObjectWidth / 2) < NAct.NVariable.X
+            && NAct.NVariable.X < NAct.Nmng.MapObjct1.TopBox.x + (NAct.Nmng.MapObjct1.myObjectWidth / 2))
+                {
+                    NAct.NVariable.Z = NAct.Nmng.MapObjct1.Box.yMax;
+                }
+
+
+                break;
+
+            case MerikomiCheckPattern.Down:
+
+
+                if (NAct.Nmng.MapObjct1.Box.yMin <= NAct.NVariable.Z
+                    && NAct.NVariable.Z <= NAct.Nmng.MapObjct1.Box.yMax
+                    && !NAct.NJumpV.jumpFlag
+                    && !NAct.NJumpV.squatFlag
+                    && NAct.NVariable.Y != NAct.Nmng.MapObjct1.topBoxY
+                    && NAct.Nmng.MapObjct1.TopBox.x - (NAct.Nmng.MapObjct1.myObjectWidth / 2) < NAct.NVariable.X
+                    && NAct.NVariable.X < NAct.Nmng.MapObjct1.TopBox.x + (NAct.Nmng.MapObjct1.myObjectWidth / 2))
+                {
+                    NAct.NVariable.Z = NAct.Nmng.MapObjct1.Box.yMin;
+                }
+
+
+                break;
+
+
+
+
+            case MerikomiCheckPattern.Left:
+
+
+                if (NAct.Nmng.MapObjct1.Box.yMin <= NAct.NVariable.Z
+                    && NAct.NVariable.Z <= NAct.Nmng.MapObjct1.Box.yMax
+                    && !NAct.NJumpV.jumpFlag
+                    && !NAct.NJumpV.squatFlag
+                    && NAct.NVariable.Y != NAct.Nmng.MapObjct1.topBoxY
+                    && NAct.Nmng.MapObjct1.TopBox.x - (NAct.Nmng.MapObjct1.myObjectWidth / 2) < NAct.NVariable.X
+                    && NAct.NVariable.X < NAct.Nmng.MapObjct1.TopBox.x + (NAct.Nmng.MapObjct1.myObjectWidth / 2))
+                {
+                    NAct.NVariable.X = NAct.Nmng.MapObjct1.Box.xMin;
+                }
+
+
+                break;
+
+
+
+
+            case MerikomiCheckPattern.Right:
+
+
+                if (NAct.Nmng.MapObjct1.Box.yMin <= NAct.NVariable.Z
+                    && NAct.NVariable.Z <= NAct.Nmng.MapObjct1.Box.yMax
+                    && !NAct.NJumpV.jumpFlag
+                    && !NAct.NJumpV.squatFlag
+                    && NAct.NVariable.Y != NAct.Nmng.MapObjct1.topBoxY
+                    && NAct.Nmng.MapObjct1.TopBox.x - (NAct.Nmng.MapObjct1.myObjectWidth / 2) < NAct.NVariable.X
+                    && NAct.NVariable.X < NAct.Nmng.MapObjct1.TopBox.x + (NAct.Nmng.MapObjct1.myObjectWidth / 2))
+                {
+                    NAct.NVariable.X = NAct.Nmng.MapObjct1.Box.xMax;
+                }
+
+
+                break;
+
+
+
+                //case MerikomiCheckPattern.None:
+
+                //    break;
+
+        }
 
 
 
@@ -98,12 +206,12 @@ public class NekketsuMerikomiCheck
         //    }
         //}
 
-        //// ★ここではなく適切な処理場所へ移動すること★
-        //// 高いところから低いところへ降りた場合
-        //if (!NAct.NJumpV.jumpFlag
-        //    && NAct.NVariable.Y != NAct.NVariable.mapY)
-        //{
-        //    NAct.NJumpV.jumpFlag = true;
-        //}
+        // ★ここではなく適切な処理場所へ移動すること★
+        // 高いところから低いところへ降りた場合
+        if (!NAct.NJumpV.jumpFlag
+            && NAct.NVariable.Y != NAct.NVariable.mapY)
+        {
+            NAct.NJumpV.jumpFlag = true;
+        }
     }
 }
