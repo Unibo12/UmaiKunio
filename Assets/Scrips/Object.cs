@@ -8,7 +8,6 @@ public class Object : MonoBehaviour
     public float Y = 0;    //内部での高さ
     public float Z = 0;    //内部での奥行き
 
-    public Rect Box = new Rect(0, 0, 0, 0); //障害物全体の大きさ
 
     public float topBoxY = 0;    //天板(足場となるスペース)の高さ
     public Rect TopBoxSetting = new Rect(0, 0, 0, 0); //障害物の天板を設定する変数(インスペクターで設定 固定値とする)
@@ -28,20 +27,21 @@ public class Object : MonoBehaviour
     {
         myObjectWidth = this.gameObject.GetComponent<RectTransform>().rect.width;
         myObjectHeight = this.gameObject.GetComponent<RectTransform>().rect.height;
-
-        Box.x = transform.position.x - (myObjectWidth / 2); //Rectの左端の値
-        Box.y = transform.position.y;
-        Box.width = myObjectWidth;
-        Box.height = myObjectHeight;
     }
 
     void Update()
     {
+        
+
         //天板の位置調整
-        TopBox.x = transform.position.x + (myObjectWidth - TopBoxSetting.width);
-        TopBox.y = transform.position.y + (myObjectHeight - TopBoxSetting.height) / 2 ; //頂点に合わせるには÷2が必要
+        TopBox.x = transform.position.x;
+        TopBox.y = transform.position.y + (myObjectHeight / 4); 
+        // transform.position.x(y) は、Rect全体の中心点を基準とするため、
+        // Rectの縦(横)の全長から、計算する必要がある。（でもなんかずれてる気がする）
         TopBox.width = myObjectWidth - (myObjectWidth - TopBoxSetting.width);
         TopBox.height = myObjectHeight - (myObjectHeight - TopBoxSetting.height);
+
+        OnDrawGizmos();
     }
 
 
@@ -50,5 +50,8 @@ public class Object : MonoBehaviour
         // 天板のギズモを表示
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireCube(new Vector3(TopBox.x, TopBox.y), new Vector3(TopBox.width, TopBox.height));
+
+
+
     }
 }
