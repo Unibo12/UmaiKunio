@@ -35,11 +35,11 @@ public class Object : MonoBehaviour
 
         //天板の位置調整
         TopBox.x = transform.position.x;
-        TopBox.y = transform.position.y + (myObjectHeight / 4); 
+        TopBox.y = transform.position.y ; 
         // transform.position.x(y) は、Rect全体の中心点を基準とするため、
         // Rectの縦(横)の全長から、計算する必要がある。（でもなんかずれてる気がする）
-        TopBox.width = myObjectWidth - (myObjectWidth - TopBoxSetting.width);
-        TopBox.height = myObjectHeight - (myObjectHeight - TopBoxSetting.height);
+        TopBox.width = myObjectWidth;
+        TopBox.height = myObjectHeight - topBoxY;
 
         OnDrawGizmos();
     }
