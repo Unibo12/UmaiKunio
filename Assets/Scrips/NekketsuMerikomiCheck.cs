@@ -18,13 +18,21 @@ public class NekketsuMerikomiCheck
 
     public void MerikomiMain()
     {
+        //めり込みチェック初期化
+        MeriCheckPtn = MerikomiCheckPattern.None;
+
         // 地面(Y座標)めりこみ補正は着地したタイミングで行う
         // プレイヤーの現在地と障害物が重なっている場合
 
         if (NAct.NJumpV.squatFlag
-            && NAct.NVariable.Y < NAct.NVariable.mapY)
+            && NAct.NVariable.mapY <= NAct.NVariable.Y)
         {
             NAct.NVariable.Y = NAct.NVariable.mapY; // マイナス値は入れないようにする
+
+            //if (NAct.NVariable.Y < 0)
+            //{
+            //    NAct.NVariable.Y = 0;
+            //}
         }
 
         //テスト用テーブル地形
@@ -206,12 +214,17 @@ public class NekketsuMerikomiCheck
         //    }
         //}
 
+
+
+
+        // めり込みチェック確認用に　一旦コメントアウト。
+
         // ★ここではなく適切な処理場所へ移動すること★
         // 高いところから低いところへ降りた場合
-        if (!NAct.NJumpV.jumpFlag
-            && NAct.NVariable.Y != NAct.NVariable.mapY)
-        {
-            NAct.NJumpV.jumpFlag = true;
-        }
+        //if (!NAct.NJumpV.jumpFlag
+        //    && NAct.NVariable.Y != NAct.NVariable.mapY)
+        //{
+        //    NAct.NJumpV.jumpFlag = true;
+        //}
     }
 }
