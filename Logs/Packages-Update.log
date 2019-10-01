@@ -91,3 +91,12 @@ The following packages were 追加済:
 The following packages were 更新済:
   com.unity.package-manager-ui をバージョン 2.1.2 から 2.2.0 へ
   com.unity.timeline をバージョン 1.0.0 から 1.1.0 へ
+
+=== Tue Oct  1 21:24:37 2019
+
+Packages were changed.
+Update Mode: updateDependencies
+
+The following packages were 更新済:
+  com.unity.ide.rider をバージョン 1.0.8 から 1.1.0 へ
+  com.unity.ide.vscode をバージョン 1.0.7 から 1.1.0 へ
