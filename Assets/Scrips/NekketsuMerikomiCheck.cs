@@ -73,11 +73,11 @@ public class NekketsuMerikomiCheck
             && NAct.Nmng.MapObjct1.TopBox.yMin < NAct.NVariable.Z
             && NAct.NVariable.Z < NAct.Nmng.MapObjct1.TopBox.yMax)
         {
-            if (NAct.NVariable.X < NAct.Nmng.MapObjct1.TopBox.x)
+            if (NAct.NVariable.X <= NAct.Nmng.MapObjct1.TopBox.x - (NAct.Nmng.MapObjct1.myObjectWidth / 2))
             {
                 MeriCheckPtn = MerikomiCheckPattern.Left;
             }
-            if (NAct.Nmng.MapObjct1.TopBox.x + NAct.Nmng.MapObjct1.TopBox.width < NAct.NVariable.X)
+            if (NAct.Nmng.MapObjct1.TopBox.x - (NAct.Nmng.MapObjct1.myObjectWidth / 2) <= NAct.NVariable.X)
             {
                 MeriCheckPtn = MerikomiCheckPattern.Right;
             }
