@@ -135,7 +135,7 @@ public class NekketsuMerikomiCheck
                     && NAct.Nmng.MapObjct1.TopBox.x - (NAct.Nmng.MapObjct1.myObjectWidth / 2) < NAct.NVariable.X
                     && NAct.NVariable.X < NAct.Nmng.MapObjct1.TopBox.x + (NAct.Nmng.MapObjct1.myObjectWidth / 2))
                 {
-                    NAct.NVariable.X = NAct.Nmng.MapObjct1.TopBox.xMin;
+                    NAct.NVariable.X = NAct.Nmng.MapObjct1.TopBox.x - (NAct.Nmng.MapObjct1.myObjectWidth / 2);
                 }
 
 
@@ -155,7 +155,7 @@ public class NekketsuMerikomiCheck
                     && NAct.Nmng.MapObjct1.TopBox.x - (NAct.Nmng.MapObjct1.myObjectWidth / 2) < NAct.NVariable.X
                     && NAct.NVariable.X < NAct.Nmng.MapObjct1.TopBox.x + (NAct.Nmng.MapObjct1.myObjectWidth / 2))
                 {
-                    NAct.NVariable.X = NAct.Nmng.MapObjct1.TopBox.xMax;
+                    NAct.NVariable.X = NAct.Nmng.MapObjct1.TopBox.x + (NAct.Nmng.MapObjct1.myObjectWidth / 2);
                 }
 
 
