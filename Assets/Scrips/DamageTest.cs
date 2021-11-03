@@ -46,10 +46,10 @@ public class DamageTest : MonoBehaviour
 
     }
 
-    void OnDrawGizmos()
-    {
-        // 喰らい判定のギズモを表示
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(transform.position, new Vector3(hitBoxTEST.width, hitBoxTEST.height, 0));
-    }
+    // void OnDrawGizmos()
+    // {
+    //     // 喰らい判定のギズモを表示
+    //     Gizmos.color = Color.red;
+    //     Gizmos.DrawWireCube(transform.position, new Vector3(hitBoxTEST.width, hitBoxTEST.height, 0));
+    // }
 }

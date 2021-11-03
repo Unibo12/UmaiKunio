@@ -64,14 +64,14 @@ public class Fighter : MonoBehaviour {
 
     protected bool isGuard = false;
 
-    protected virtual void OnDrawGizmosSelected()
-    {
-        if (leftPunch == null || rightPunch == null)
-            return;
-        Gizmos.color = Color.white;
-        Gizmos.DrawWireSphere(leftPunch.position, punchRadius);
-        Gizmos.DrawWireSphere(rightPunch.position, punchRadius);
-    }
+    // protected virtual void OnDrawGizmosSelected()
+    // {
+    //     if (leftPunch == null || rightPunch == null)
+    //         return;
+    //     Gizmos.color = Color.white;
+    //     Gizmos.DrawWireSphere(leftPunch.position, punchRadius);
+    //     Gizmos.DrawWireSphere(rightPunch.position, punchRadius);
+    // }
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();

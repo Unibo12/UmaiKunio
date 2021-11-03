@@ -3,7 +3,7 @@
 /// <summary>
 /// 所持アイテムの管理を行うクラス
 /// </summary>
-public class NekketsuHaveItem : MonoBehaviour
+public class NekketsuHaveItem
 {
     NekketsuAction NAct; //NekketsuActionが入る変数
 

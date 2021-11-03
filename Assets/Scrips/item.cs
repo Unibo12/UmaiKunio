@@ -56,11 +56,11 @@ public class item : MonoBehaviour
         }
     }
 
-    void OnDrawGizmos()
-    {
-        // アイテム拾い判定のギズモを表示
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireCube(itemBox.position, new Vector3(itemBox.width, itemBox.height, 0));
-    }
+    // void OnDrawGizmos()
+    // {
+    //     // アイテム拾い判定のギズモを表示
+    //     Gizmos.color = Color.green;
+    //     Gizmos.DrawWireCube(itemBox.position, new Vector3(itemBox.width, itemBox.height, 0));
+    // }
 
 }

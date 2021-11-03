@@ -145,10 +145,10 @@ public class UmaiboSandbag : MonoBehaviour
         #endregion
     }
 
-    void OnDrawGizmos()
-    {
-        // 喰らい判定のギズモを表示
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireCube(transform.position, new Vector3(UmaiboSandbagHitBox.width, UmaiboSandbagHitBox.height, 0));
-    }
+    // void OnDrawGizmos()
+    // {
+    //     // 喰らい判定のギズモを表示
+    //     Gizmos.color = Color.yellow;
+    //     Gizmos.DrawWireCube(transform.position, new Vector3(UmaiboSandbagHitBox.width, UmaiboSandbagHitBox.height, 0));
+    // }
 }

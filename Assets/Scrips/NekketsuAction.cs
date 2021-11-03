@@ -249,14 +249,14 @@ public class NekketsuAction : MonoBehaviour
         #endregion
     }
 
-    void OnDrawGizmos()
-    {
-        // 喰らい判定のギズモを表示
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireCube(transform.position, new Vector3(NAttackV.hurtBox.width, NAttackV.hurtBox.height, 0));
+    // void OnDrawGizmos()
+    // {
+    //     // 喰らい判定のギズモを表示
+    //     Gizmos.color = Color.yellow;
+    //     Gizmos.DrawWireCube(transform.position, new Vector3(NAttackV.hurtBox.width, NAttackV.hurtBox.height, 0));
 
-        // 攻撃判定のギズモを表示
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(new Vector3(NAttackV.hitBox.x, NVariable.Z + NAttackV.hitBox.y), new Vector3(NAttackV.hitBox.width, NAttackV.hitBox.height, 0.1f));
-    }
+    //     // 攻撃判定のギズモを表示
+    //     Gizmos.color = Color.red;
+    //     Gizmos.DrawWireCube(new Vector3(NAttackV.hitBox.x, NVariable.Z + NAttackV.hitBox.y), new Vector3(NAttackV.hitBox.width, NAttackV.hitBox.height, 0.1f));
+    // }
 }

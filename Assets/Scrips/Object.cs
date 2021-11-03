@@ -31,27 +31,24 @@ public class Object : MonoBehaviour
 
     void Update()
     {
-        
+
 
         //天板の位置調整
         TopBox.x = transform.position.x;
-        TopBox.y = transform.position.y ; 
+        TopBox.y = transform.position.y;
         // transform.position.x(y) は、Rect全体の中心点を基準とするため、
         // Rectの縦(横)の全長から、計算する必要がある。（でもなんかずれてる気がする）
         TopBox.width = myObjectWidth;
         TopBox.height = myObjectHeight - topBoxY;
 
-        OnDrawGizmos();
+        // OnDrawGizmos();
     }
 
 
-    void OnDrawGizmos()
-    {
-        // 天板のギズモを表示
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireCube(new Vector3(TopBox.x, TopBox.y), new Vector3(TopBox.width, TopBox.height));
-
-
-
-    }
+    // void OnDrawGizmos()
+    // {
+    //     // 天板のギズモを表示
+    //     Gizmos.color = Color.yellow;
+    //     Gizmos.DrawWireCube(new Vector3(TopBox.x, TopBox.y), new Vector3(TopBox.width, TopBox.height));
+    // }
 }
